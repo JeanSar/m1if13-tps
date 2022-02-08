@@ -21,18 +21,18 @@ public interface Dao<T> {
      * Crée un utilisateur et le sauvegarde
      * @param t L'utilisateur à créer
      */
-    void save(T t);
+    void save(T t) throws IllegalArgumentException;
 
     /**
      * Modifie un utilisateur enregistré
      * @param t L'utilisateur à modifier
      * @param params Un tableau de 2 Strings : login et password
      */
-    void update(T t, String[] params);
+    void update(T t) throws IllegalArgumentException;
 
     /**
      * Supprime un utilisateur enregistré
      * @param t L'utilisateur à supprimer
      */
-    void delete(T t);
+    void delete(T t) throws IllegalArgumentException;
 }
