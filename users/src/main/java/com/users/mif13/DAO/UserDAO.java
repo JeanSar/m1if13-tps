@@ -31,7 +31,7 @@ public class UserDAO implements Dao<User> {
 
     @Override
     public void save(User user) throws IllegalArgumentException{
-        if(this.get(user.getLogin()).isPresent()) {
+        if(users.get(user.getLogin()) != null) {
             throw new IllegalArgumentException("Cet utilisateur existe déjà");
         } else {
             users.put(user.getLogin(), user);
@@ -41,7 +41,7 @@ public class UserDAO implements Dao<User> {
     // update only the password in the collections
     @Override
     public void update(User user) throws IllegalArgumentException {
-        if(this.get(user.getLogin()).isEmpty()) {
+        if(users.get(user.getLogin()) == null)  {
             throw new IllegalArgumentException("Cet utilisateur n'existe pas");
         } else {
             users.replace(user.getLogin(), user);
@@ -50,7 +50,7 @@ public class UserDAO implements Dao<User> {
 
     @Override
     public void delete(User user) throws IllegalArgumentException {
-        if(this.get(user.getLogin()).isEmpty()) {
+        if(users.get(user.getLogin()) == null) {
             throw new IllegalArgumentException("Cet utilisateur n'existe pas");
         } else {
             users.remove(user.getLogin());
