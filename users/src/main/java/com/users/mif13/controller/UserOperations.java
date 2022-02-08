@@ -1,14 +1,21 @@
 package com.users.mif13.controller;
 
+import com.users.mif13.DAO.Dao;
+import com.users.mif13.DAO.UserDAO;
+import com.users.mif13.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.naming.AuthenticationException;
+
 @Controller
 public class UserOperations {
 
-    // TODO récupérer le DAO...
-
+    @Autowired
+    private UserDAO dao;
     /**
      * Procédure de login utilisée par un utilisateur
      * @param login Le login de l'utilisateur. L'utilisateur doit avoir été créé préalablement et son login doit être présent dans le DAO.
@@ -17,8 +24,16 @@ public class UserOperations {
      */
     @PostMapping("/login")
     public ResponseEntity<Void> login(@RequestParam("login") String login, @RequestParam("password") String password, @RequestHeader("Origin") String origin) {
-        // TODO
-        return null;
+        if(dao.get(login).isPresent()) {
+            try {
+                dao.get(login).get().authenticate(password);
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT); // succeed
+            } catch (AuthenticationException e) {
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); // bad password
+            }
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // user not found
+        }
     }
 
     /**
