@@ -1,5 +1,6 @@
 package com.users.mif13.controller;
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.users.mif13.DAO.UserDAO;
 import com.users.mif13.model.User;
 import com.users.mif13.utils.JwtHelper;
@@ -21,6 +22,7 @@ public class UserOperations {
 
     @Autowired
     private UserDAO dao;
+
     /**
      * Procédure de login utilisée par un utilisateur
      * @param login Le login de l'utilisateur. L'utilisateur doit avoir été créé préalablement et son login doit être présent dans le DAO.
@@ -65,6 +67,19 @@ public class UserOperations {
      */
     @GetMapping("/authenticate")
     public ResponseEntity<Void> authenticate(@RequestParam("jwt") String jwt, @RequestParam("origin") String origin) {
-        return null;
+        try {
+            if(JwtHelper.verifyToken(jwt, origin).isEmpty()) {
+                throw new InternalServerErrorException();
+            }
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch(NullPointerException e) {
+            e.getMessage();
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); // Login n'existe pas : 401
+        } catch(JWTVerificationException e) {
+            e.getMessage();
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // Le token est invalide : 401
+        }
     }
 }
