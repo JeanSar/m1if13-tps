@@ -1,13 +1,27 @@
 package com.users.mif13.controller;
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.users.mif13.DAO.UserDAO;
+import com.users.mif13.model.User;
+import com.users.mif13.utils.JwtHelper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.ws.rs.InternalServerErrorException;
 
 @Controller
 public class UserOperations {
 
-    // TODO récupérer le DAO...
+    @Autowired
+    private UserDAO dao;
 
     /**
      * Procédure de login utilisée par un utilisateur
@@ -17,8 +31,26 @@ public class UserOperations {
      */
     @PostMapping("/login")
     public ResponseEntity<Void> login(@RequestParam("login") String login, @RequestParam("password") String password, @RequestHeader("Origin") String origin) {
-        // TODO
-        return null;
+        if(dao.get(login).isPresent()) {
+            try {
+                User user = dao.get(login).get();
+                user.authenticate(password);
+                if(!user.isConnected()) {
+                    throw new InternalServerErrorException();
+                }
+                String token = JwtHelper.generateToken(login,false, origin);
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentType(MediaType.APPLICATION_JSON);
+                headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + token);
+                return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);// succeed : 204
+            } catch (Exception e) {
+                e.getMessage();
+                e.printStackTrace();
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); // bad password : 401
+            }
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // user not found : 404
+        }
     }
 
     /**
@@ -35,7 +67,19 @@ public class UserOperations {
      */
     @GetMapping("/authenticate")
     public ResponseEntity<Void> authenticate(@RequestParam("jwt") String jwt, @RequestParam("origin") String origin) {
-        // TODO
-        return null;
+        try {
+            if(JwtHelper.verifyToken(jwt, origin).isEmpty()) {
+                throw new InternalServerErrorException();
+            }
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch(NullPointerException e) {
+            e.getMessage();
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); // Login n'existe pas : 401
+        } catch(JWTVerificationException e) {
+            e.getMessage();
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // Le token est invalide : 401
+        }
     }
 }
