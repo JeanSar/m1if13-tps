@@ -27,13 +27,13 @@ public class JwtHelper {
      * Vérifie l'authentification d'un utilisateur grâce à un token JWT
      *
      * @param token le token à vérifier
-     * @param req   la requête HTTP (nécessaire pour vérifier si l'origine de la requête est la même que celle du token
+     * @param origin   la requête HTTP (nécessaire pour vérifier si l'origine de la requête est la même que celle du token
      * @return un booléen qui indique si le token est bien formé et valide (pas expiré) et si l'utilisateur est authentifié
      */
-    public static String verifyToken(String token, @NotNull HttpServletRequest req) throws NullPointerException, JWTVerificationException {
+    public static String verifyToken(String token, @NotNull String origin) throws NullPointerException, JWTVerificationException {
         JWTVerifier authenticationVerifier = JWT.require(algorithm)
                 .withIssuer(ISSUER)
-                .withAudience(getOrigin(req)) // Non-reusable verifier instance
+                .withAudience(origin) // Non-reusable verifier instance
                 .build();
 
         authenticationVerifier.verify(token); // Lève une NullPointerException si le token n'existe pas, et une JWTVerificationException s'il est invalide
@@ -61,21 +61,22 @@ public class JwtHelper {
      *
      * @param subject le login de l'utilisateur
      * @param admin   si l'utilisateur est admin ou non
-     * @param req     la requête HTTP pour pouvoir en extraire l'origine avec getOrigin()
+     * @param origin     la requête HTTP pour pouvoir en extraire l'origine avec getOrigin()
      * @return le token signé
      * @throws JWTCreationException si les paramètres ne permettent pas de créer un token
      */
-    public static String generateToken(String subject, boolean admin, HttpServletRequest req) throws JWTCreationException {
+    public static String generateToken(String subject, boolean admin, String origin) throws JWTCreationException {
         return JWT.create()
                 .withIssuer(ISSUER)
                 .withSubject(subject)
-                .withAudience(getOrigin(req))
+                .withAudience(origin)
                 .withClaim("admin", admin)
                 .withExpiresAt(new Date(new Date().getTime() + LIFETIME))
                 .sign(algorithm);
     }
 
     /**
+     * OBSOLETE POUR L'INSTANT
      * Renvoie l'URL d'origine du client, en fonction des headers de proxy (si existants) ou de l'URL de la requête sinon
      *
      * @param request la requête HTTP
