@@ -1,13 +1,14 @@
 package com.users.mif13.controller;
 
-import com.users.mif13.DAO.Dao;
 import com.users.mif13.DAO.UserDAO;
-import com.users.mif13.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.naming.AuthenticationException;
 
@@ -27,12 +28,12 @@ public class UserOperations {
         if(dao.get(login).isPresent()) {
             try {
                 dao.get(login).get().authenticate(password);
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT); // succeed
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT); // succeed : 204
             } catch (AuthenticationException e) {
-                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); // bad password
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); // bad password : 401
             }
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // user not found
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // user not found : 404
         }
     }
 
