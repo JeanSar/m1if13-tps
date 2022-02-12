@@ -37,4 +37,12 @@ public class User {
     public void disconnect() {
         this.connected = false;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "login='" + login + '\'' +
+                ", password=" + password +
+                '}';
+    }
 }

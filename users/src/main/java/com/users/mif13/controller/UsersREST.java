@@ -4,17 +4,27 @@ import com.users.mif13.DAO.UserDAO;
 import com.users.mif13.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.ws.rs.QueryParam;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-@RestController()
-@RequestMapping("/users")
-public class UsersREST {
+@EnableWebMvc
+@RestController
+@RequestMapping(value = "/users", produces= {"application/json", "application/xml"})
+public class UsersREST implements WebMvcConfigurer {
+
+    public static final String MEDIA_TYPE_JSON  = "application/json";
+
+    public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
+        configurer.defaultContentType(MediaType.valueOf(MEDIA_TYPE_JSON));
+    }
 
     @Autowired
     UserDAO userDAO;
