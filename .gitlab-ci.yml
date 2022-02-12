@@ -24,7 +24,7 @@ deploy:
         # configuration file that does this for us.
         - . ci/setup-mvn-proxy.sh
         # Useful only for debugging
-        # - cat ~/.m2/settings.xml
+        - cat ~/.m2/settings.xml
         - chmod 400 $CI_SSH_KEY
     script:
         - mvn clean package --batch-mode
