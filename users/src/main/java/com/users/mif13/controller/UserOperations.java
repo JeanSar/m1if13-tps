@@ -57,11 +57,15 @@ public class UserOperations {
 
     /**
      * Réalise la déconnexion
+     *
+     * @param jwt    Le token JWT qui se trouve dans le header "Authentication" de la requête
+     * @param origin L'origine de la requête (pour la comparer avec celle du client, stockée dans le token JWT)
+     * @return Une réponse vide avec un code de statut approprié (204, 400, 401).
      */
     @PostMapping("/logout")
-    public ResponseEntity<Void> login(@RequestParam("jwt") String jwt, @RequestHeader("Origin") String origin) {
-        String login = JwtHelper.verifyToken(jwt, origin);
+    public ResponseEntity<Void> logout(@RequestParam("jwt") String jwt, @RequestHeader("Origin") String origin) {
         try {
+            String login = JwtHelper.verifyToken(jwt, origin);
             if (login.isEmpty()) {
                 throw new InternalServerErrorException();
             }
@@ -86,8 +90,8 @@ public class UserOperations {
      */
     @GetMapping("/authenticate")
     public ResponseEntity<Void> authenticate(@RequestParam("jwt") String jwt, @RequestParam("origin") String origin) {
-        String login = JwtHelper.verifyToken(jwt, origin);
         try {
+            String login = JwtHelper.verifyToken(jwt, origin);
             if (login.isEmpty()) {
                 throw new InternalServerErrorException();
             }
