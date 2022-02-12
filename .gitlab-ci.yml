@@ -30,5 +30,6 @@ deploy:
         - cd users/
     script:
         - mvn clean package --batch-mode
+        - ls -al
         - scp -o StrictHostKeyChecking=no -i $CI_SSH_KEY /builds/p1710759/m1if13-tps/users/target/mif13.war gitlabci@192.168.75.13:/opt/tomcat/webapps/mif13.war
         
