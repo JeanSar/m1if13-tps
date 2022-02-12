@@ -86,6 +86,7 @@ public class UserOperations {
      */
     @GetMapping("/authenticate")
     public ResponseEntity<Void> authenticate(@RequestParam("jwt") String jwt, @RequestParam("origin") String origin) {
+        // TODO -- Try ... Si pas de token valide
         String login = JwtHelper.verifyToken(jwt, origin);
         try {
             if (login.isEmpty()) {

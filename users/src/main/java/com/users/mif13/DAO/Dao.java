@@ -34,5 +34,5 @@ public interface Dao<T> {
      * Supprime un utilisateur enregistré
      * @param t L'utilisateur à supprimer
      */
-    void delete(T t) throws IllegalArgumentException;
+    void delete(String id) throws IllegalArgumentException;
 }

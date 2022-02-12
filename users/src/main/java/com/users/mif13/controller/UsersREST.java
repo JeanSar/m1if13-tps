@@ -33,9 +33,37 @@ public class UsersREST {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // L'utilsateur demandé n'existe pas
     }
 
-    @PutMapping("/update/{login}")
+    @PostMapping("/")
+    ResponseEntity<Void> create(@RequestParam("login") String login, @RequestParam("password") String password) {
+        if(userDAO.get(login).isEmpty()) {
+            userDAO.save(new User(login, password));
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @PutMapping("/{login}")
     public ResponseEntity<Void> update(@RequestParam("password") String password, @PathVariable String login) {
-        userDAO.update(new User(login, password));
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        try {
+            userDAO.update(new User(login, password));
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+
+    }
+
+    @DeleteMapping("/{login}")
+    public ResponseEntity<Void> delete (@PathVariable String login) {
+        try {
+            userDAO.delete(login);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
     }
 }

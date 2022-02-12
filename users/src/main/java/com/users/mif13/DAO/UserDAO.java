@@ -49,11 +49,11 @@ public class UserDAO implements Dao<User> {
     }
 
     @Override
-    public void delete(User user) throws IllegalArgumentException {
-        if(users.get(user.getLogin()) == null) {
+    public void delete(String id) throws IllegalArgumentException {
+        if(users.get(id) == null) {
             throw new IllegalArgumentException("Cet utilisateur n'existe pas");
         } else {
-            users.remove(user.getLogin());
+            users.remove(id);
         }
     }
 }
