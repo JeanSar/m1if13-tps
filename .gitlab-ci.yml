@@ -27,7 +27,8 @@ deploy:
         - cat ~/.m2/settings.xml
         - echo $CI_SSH_KEY
         - chmod 400 $CI_SSH_KEY
+        - cd users/
     script:
         - mvn clean package --batch-mode
-        - scp -o StrictHostKeyChecking=no -i $CI_SSH_KEY /builds/p1710759/m1if13-tps/target/mif13-0.0.1-SNAPSHOT.jar gitlabci@192.168.75.13:/opt/tomcat/webapps/mif13-0.0.1-SNAPSHOT.jar
+        - scp -o StrictHostKeyChecking=no -i $CI_SSH_KEY /builds/p1710759/m1if13-tps/users/target/mif13-0.0.1-SNAPSHOT.jar gitlabci@192.168.75.13:/opt/tomcat/webapps/mif13-0.0.1-SNAPSHOT.jar
         
