@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -38,13 +38,12 @@ public class UsersREST implements WebMvcConfigurer {
     }
 
 
-    // TODO - Chercher ou demander comment faire pour renvoyer un code http avec la réponse de la page html
     @GetMapping(value ="/list", produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getAllHTML(Model model) {
         model.addAttribute("users", userDAO.getAll());
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("userList");
-        // TODO - Devrait retourné un code 200 Ok (ie TODO ci dessus)
+
         return modelAndView;
     }
 
@@ -60,20 +59,16 @@ public class UsersREST implements WebMvcConfigurer {
 
     // TODO - Chercher ou demander comment faire pour renvoyer un code http avec la réponse de la page html
     @GetMapping(value ="/getOne", produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getOneHTML(@QueryParam("login") String login, Model model) {
+    public ModelAndView getOneHTML(@QueryParam("login") String login, Model model) throws ResponseStatusException {
         Optional<User> user = userDAO.get(login);
         if(user.isPresent()) {
             model.addAttribute("user", user.get());
             ModelAndView modelAndView = new ModelAndView();
             modelAndView.setViewName("user");
-            // TODO - Devrait retourné un code 200 Ok (ie TODO ci dessus)
 
             return modelAndView;
         }
-
-        // Devrait retourné un code d'erreur ici au lieu de null
-        return null;
-        // return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // L'utilsateur demandé n'existe pas
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "L'utilsateur demandé n'existe pas");
     }
 
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
