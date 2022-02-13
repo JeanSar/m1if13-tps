@@ -39,7 +39,7 @@ public class UsersREST implements WebMvcConfigurer {
         return "index";
     }
 
-    @GetMapping("/getOne")
+    @GetMapping(value = "/getOne", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE} )
     public ResponseEntity<User> getOne(@QueryParam("login") String login) {
         Optional<User> user = userDAO.get(login);
         if(user.isPresent()) {
@@ -52,7 +52,7 @@ public class UsersREST implements WebMvcConfigurer {
     ResponseEntity<Void> create(@RequestParam("login") String login, @RequestParam("password") String password) {
         if(userDAO.get(login).isEmpty()) {
             userDAO.save(new User(login, password));
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
@@ -61,13 +61,14 @@ public class UsersREST implements WebMvcConfigurer {
     ResponseEntity<Void> create(@RequestBody User user) {
         if(userDAO.get(user.getLogin()).isEmpty()) {
             userDAO.save(user);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @PutMapping("/{login}")
-    public ResponseEntity<Void> update(@RequestParam("password") String password, @PathVariable String login) {
+    // TODO - Accepter l'url encoded
+    @PutMapping(value = "/{login}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> update(@PathVariable String login, @RequestParam("password") String password) {
         try {
             userDAO.update(new User(login, password));
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -75,8 +76,19 @@ public class UsersREST implements WebMvcConfigurer {
             System.out.println(e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
 
 
+    // TODO - Parser le json ?
+    @PutMapping(value = "/{login}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> updateJSON(@PathVariable String login, @RequestBody String password) {
+        try {
+            userDAO.update(new User(login, password));
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @DeleteMapping("/{login}")
