@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -35,8 +38,11 @@ public class UsersREST implements WebMvcConfigurer {
     }
 
     @GetMapping(value ="/list", produces = MediaType.TEXT_HTML_VALUE)
-    public String getAllHTML() {
-        return "index";
+    public ModelAndView getAllHTML(Model model) {
+        model.addAttribute("users", userDAO.getAll());
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("userList");
+        return modelAndView;
     }
 
     @GetMapping(value = "/getOne", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE} )
