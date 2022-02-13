@@ -54,6 +54,19 @@ public class UsersREST implements WebMvcConfigurer {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // L'utilsateur demandé n'existe pas
     }
 
+    @GetMapping(value ="/getOne", produces = MediaType.TEXT_HTML_VALUE)
+    public ModelAndView getOneHTML(@QueryParam("login") String login, Model model) {
+        Optional<User> user = userDAO.get(login);
+        if(user.isPresent()) {
+            model.addAttribute("user", user.get());
+            ModelAndView modelAndView = new ModelAndView();
+            modelAndView.setViewName("user");
+            return modelAndView;
+        }
+        return null;
+        // return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // L'utilsateur demandé n'existe pas
+    }
+
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     ResponseEntity<Void> create(@RequestParam("login") String login, @RequestParam("password") String password) {
         if(userDAO.get(login).isEmpty()) {

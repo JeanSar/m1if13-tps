@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Utilsateur</title>
+</head>
+<body>
+<h1>Utilsateur</h1>
+<br/><br/>
+<div>
+    <div style="display: flex">
+        <p>Login : </p>
+        <p th:text="${user.getLogin()}">...</p>
+    </div>
+    <div style="display: flex">
+        <p>Password : </p>
+        <p th:text="${user.getPassword()}">...</p>
+    </div>
+    <div style="display: flex">
+        <p>Est connecté ? </p>
+        <p th:text="${user.isConnected()}">...</p>
+    </div>
+</div>
+
+</body>
+</html>
