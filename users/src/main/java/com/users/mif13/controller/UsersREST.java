@@ -37,11 +37,14 @@ public class UsersREST implements WebMvcConfigurer {
         return new ResponseEntity<>(userDAO.getAll(), HttpStatus.OK);
     }
 
+
+    // TODO - Chercher ou demander comment faire pour renvoyer un code http avec la réponse de la page html
     @GetMapping(value ="/list", produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getAllHTML(Model model) {
         model.addAttribute("users", userDAO.getAll());
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("userList");
+        // TODO - Devrait retourné un code 200 Ok (ie TODO ci dessus)
         return modelAndView;
     }
 
@@ -54,6 +57,8 @@ public class UsersREST implements WebMvcConfigurer {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // L'utilsateur demandé n'existe pas
     }
 
+
+    // TODO - Chercher ou demander comment faire pour renvoyer un code http avec la réponse de la page html
     @GetMapping(value ="/getOne", produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getOneHTML(@QueryParam("login") String login, Model model) {
         Optional<User> user = userDAO.get(login);
@@ -61,8 +66,12 @@ public class UsersREST implements WebMvcConfigurer {
             model.addAttribute("user", user.get());
             ModelAndView modelAndView = new ModelAndView();
             modelAndView.setViewName("user");
+            // TODO - Devrait retourné un code 200 Ok (ie TODO ci dessus)
+
             return modelAndView;
         }
+
+        // Devrait retourné un code d'erreur ici au lieu de null
         return null;
         // return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // L'utilsateur demandé n'existe pas
     }
