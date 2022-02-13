@@ -3,11 +3,13 @@ package com.users.mif13.model;
 import javax.naming.AuthenticationException;
 
 public class User {
-    private final String login;
+    private String login;
     private String password;
 
     // Permet d'invalider une connexion même si le token est toujours valide
     private boolean connected;
+
+    public User() {};
 
     public User(String login, String password) {
         this.login = login;

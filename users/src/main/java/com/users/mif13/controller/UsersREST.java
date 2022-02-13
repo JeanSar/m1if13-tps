@@ -17,7 +17,7 @@ import java.util.Set;
 
 @EnableWebMvc
 @RestController
-@RequestMapping(value = "/users", produces= {"application/json", "application/xml"})
+@RequestMapping(value = "/users")
 public class UsersREST implements WebMvcConfigurer {
 
     public static final String MEDIA_TYPE_JSON  = "application/json";
@@ -29,9 +29,14 @@ public class UsersREST implements WebMvcConfigurer {
     @Autowired
     UserDAO userDAO;
 
-    @GetMapping("/list")
+    @GetMapping(value ="/list", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<Set<String>> getAll() {
         return new ResponseEntity<>(userDAO.getAll(), HttpStatus.OK);
+    }
+
+    @GetMapping(value ="/list", produces = MediaType.TEXT_HTML_VALUE)
+    public String getAllHTML() {
+        return "index";
     }
 
     @GetMapping("/getOne")
@@ -43,10 +48,19 @@ public class UsersREST implements WebMvcConfigurer {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // L'utilsateur demandé n'existe pas
     }
 
-    @PostMapping("/")
+    @PostMapping(value = "/", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     ResponseEntity<Void> create(@RequestParam("login") String login, @RequestParam("password") String password) {
         if(userDAO.get(login).isEmpty()) {
             userDAO.save(new User(login, password));
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<Void> create(@RequestBody User user) {
+        if(userDAO.get(user.getLogin()).isEmpty()) {
+            userDAO.save(user);
             return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
