@@ -15,6 +15,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.ws.rs.QueryParam;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -102,11 +103,10 @@ public class UsersREST implements WebMvcConfigurer {
     }
 
 
-    // TODO - Parser le json ?
     @PutMapping(value = "/{login}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> updateJSON(@PathVariable String login, @RequestBody String password) {
+    public ResponseEntity<Void> updateJSON(@PathVariable String login, @RequestBody Map<String, String> password) {
         try {
-            userDAO.update(new User(login, password));
+            userDAO.update(new User(login, password.get("password")));
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
