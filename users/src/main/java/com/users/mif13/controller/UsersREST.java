@@ -5,6 +5,7 @@ import com.users.mif13.model.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,16 @@ public class UsersREST implements WebMvcConfigurer {
     }
 
     @GetMapping(value = "/getOne", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @Operation(summary = "Récupère un utilisateur")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "L'utilisateur correspondant au login.",
+                    content = {
+                        @Content(mediaType = "application/json", schema = @Schema(implementation = User.class)),
+                        @Content(mediaType = "application/xml", schema = @Schema(implementation = User.class)),
+                        @Content(mediaType = "text/html", schema = @Schema(implementation = User.class))
+                    }),
+            @ApiResponse(responseCode = "400", description = "Le login de l'utilisateur n'existe pas.",
+                    content = @Content)})
     public ResponseEntity<User> getOne(@QueryParam("login") String login) {
         Optional<User> user = userDAO.get(login);
         if (user.isPresent()) {
@@ -120,13 +131,13 @@ public class UsersREST implements WebMvcConfigurer {
     }
 
     @DeleteMapping("/{login}")
-    @Operation(summary = "Supprime un utilsateur")
+    @Operation(summary = "Supprime un utilisateur")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Utilsateur supprimé",
+            @ApiResponse(responseCode = "204", description = "Utilisateur supprimé.",
                     content = @Content),
-            @ApiResponse(responseCode = "400", description = "Le login de l'utilsateur n'existe pas",
+            @ApiResponse(responseCode = "400", description = "Le login de l'utilisateur n'existe pas.",
                     content = @Content)})
-    public ResponseEntity<Void> delete(@Parameter(description = "Le login de l'utilsateur à supprimer")
+    public ResponseEntity<Void> delete(@Parameter(description = "Le login de l'utilisateur à supprimer.")
                                        @PathVariable String login) {
         try {
             userDAO.delete(login);
