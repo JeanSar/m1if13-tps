@@ -2,6 +2,11 @@ package com.users.mif13.controller;
 
 import com.users.mif13.DAO.UserDAO;
 import com.users.mif13.model.User;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -24,7 +29,7 @@ import java.util.Set;
 @RequestMapping(value = "/users")
 public class UsersREST implements WebMvcConfigurer {
 
-    public static final String MEDIA_TYPE_JSON  = "application/json";
+    public static final String MEDIA_TYPE_JSON = "application/json";
 
     public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
         configurer.defaultContentType(MediaType.valueOf(MEDIA_TYPE_JSON));
@@ -33,13 +38,13 @@ public class UsersREST implements WebMvcConfigurer {
     @Autowired
     UserDAO userDAO;
 
-    @GetMapping(value ="/list", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @GetMapping(value = "/list", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<Set<String>> getAll() {
         return new ResponseEntity<>(userDAO.getAll(), HttpStatus.OK);
     }
 
 
-    @GetMapping(value ="/list", produces = MediaType.TEXT_HTML_VALUE)
+    @GetMapping(value = "/list", produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getAllHTML(Model model) {
         model.addAttribute("users", userDAO.getAll());
         ModelAndView modelAndView = new ModelAndView();
@@ -48,10 +53,10 @@ public class UsersREST implements WebMvcConfigurer {
         return modelAndView;
     }
 
-    @GetMapping(value = "/getOne", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE} )
+    @GetMapping(value = "/getOne", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<User> getOne(@QueryParam("login") String login) {
         Optional<User> user = userDAO.get(login);
-        if(user.isPresent()) {
+        if (user.isPresent()) {
             return new ResponseEntity<>(user.get(), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // L'utilsateur demandé n'existe pas
@@ -59,10 +64,10 @@ public class UsersREST implements WebMvcConfigurer {
 
 
     // TODO - Chercher ou demander comment faire pour renvoyer un code http avec la réponse de la page html
-    @GetMapping(value ="/getOne", produces = MediaType.TEXT_HTML_VALUE)
+    @GetMapping(value = "/getOne", produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getOneHTML(@QueryParam("login") String login, Model model) throws ResponseStatusException {
         Optional<User> user = userDAO.get(login);
-        if(user.isPresent()) {
+        if (user.isPresent()) {
             model.addAttribute("user", user.get());
             ModelAndView modelAndView = new ModelAndView();
             modelAndView.setViewName("user");
@@ -74,7 +79,7 @@ public class UsersREST implements WebMvcConfigurer {
 
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     ResponseEntity<Void> create(@RequestParam("login") String login, @RequestParam("password") String password) {
-        if(userDAO.get(login).isEmpty()) {
+        if (userDAO.get(login).isEmpty()) {
             userDAO.save(new User(login, password));
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -83,7 +88,7 @@ public class UsersREST implements WebMvcConfigurer {
 
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Void> create(@RequestBody User user) {
-        if(userDAO.get(user.getLogin()).isEmpty()) {
+        if (userDAO.get(user.getLogin()).isEmpty()) {
             userDAO.save(user);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -115,7 +120,14 @@ public class UsersREST implements WebMvcConfigurer {
     }
 
     @DeleteMapping("/{login}")
-    public ResponseEntity<Void> delete (@PathVariable String login) {
+    @Operation(summary = "Supprime un utilsateur")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Utilsateur supprimé",
+                    content = @Content),
+            @ApiResponse(responseCode = "400", description = "Le login de l'utilsateur n'existe pas",
+                    content = @Content)})
+    public ResponseEntity<Void> delete(@Parameter(description = "Le login de l'utilsateur à supprimer")
+                                       @PathVariable String login) {
         try {
             userDAO.delete(login);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
