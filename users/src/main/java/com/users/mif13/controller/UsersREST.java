@@ -21,6 +21,7 @@ import org.springframework.web.servlet.config.annotation.ContentNegotiationConfi
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import javax.swing.text.html.HTMLDocument;
 import javax.ws.rs.QueryParam;
 import java.util.Map;
 import java.util.Optional;
@@ -74,7 +75,7 @@ public class UsersREST implements WebMvcConfigurer {
                     }),
             @ApiResponse(responseCode = "400", description = "Le login de l'utilisateur n'existe pas.",
                     content = @Content)})
-    public ResponseEntity<User> getOne(@QueryParam("login") String login) {
+    public ResponseEntity<User> getOne( @Parameter(description = "Le login de l'utilisateur recherché") @QueryParam("login") String login) {
         Optional<User> user = userDAO.get(login);
         if (user.isPresent()) {
             return new ResponseEntity<>(user.get(), HttpStatus.OK);
