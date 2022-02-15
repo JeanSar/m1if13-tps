@@ -2,6 +2,7 @@ package com.users.mif13.controller;
 
 import com.users.mif13.DAO.UserDAO;
 import com.users.mif13.model.User;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -40,12 +41,20 @@ public class UsersREST implements WebMvcConfigurer {
     UserDAO userDAO;
 
     @GetMapping(value = "/list", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @Operation(summary = "Récupérer la liste des utilisateurs")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "La liste des utilisateurs",
+                    content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = UserDAO.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = UserDAO.class)),
+                            @Content(mediaType = "text/html", schema = @Schema(implementation = UserDAO.class))
+                    })})
     public ResponseEntity<Set<String>> getAll() {
         return new ResponseEntity<>(userDAO.getAll(), HttpStatus.OK);
     }
 
-
     @GetMapping(value = "/list", produces = MediaType.TEXT_HTML_VALUE)
+    @Hidden
     public ModelAndView getAllHTML(Model model) {
         model.addAttribute("users", userDAO.getAll());
         ModelAndView modelAndView = new ModelAndView();
@@ -55,7 +64,7 @@ public class UsersREST implements WebMvcConfigurer {
     }
 
     @GetMapping(value = "/getOne", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    @Operation(summary = "Récupère un utilisateur")
+    @Operation(summary = "Récupérer un utilisateur")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "L'utilisateur correspondant au login.",
                     content = {
@@ -73,9 +82,9 @@ public class UsersREST implements WebMvcConfigurer {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // L'utilsateur demandé n'existe pas
     }
 
-
     // TODO - Chercher ou demander comment faire pour renvoyer un code http avec la réponse de la page html
     @GetMapping(value = "/getOne", produces = MediaType.TEXT_HTML_VALUE)
+    @Hidden
     public ModelAndView getOneHTML(@QueryParam("login") String login, Model model) throws ResponseStatusException {
         Optional<User> user = userDAO.get(login);
         if (user.isPresent()) {
