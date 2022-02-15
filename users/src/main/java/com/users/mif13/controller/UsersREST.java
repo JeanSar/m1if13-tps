@@ -91,7 +91,7 @@ public class UsersREST implements WebMvcConfigurer {
     }
 
     // TODO - Accepter l'url encoded
-    @PutMapping(value = "/{login}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PutMapping(value = "/{login}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_FORM_URLENCODED_VALUE})
     public ResponseEntity<Void> update(@PathVariable String login, @RequestParam("password") String password) {
         try {
             userDAO.update(new User(login, password));
