@@ -4,6 +4,13 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.users.mif13.DAO.UserDAO;
 import com.users.mif13.model.User;
 import com.users.mif13.utils.JwtHelper;
+import io.swagger.v3.oas.annotations.headers.Header;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -32,7 +39,21 @@ public class UserOperations {
      * @return Une ResponseEntity avec le JWT dans le header "Authentication" si le login s'est bien passé, et le code de statut approprié (204, 401 ou 404).
      */
     @PostMapping("/login")
-    public ResponseEntity<Void> login(@RequestParam("login") String login, @RequestParam("password") String password, @RequestHeader("Origin") String origin) {
+    @Operation(summary = "Se connecter avec son login")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Connexion réussi : le token est renvoyé.", headers = {
+                    @Header( name = "Authorization", description = "Token", schema = @Schema( implementation = String.class))},
+                    content = @Content(mediaType =  "application/json")),
+            @ApiResponse(responseCode = "404", description = "Le login de l'utilisateur n'existe pas.",
+                    content = @Content),
+            @ApiResponse(responseCode = "401", description = "Le mot de passe ne correspond pas au login.",
+                    content = @Content)})
+    public ResponseEntity<Void> login(@Parameter( description = "Le login de l'utilisateur")
+                                      @RequestParam("login") String login,
+                                      @Parameter( description = "Le mot de passe associé au login")
+                                      @RequestParam("password") String password,
+                                      @Parameter( description = "En-tête Origin")
+                                      @RequestHeader("Origin") String origin) {
         if (dao.get(login).isPresent()) {
             try {
                 User user = dao.get(login).get();
