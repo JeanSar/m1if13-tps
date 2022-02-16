@@ -95,9 +95,17 @@ public class UsersREST implements WebMvcConfigurer {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    // TODO - Accepter l'url encoded
-    @PutMapping(value = "/{login}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_FORM_URLENCODED_VALUE})
-    public ResponseEntity<Void> update(@PathVariable String login, @RequestParam("password") String password) {
+    @Operation(summary = "Met à jour le mot de passe d'un utilsateur")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Mot de passe modifié",
+                    content = @Content),
+            @ApiResponse(responseCode = "400", description = "Le login de l'utilsateur n'existe pas",
+                    content = @Content)})
+    @PutMapping(value = "/{login}", consumes = {"multipart/form-data", "application/x-www-form-urlencoded"})
+    public ResponseEntity<Void> update(@Parameter(description = "Le login de l'utilsateur où le mot de passe doit être modifié")
+                                       @PathVariable String login,
+                                       @Parameter(description = "Le nouveau mot de passe")
+                                       @RequestParam("password") String password) {
         try {
             userDAO.update(new User(login, password));
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -108,7 +116,7 @@ public class UsersREST implements WebMvcConfigurer {
     }
 
 
-    @PutMapping(value = "/{login}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/{login}", consumes = {"application/json"})
     public ResponseEntity<Void> updateJSON(@PathVariable String login, @RequestBody Map<String, String> password) {
         try {
             userDAO.update(new User(login, password.get("password")));
