@@ -40,7 +40,8 @@ public class UserOperations {
     @Operation(summary = "Se connecter avec son login")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Connexion réussi : le token est renvoyé.", headers = {
-                    @Header( name = "Authorization", description = "Token jwt", schema = @Schema( implementation = String.class))},
+                    @Header( name = "Authorization", description = "Token jwt", schema = @Schema( implementation = String.class)),
+                    @Header( name = "Access-Control-Expose-Headers", description = "Origin validé permettant l'accès aux headers", schema = @Schema( implementation = String.class))},
                     content = @Content(mediaType =  "application/json")),
             @ApiResponse(responseCode = "404", description = "Le login de l'utilisateur n'existe pas.",
                     content = @Content),
