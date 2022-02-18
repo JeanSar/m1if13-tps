@@ -4,9 +4,9 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.users.mif13.DAO.UserDAO;
 import com.users.mif13.model.User;
 import com.users.mif13.utils.JwtHelper;
-import io.swagger.v3.oas.annotations.headers.Header;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.headers.Header;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -17,10 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.InternalServerErrorException;
 import java.util.Optional;
@@ -39,10 +36,12 @@ public class UserOperations {
      * @return Une ResponseEntity avec le JWT dans le header "Authentication" si le login s'est bien passé, et le code de statut approprié (204, 401 ou 404).
      */
     @PostMapping("/login")
+    @CrossOrigin(origins = {"http://localhost", "https://192.168.75.13", "http://192.168.75.13"})
     @Operation(summary = "Se connecter avec son login")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Connexion réussi : le token est renvoyé.", headers = {
-                    @Header( name = "Authorization", description = "Token", schema = @Schema( implementation = String.class))},
+                    @Header( name = "Authorization", description = "Token jwt", schema = @Schema( implementation = String.class)),
+                    @Header( name = "Access-Control-Expose-Headers", description = "Origin validé permettant l'accès aux headers", schema = @Schema( implementation = String.class))},
                     content = @Content(mediaType =  "application/json")),
             @ApiResponse(responseCode = "404", description = "Le login de l'utilisateur n'existe pas.",
                     content = @Content),
@@ -65,6 +64,7 @@ public class UserOperations {
                 HttpHeaders headers = new HttpHeaders();
                 headers.setContentType(MediaType.APPLICATION_JSON);
                 headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + token);
+                headers.add(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, origin);
                 return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);// succeed : 204
             } catch (Exception e) {
                 e.getMessage();
@@ -84,7 +84,19 @@ public class UserOperations {
      * @return Une réponse vide avec un code de statut approprié (204, 400, 401).
      */
     @PostMapping("/logout")
-    public ResponseEntity<Void> logout(@RequestParam("jwt") String jwt, @RequestHeader("Origin") String origin) {
+    @CrossOrigin(origins = {"http://localhost", "https://192.168.75.13", "http://192.168.75.13"})
+    @Operation(summary = "Se deconnecter avec le token")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Déconnexion reussi.",
+                    content = @Content),
+            @ApiResponse(responseCode = "401", description = "Le login de l'utilisateur n'existe pas.",
+                    content = @Content),
+            @ApiResponse(responseCode = "400", description = "Le token est invalide.",
+                    content = @Content)})
+    public ResponseEntity<Void> logout(@Parameter( description = "Token d'authentification jwt")
+                                       @RequestParam("jwt") String jwt,
+                                       @Parameter( description = "En-tête Origin")
+                                       @RequestHeader("Origin") String origin) {
         try {
             String login = JwtHelper.verifyToken(jwt, origin);
             if (login.isEmpty()) {
@@ -98,7 +110,7 @@ public class UserOperations {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); // Login n'existe pas : 401
         } catch (JWTVerificationException e) {
             e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // Le token est invalide : 401
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // Le token est invalide : 400
         }
     }
 
@@ -110,7 +122,19 @@ public class UserOperations {
      * @return Une réponse vide avec un code de statut approprié (204, 400, 401).
      */
     @GetMapping("/authenticate")
-    public ResponseEntity<Void> authenticate(@RequestParam("jwt") String jwt, @RequestParam("origin") String origin) {
+    @CrossOrigin(origins = {"http://localhost", "https://192.168.75.13", "http://192.168.75.13"})
+    @Operation(summary = "S'authentifier avec le token")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Déconnexion reussi.",
+                    content = @Content),
+            @ApiResponse(responseCode = "401", description = "Le login de l'utilisateur n'existe pas.",
+                    content = @Content),
+            @ApiResponse(responseCode = "400", description = "Le token est invalide.",
+                    content = @Content)})
+    public ResponseEntity<Void> authenticate(@Parameter( description = "Token d'authentification jwt" )
+                                             @RequestParam("jwt") String jwt,
+                                             @Parameter( description = "En-tête Origin" )
+                                             @RequestParam("origin") String origin) {
         try {
             String login = JwtHelper.verifyToken(jwt, origin);
             if (login.isEmpty()) {
@@ -125,7 +149,7 @@ public class UserOperations {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); // Login n'existe pas : 401
         } catch (JWTVerificationException e) {
             e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // Le token est invalide : 401
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // Le token est invalide : 400
         }
     }
 }

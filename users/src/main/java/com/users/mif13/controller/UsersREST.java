@@ -21,7 +21,6 @@ import org.springframework.web.servlet.config.annotation.ContentNegotiationConfi
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import javax.swing.text.html.HTMLDocument;
 import javax.ws.rs.QueryParam;
 import java.util.Map;
 import java.util.Optional;
@@ -65,6 +64,7 @@ public class UsersREST implements WebMvcConfigurer {
     }
 
     @GetMapping(value = "/getOne", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @CrossOrigin(origins = {"http://localhost", "https://192.168.75.13", "http://192.168.75.13"})
     @Operation(summary = "Récupérer un utilisateur")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "L'utilisateur correspondant au login.",
