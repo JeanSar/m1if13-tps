@@ -25,6 +25,7 @@ import java.util.Optional;
 @Controller
 public class UserOperations {
 
+    // TODO - Changer les @QueryParam en @RequestBody
     @Autowired
     private UserDAO dao;
 
