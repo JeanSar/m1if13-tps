@@ -1,7 +1,9 @@
 package com.users.mif13.controller;
 
 import com.users.mif13.DAO.UserDAO;
+import com.users.mif13.model.Password;
 import com.users.mif13.model.User;
+import com.users.mif13.model.UserAPI;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -22,7 +24,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.ws.rs.QueryParam;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -98,8 +99,16 @@ public class UsersREST implements WebMvcConfigurer {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "L'utilsateur demandé n'existe pas");
     }
 
+    @Operation(summary = "Crée un utilsateur", requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "User body"))
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Utilisteur crée",
+                    content = @Content),
+            @ApiResponse(responseCode = "400", description = "L'utilisteur n'a pas pu être crée car le login est déjà pris",
+                    content = @Content)})
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    ResponseEntity<Void> create(@RequestParam("login") String login, @RequestParam("password") String password) {
+    public ResponseEntity<Void> createUrlEncoded(
+            @Parameter(description = "Le login de l'utilsateur que l'on veut créer") @io.swagger.v3.oas.annotations.parameters.RequestBody  String login,
+            @Parameter(description = "Le mot de passe de l'utilsateur que l'on veut créer") @io.swagger.v3.oas.annotations.parameters.RequestBody String password) {
         if (userDAO.get(login).isEmpty()) {
             userDAO.save(new User(login, password));
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -107,10 +116,11 @@ public class UsersREST implements WebMvcConfigurer {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
+
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<Void> create(@RequestBody User user) {
-        if (userDAO.get(user.getLogin()).isEmpty()) {
-            userDAO.save(user);
+    public ResponseEntity<Void> createJson(@RequestBody UserAPI user) {
+        if (userDAO.get(user.login).isEmpty()) {
+            userDAO.save(new User(user.login, user.password));
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -122,11 +132,10 @@ public class UsersREST implements WebMvcConfigurer {
                     content = @Content),
             @ApiResponse(responseCode = "400", description = "Le login de l'utilsateur n'existe pas",
                     content = @Content)})
-    @PutMapping(value = "/{login}", consumes = {"multipart/form-data", "application/x-www-form-urlencoded"})
-    public ResponseEntity<Void> update(@Parameter(description = "Le login de l'utilsateur où le mot de passe doit être modifié")
-                                       @PathVariable String login,
-                                       @Parameter(description = "Le nouveau mot de passe")
-                                       @RequestParam("password") String password) {
+    @PutMapping(value = "/{login}", consumes = {"application/x-www-form-urlencoded"})
+    public ResponseEntity<Void> update( @Parameter(description = "Le nouveau mot de passe") @io.swagger.v3.oas.annotations.parameters.RequestBody String password,
+                                        @Parameter(description = "Le login de l'utilsateur où le mot de passe doit être modifié") @PathVariable String login)
+    {
         try {
             userDAO.update(new User(login, password));
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -138,9 +147,9 @@ public class UsersREST implements WebMvcConfigurer {
 
 
     @PutMapping(value = "/{login}", consumes = {"application/json"})
-    public ResponseEntity<Void> updateJSON(@PathVariable String login, @RequestBody Map<String, String> password) {
+    public ResponseEntity<Void> updateJSON(@RequestBody Password password, @PathVariable String login) {
         try {
-            userDAO.update(new User(login, password.get("password")));
+            userDAO.update(new User(login, password.password));
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
