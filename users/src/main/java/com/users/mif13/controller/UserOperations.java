@@ -3,6 +3,7 @@ package com.users.mif13.controller;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.users.mif13.DAO.UserDAO;
 import com.users.mif13.model.User;
+import com.users.mif13.model.UserAPI;
 import com.users.mif13.utils.JwtHelper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -36,7 +37,7 @@ public class UserOperations {
      * @param password Le password à vérifier.
      * @return Une ResponseEntity avec le JWT dans le header "Authentication" si le login s'est bien passé, et le code de statut approprié (204, 401 ou 404).
      */
-    @PostMapping("/login")
+    @PostMapping(value = "/login", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
     @CrossOrigin(origins = {"http://localhost", "https://192.168.75.13", "http://192.168.75.13"})
     @Operation(summary = "Se connecter avec son login")
     @ApiResponses(value = {
@@ -62,6 +63,33 @@ public class UserOperations {
                     throw new InternalServerErrorException();
                 }
                 String token = JwtHelper.generateToken(login, false, origin);
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentType(MediaType.APPLICATION_JSON);
+                headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + token);
+                headers.add(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, origin);
+                return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);// succeed : 204
+            } catch (Exception e) {
+                e.getMessage();
+                e.printStackTrace();
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); // bad password : 401
+            }
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // user not found : 404
+        }
+    }
+
+    @PostMapping(value = "/login", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Void> loginJSON(@RequestBody UserAPI userAPI,
+                                          @Parameter( description = "En-tête Origin")
+                                      @RequestHeader("Origin") String origin) {
+        if (dao.get(userAPI.login).isPresent()) {
+            try {
+                User user = dao.get(userAPI.login).get();
+                user.authenticate(userAPI.password);
+                if (!user.isConnected()) {
+                    throw new InternalServerErrorException();
+                }
+                String token = JwtHelper.generateToken(userAPI.login, false, origin);
                 HttpHeaders headers = new HttpHeaders();
                 headers.setContentType(MediaType.APPLICATION_JSON);
                 headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + token);
