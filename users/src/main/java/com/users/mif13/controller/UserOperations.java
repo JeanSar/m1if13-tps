@@ -2,6 +2,7 @@ package com.users.mif13.controller;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.users.mif13.DAO.UserDAO;
+import com.users.mif13.model.Token;
 import com.users.mif13.model.User;
 import com.users.mif13.model.UserAPI;
 import com.users.mif13.utils.JwtHelper;
@@ -22,8 +23,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.InternalServerErrorException;
 import java.util.Optional;
-
-@Controller
+// Si on met seulement l'annotation @Controller, la donc n'est pas généré pour tout les contenue
+// ie url encoded et json
+@RestController
 public class UserOperations {
 
     // TODO - Changer les @QueryParam en @RequestBody
@@ -50,9 +52,9 @@ public class UserOperations {
             @ApiResponse(responseCode = "401", description = "Le mot de passe ne correspond pas au login.",
                     content = @Content)})
     public ResponseEntity<Void> login(@Parameter( description = "Le login de l'utilisateur")
-                                      @RequestParam("login") String login,
+                                      @io.swagger.v3.oas.annotations.parameters.RequestBody String login,
                                       @Parameter( description = "Le mot de passe associé au login")
-                                      @RequestParam("password") String password,
+                                      @io.swagger.v3.oas.annotations.parameters.RequestBody String password,
                                       @Parameter( description = "En-tête Origin")
                                       @RequestHeader("Origin") String origin) {
         if (dao.get(login).isPresent()) {
@@ -80,8 +82,7 @@ public class UserOperations {
 
     @PostMapping(value = "/login", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Void> loginJSON(@RequestBody UserAPI userAPI,
-                                          @Parameter( description = "En-tête Origin")
-                                      @RequestHeader("Origin") String origin) {
+                                          @RequestHeader("Origin") String origin) {
         if (dao.get(userAPI.login).isPresent()) {
             try {
                 User user = dao.get(userAPI.login).get();
@@ -112,7 +113,7 @@ public class UserOperations {
      * @param origin L'origine de la requête (pour la comparer avec celle du client, stockée dans le token JWT)
      * @return Une réponse vide avec un code de statut approprié (204, 400, 401).
      */
-    @PostMapping("/logout")
+    @PostMapping(value = "/logout", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
     @CrossOrigin(origins = {"http://localhost", "https://192.168.75.13", "http://192.168.75.13"})
     @Operation(summary = "Se deconnecter avec le token")
     @ApiResponses(value = {
@@ -123,11 +124,32 @@ public class UserOperations {
             @ApiResponse(responseCode = "400", description = "Le token est invalide.",
                     content = @Content)})
     public ResponseEntity<Void> logout(@Parameter( description = "Token d'authentification jwt")
-                                       @RequestParam("jwt") String jwt,
+                                       @io.swagger.v3.oas.annotations.parameters.RequestBody String jwt,
                                        @Parameter( description = "En-tête Origin")
                                        @RequestHeader("Origin") String origin) {
         try {
             String login = JwtHelper.verifyToken(jwt, origin);
+            if (login.isEmpty()) {
+                throw new InternalServerErrorException();
+            }
+            Optional<User> user = dao.get(login);
+            user.ifPresent(User::disconnect);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); // Login n'existe pas : 401
+        } catch (JWTVerificationException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // Le token est invalide : 400
+        }
+    }
+
+    @PostMapping(value = "/logout", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @CrossOrigin(origins = {"http://localhost", "https://192.168.75.13", "http://192.168.75.13"})
+    public ResponseEntity<Void> logoutJSON( @RequestBody Token token,
+                                            @RequestHeader("Origin") String origin) {
+        try {
+            String login = JwtHelper.verifyToken(token.jwt, origin);
             if (login.isEmpty()) {
                 throw new InternalServerErrorException();
             }

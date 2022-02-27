@@ -99,7 +99,7 @@ public class UsersREST implements WebMvcConfigurer {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "L'utilsateur demandé n'existe pas");
     }
 
-    @Operation(summary = "Crée un utilsateur", requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "User body"))
+    @Operation(summary = "Crée un utilsateur")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Utilisteur crée",
                     content = @Content),
