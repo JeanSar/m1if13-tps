@@ -18,7 +18,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.InternalServerErrorException;
@@ -97,8 +96,7 @@ public class UserOperations {
                 headers.add(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, origin);
                 return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);// succeed : 204
             } catch (Exception e) {
-                e.getMessage();
-                e.printStackTrace();
+                System.out.println("Error password, excecption catch and return error code 401 unauthorized");
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); // bad password : 401
             }
         } else {

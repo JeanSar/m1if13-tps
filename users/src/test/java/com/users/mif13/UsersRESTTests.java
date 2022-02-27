@@ -21,6 +21,7 @@ import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static utils.Utils.jsonBodyConstruct;
 
 
 @SpringBootTest
@@ -38,12 +39,6 @@ class UsersRESTTests {
     @Order(1)
     void contextLoads() {
         assertThat(usersREST).isNotNull();
-    }
-
-    private String jsonBodyConstruct(Object object) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        ObjectWriter objectWriter = objectMapper.writer().withDefaultPrettyPrinter();
-        return objectWriter.writeValueAsString(object);
     }
 
     @Test
@@ -133,7 +128,7 @@ class UsersRESTTests {
         String requestBody = jsonBodyConstruct(new User("Florian", "1234"));
 
         this.mockMvc.perform(
-                        post("/users/").content(requestBody).contentType(MediaType.APPLICATION_JSON_VALUE).content(requestBody)
+                        post("/users/").content(requestBody).contentType(MediaType.APPLICATION_JSON_VALUE)
                 )
                 .andExpect(
                         status().isNoContent()
