@@ -134,5 +134,24 @@ public class UserOperationTest {
                 .andExpect(
                         status().isNoContent()
                 );
+
+        // On se déconnecte puis on reteste authentificate (on doit avoir une erreur 401 avec un log approprié)
+        this.mockMvc.perform(
+                        post("/logout")
+                                .content(jsonBodyConstruct(token))
+                                .headers(headers)
+                                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                )
+                .andExpect(
+                        status().isNoContent()
+                );
+
+        this.mockMvc.perform(
+                        get("/authenticate").params(params)
+                )
+                .andExpect(
+                        status().isUnauthorized()
+                );
+
     }
 }

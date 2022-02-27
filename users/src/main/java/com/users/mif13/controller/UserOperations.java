@@ -192,6 +192,7 @@ public class UserOperations {
             if (dao.get(login).get().isConnected()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
+            System.out.println("Tentative de connection d'un utilisateur déconnecté");
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); // L'utilisateur n'est pas connecté
         } catch (NullPointerException e) {
             e.printStackTrace();
