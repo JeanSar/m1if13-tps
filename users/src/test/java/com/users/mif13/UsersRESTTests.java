@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class UsersApplicationTests {
+class UsersRESTTests {
 
     @Autowired
     private MockMvc mockMvc;
@@ -133,7 +133,6 @@ class UsersApplicationTests {
         String requestBody = jsonBodyConstruct(new User("Florian", "1234"));
 
         this.mockMvc.perform(
-                        // TODO /users/ -> /users + test
                         post("/users/").content(requestBody).contentType(MediaType.APPLICATION_JSON_VALUE).content(requestBody)
                 )
                 .andExpect(
@@ -154,5 +153,6 @@ class UsersApplicationTests {
                 );
     }
 
-    // TODO - Reste PUT à Tester + UserOpération
+    // Méthode PUT pour modifier le password est testé dans userOperation car le seul moyen de vérifier
+    // qu'un mot de passe est bien modifier est de  tenter de se connecter avec ce nouveau mot de passe
 }
