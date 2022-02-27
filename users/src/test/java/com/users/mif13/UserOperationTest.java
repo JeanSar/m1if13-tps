@@ -15,10 +15,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static utils.Utils.jsonBodyConstruct;
 
@@ -44,15 +45,18 @@ public class UserOperationTest {
         assertThat(usersREST).isNotNull();
     }
 
+    // Scnéario assez complet
+    // (Plus bas quelques tests un peu plus spécifique)
     @Test
     public void testCreateUserThenLogin() throws Exception {
         UserAPI userAPI = new UserAPI();
         userAPI.login = "Florian";
         userAPI.password = "1234";
         String requestBody = jsonBodyConstruct(userAPI);
+        String origin = "http://localhost";
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Origin", "http://localhost");
+        headers.add("Origin", origin);
         this.mockMvc.perform(
                         post("/users/").content(requestBody).contentType(MediaType.APPLICATION_JSON_VALUE)
                 )
@@ -109,8 +113,23 @@ public class UserOperationTest {
         newUserApi.login = userAPI.login;
         newUserApi.password = newPassword.password;
 
-        this.mockMvc.perform(
+        token.jwt =  this.mockMvc.perform(
                         post("/login").content(jsonBodyConstruct(newUserApi)).contentType(MediaType.APPLICATION_JSON_VALUE).headers(headers)
+                )
+                .andExpect(
+                        status().isNoContent()
+                )
+                .andReturn()
+                .getResponse()
+                .getHeader("Authorization")
+                .split("Bearer ")[1]; // Retire "Bearer " devant le token
+
+        // Enfin on test la route /authentificate
+        LinkedMultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("jwt", token.jwt);
+        params.add("origin", origin);
+        this.mockMvc.perform(
+                        get("/authenticate").params(params)
                 )
                 .andExpect(
                         status().isNoContent()
