@@ -1,28 +1,27 @@
----
 openapi: 3.0.1
 info:
   title: Users API
   license:
     name: Apache 2.0
     url: http://springdoc.org
-  version: '0.1'
+  version: "0.1"
 servers:
-- url: http://localhost:8080
-  description: Generated server url
+  - url: http://localhost:8080
+    description: Generated server url
 paths:
-  "/users/{login}":
+  /users/{login}:
     put:
       tags:
-      - users-rest
+        - users-rest
       summary: Met à jour le mot de passe d'un utilsateur
       operationId: update_1
       parameters:
-      - name: login
-        in: path
-        description: Le login de l'utilsateur où le mot de passe doit être modifié
-        required: true
-        schema:
-          type: string
+        - name: login
+          in: path
+          description: Le login de l'utilsateur où le mot de passe doit être modifié
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -31,34 +30,34 @@ paths:
               description: Le nouveau mot de passe
           application/json:
             schema:
-              "$ref": "#/components/schemas/Password"
+              $ref: '#/components/schemas/Password'
         required: true
       responses:
-        '204':
-          description: Mot de passe modifié
-        '400':
+        "400":
           description: Le login de l'utilsateur n'existe pas
+        "204":
+          description: Mot de passe modifié
     delete:
       tags:
-      - users-rest
+        - users-rest
       summary: Supprime un utilisateur
       operationId: delete
       parameters:
-      - name: login
-        in: path
-        description: Le login de l'utilisateur à supprimer.
-        required: true
-        schema:
-          type: string
+        - name: login
+          in: path
+          description: Le login de l'utilisateur à supprimer.
+          required: true
+          schema:
+            type: string
       responses:
-        '204':
+        "204":
           description: Utilisateur supprimé.
-        '400':
+        "400":
           description: Le login de l'utilisateur n'existe pas.
-  "/users/":
+  /users/:
     post:
       tags:
-      - users-rest
+        - users-rest
       summary: Crée un utilsateur
       operationId: createUrlEncoded_1
       requestBody:
@@ -75,26 +74,26 @@ paths:
                   description: Le mot de passe de l'utilsateur que l'on veut créer
           application/json:
             schema:
-              "$ref": "#/components/schemas/UserAPI"
+              $ref: '#/components/schemas/UserAPI'
         required: true
       responses:
-        '204':
+        "400":
+          description: L'utilisteur n'a pas pu �tre cr�e car le login est déjà pris
+        "204":
           description: Utilisteur crée
-        '400':
-          description: L'utilisteur n'a pas pu être crée car le login est déjà pris
-  "/logout":
+  /logout:
     post:
       tags:
-      - user-operations
+        - user-operations
       summary: Se deconnecter avec le token
       operationId: logout_1
       parameters:
-      - name: Origin
-        in: header
-        description: En-tête Origin
-        required: true
-        schema:
-          type: string
+        - name: Origin
+          in: header
+          description: En-tête Origin
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -103,28 +102,28 @@ paths:
               description: Token d'authentification jwt
           application/json:
             schema:
-              "$ref": "#/components/schemas/Token"
+              $ref: '#/components/schemas/Token'
         required: true
       responses:
-        '204':
-          description: Déconnexion reussi.
-        '400':
+        "400":
           description: Le token est invalide.
-        '401':
+        "204":
+          description: Déconnexion reussi.
+        "401":
           description: Le login de l'utilisateur n'existe pas.
-  "/login":
+  /login:
     post:
       tags:
-      - user-operations
+        - user-operations
       summary: Se connecter avec son login
       operationId: login_1
       parameters:
-      - name: Origin
-        in: header
-        description: En-tête Origin
-        required: true
-        schema:
-          type: string
+        - name: Origin
+          in: header
+          description: En-tête Origin
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -139,11 +138,11 @@ paths:
                   description: Le mot de passe associé au login
           application/json:
             schema:
-              "$ref": "#/components/schemas/UserAPI"
+              $ref: '#/components/schemas/UserAPI'
         required: true
       responses:
-        '204':
-          description: 'Connexion réussi : le token est renvoyé.'
+        "204":
+          description: "Connexion réussi : le token est renvoyé."
           headers:
             Authorization:
               description: Token jwt
@@ -153,82 +152,82 @@ paths:
               style: simple
           content:
             application/json: {}
-        '401':
-          description: Le mot de passe ne correspond pas au login.
-        '404':
+        "404":
           description: Le login de l'utilisateur n'existe pas.
-  "/users/list":
+        "401":
+          description: Le mot de passe ne correspond pas au login.
+  /users/list:
     get:
       tags:
-      - users-rest
+        - users-rest
       summary: Récupérer la liste des utilisateurs
       operationId: getAll
       responses:
-        '200':
+        "200":
           description: La liste des utilisateurs
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/UserDAO"
+                $ref: '#/components/schemas/UserDAO'
             application/xml:
               schema:
-                "$ref": "#/components/schemas/UserDAO"
+                $ref: '#/components/schemas/UserDAO'
             text/html:
               schema:
-                "$ref": "#/components/schemas/UserDAO"
-  "/users/getOne":
+                $ref: '#/components/schemas/UserDAO'
+  /users/getOne:
     get:
       tags:
-      - users-rest
+        - users-rest
       summary: Récupérer un utilisateur
       operationId: getOne
       parameters:
-      - name: login
-        in: query
-        description: Le login de l'utilisateur recherché
-        required: true
-        schema:
-          type: string
+        - name: login
+          in: query
+          description: Le login de l'utilisateur recherché
+          required: true
+          schema:
+            type: string
       responses:
-        '200':
+        "400":
+          description: Le login de l'utilisateur n'existe pas.
+        "200":
           description: L'utilisateur correspondant au login.
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/User"
+                $ref: '#/components/schemas/User'
             application/xml:
               schema:
-                "$ref": "#/components/schemas/User"
+                $ref: '#/components/schemas/User'
             text/html:
               schema:
-                "$ref": "#/components/schemas/User"
-        '400':
-          description: Le login de l'utilisateur n'existe pas.
-  "/authenticate":
+                $ref: '#/components/schemas/User'
+  /authenticate:
     get:
       tags:
-      - user-operations
+        - user-operations
       summary: S'authentifier avec le token
       operationId: authenticate
       parameters:
-      - name: jwt
-        in: query
-        description: Token d'authentification jwt
-        required: true
-        schema:
-          type: string
-      - name: origin
-        in: query
-        description: En-tête Origin
-        required: true
-        schema:
-          type: string
+        - name: jwt
+          in: query
+          description: Token d'authentification jwt
+          required: true
+          schema:
+            type: string
+        - name: origin
+          in: query
+          description: En-tête Origin
+          required: true
+          schema:
+            type: string
       responses:
-        '204':
-          description: Déconnexion reussi.
-        '400':
+        "400":
           description: Le token est invalide.
-        '401':
+        "204":
+          description: Déconnexion reussi.
+        "401":
           description: Le login de l'utilisateur n'existe pas.
 components:
   schemas:
