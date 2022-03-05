@@ -49,7 +49,7 @@ public class UserOperationTest {
     @Test
     public void testCreateUserThenLogin() throws Exception {
         UserAPI userAPI = new UserAPI();
-        userAPI.login = "FlorianBis"; // Bis car sinon rentre en conflit avec les tests précédent lors du passage dans la pipeline
+        userAPI.login = "Florian";
         userAPI.password = "1234";
         String requestBody = jsonBodyConstruct(userAPI);
         String origin = "http://localhost";
@@ -152,6 +152,10 @@ public class UserOperationTest {
                         status().isUnauthorized()
                 );
 
+
+        // On supprime l'utilsateur créer car lors du déploiement les tests de ce fichier et ceux du fichier UserRESTTests
+        // Sont éxécuté à la suite, ainsi, la création d'un utilsateurs impact les tests (lorsqu'on vérifie le nombre
+        // d'utilisateurs par exemple)
         this.mockMvc.perform(
                             delete("/users/"+userAPI.login)
                     )
