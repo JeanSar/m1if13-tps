@@ -16,7 +16,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -50,7 +49,7 @@ public class UserOperationTest {
     @Test
     public void testCreateUserThenLogin() throws Exception {
         UserAPI userAPI = new UserAPI();
-        userAPI.login = "Florian";
+        userAPI.login = "FlorianBis"; // Bis car sinon rentre en conflit avec les tests précédent lors du passage dans la pipeline
         userAPI.password = "1234";
         String requestBody = jsonBodyConstruct(userAPI);
         String origin = "http://localhost";
