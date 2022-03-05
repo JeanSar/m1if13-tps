@@ -84,7 +84,6 @@ public class UsersREST implements WebMvcConfigurer {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // L'utilsateur demandé n'existe pas
     }
 
-    // TODO - Chercher ou demander comment faire pour renvoyer un code http avec la réponse de la page html
     @GetMapping(value = "/getOne", produces = MediaType.TEXT_HTML_VALUE)
     @Hidden
     public ModelAndView getOneHTML(@QueryParam("login") String login, Model model) throws ResponseStatusException {

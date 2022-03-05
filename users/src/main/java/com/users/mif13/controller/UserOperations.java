@@ -27,7 +27,6 @@ import java.util.Optional;
 @RestController
 public class UserOperations {
 
-    // TODO - Changer les @QueryParam en @RequestBody
     @Autowired
     private UserDAO dao;
 
@@ -70,7 +69,6 @@ public class UserOperations {
                 headers.add(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, origin);
                 return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);// succeed : 204
             } catch (Exception e) {
-                e.getMessage();
                 e.printStackTrace();
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); // bad password : 401
             }
@@ -189,7 +187,7 @@ public class UserOperations {
             if (login.isEmpty()) {
                 throw new InternalServerErrorException();
             }
-            if (dao.get(login).get().isConnected()) {
+            if (dao.get(login).isPresent() && dao.get(login).get().isConnected()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
             System.out.println("Tentative de connection d'un utilisateur déconnecté");
