@@ -1,0 +1,1058 @@
+{
+	"info": {
+		"_postman_id": "c8f8ff03-3d86-47cc-a7f2-410ad0af0d97",
+		"name": "Users API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "{login}",
+					"item": [
+						{
+							"name": "Met à jour le mot de passe d'un utilsateur",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/x-www-form-urlencoded"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "password",
+											"value": ""
+										}
+									]
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users/:login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										":login"
+									],
+									"variable": [
+										{
+											"key": "login",
+											"value": "sint fugiat",
+											"description": "(Required) Le login de l'utilsateur où le mot de passe doit être modifié"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Mot de passe modifié",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "password",
+													"value": ""
+												}
+											]
+										},
+										"url": {
+											"raw": "{{baseUrl}}/users/:login",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":login"
+											],
+											"variable": [
+												{
+													"key": "login",
+													"value": "sint fugiat",
+													"description": "(Required) Le login de l'utilsateur où le mot de passe doit être modifié"
+												}
+											]
+										}
+									},
+									"status": "No Content",
+									"code": 204,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Le login de l'utilsateur n'existe pas",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "0",
+													"value": "n"
+												},
+												{
+													"key": "1",
+													"value": "o"
+												},
+												{
+													"key": "2",
+													"value": "s"
+												},
+												{
+													"key": "3",
+													"value": "t"
+												},
+												{
+													"key": "4",
+													"value": "r"
+												},
+												{
+													"key": "5",
+													"value": "u"
+												},
+												{
+													"key": "6",
+													"value": "d"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{baseUrl}}/users/:login",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":login"
+											],
+											"variable": [
+												{
+													"key": "login",
+													"value": "sint fugiat",
+													"description": "(Required) Le login de l'utilsateur où le mot de passe doit être modifié"
+												}
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Supprime un utilisateur",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users/:login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										":login"
+									],
+									"variable": [
+										{
+											"key": "login",
+											"value": "sint fugiat",
+											"description": "(Required) Le login de l'utilisateur à supprimer."
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Utilisateur supprimé.",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/users/:login",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":login"
+											],
+											"variable": [
+												{
+													"key": "login",
+													"value": "sint fugiat",
+													"description": "(Required) Le login de l'utilisateur à supprimer."
+												}
+											]
+										}
+									},
+									"status": "No Content",
+									"code": 204,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Le login de l'utilisateur n'existe pas.",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/users/:login",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":login"
+											],
+											"variable": [
+												{
+													"key": "login",
+													"value": "sint fugiat",
+													"description": "(Required) Le login de l'utilisateur à supprimer."
+												}
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Crée un utilsateur",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "login",
+									"value": "quis enim sunt magna",
+									"description": "Le login de l'utilsateur que l'on veut créer"
+								},
+								{
+									"key": "password",
+									"value": "est exercitation irure",
+									"description": "Le mot de passe de l'utilsateur que l'on veut créer"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Utilisteur crée",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "login",
+											"value": "quis enim sunt magna",
+											"description": "Le login de l'utilsateur que l'on veut créer"
+										},
+										{
+											"key": "password",
+											"value": "est exercitation irure",
+											"description": "Le mot de passe de l'utilsateur que l'on veut créer"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										""
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "L'utilisteur n'a pas pu être crée car le login est déjà pris",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "login",
+											"value": "quis enim sunt magna",
+											"description": "Le login de l'utilsateur que l'on veut créer"
+										},
+										{
+											"key": "password",
+											"value": "est exercitation irure",
+											"description": "Le mot de passe de l'utilsateur que l'on veut créer"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										""
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Récupérer la liste des utilisateurs",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users/list",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"list"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "La liste des utilisateurs",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users/list",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"list"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"all\": [\n    \"dolore enim\",\n    \"reprehenderit elit minim\"\n  ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Récupérer un utilisateur",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users/getOne?login=sint fugiat",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"getOne"
+							],
+							"query": [
+								{
+									"key": "login",
+									"value": "sint fugiat",
+									"description": "(Required) Le login de l'utilisateur recherché"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "L'utilisateur correspondant au login.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users/getOne?login=sint fugiat",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"getOne"
+									],
+									"query": [
+										{
+											"key": "login",
+											"value": "sint fugiat"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"login\": \"labore amet occaecat aliqua\",\n  \"connected\": true\n}"
+						},
+						{
+							"name": "Le login de l'utilisateur n'existe pas.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users/getOne?login=sint fugiat",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"getOne"
+									],
+									"query": [
+										{
+											"key": "login",
+											"value": "sint fugiat"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Se deconnecter avec le token",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"description": "(Required) En-tête Origin",
+						"key": "Origin",
+						"value": "sint fugiat"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "jwt",
+							"value": ""
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/logout",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Déconnexion reussi.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "(Required) En-tête Origin",
+								"key": "Origin",
+								"value": "sint fugiat"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "jwt",
+									"value": ""
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/logout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Le token est invalide.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "(Required) En-tête Origin",
+								"key": "Origin",
+								"value": "sint fugiat"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "0",
+									"value": "d"
+								},
+								{
+									"key": "1",
+									"value": "o"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/logout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Le login de l'utilisateur n'existe pas.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "(Required) En-tête Origin",
+								"key": "Origin",
+								"value": "sint fugiat"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "0",
+									"value": "d"
+								},
+								{
+									"key": "1",
+									"value": "o"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/logout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Se connecter avec son login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"description": "(Required) En-tête Origin",
+						"key": "Origin",
+						"value": "sint fugiat"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "login",
+							"value": "minim ea aliquip id",
+							"description": "Le login de l'utilisateur"
+						},
+						{
+							"key": "password",
+							"value": "sit deserunt adipisicing",
+							"description": "Le mot de passe associé au login"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Connexion réussi : le token est renvoyé.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "(Required) En-tête Origin",
+								"key": "Origin",
+								"value": "sint fugiat"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "login",
+									"value": "minim ea aliquip id",
+									"description": "Le login de l'utilisateur"
+								},
+								{
+									"key": "password",
+									"value": "sit deserunt adipisicing",
+									"description": "Le mot de passe associé au login"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Access-Control-Expose-Headers",
+							"value": "",
+							"description": "Origin validé permettant l'accès aux headers"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "\"\""
+				},
+				{
+					"name": "Le mot de passe ne correspond pas au login.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "(Required) En-tête Origin",
+								"key": "Origin",
+								"value": "sint fugiat"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "login",
+									"value": "minim ea aliquip id",
+									"description": "Le login de l'utilisateur"
+								},
+								{
+									"key": "password",
+									"value": "sit deserunt adipisicing",
+									"description": "Le mot de passe associé au login"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Le login de l'utilisateur n'existe pas.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "(Required) En-tête Origin",
+								"key": "Origin",
+								"value": "sint fugiat"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "login",
+									"value": "minim ea aliquip id",
+									"description": "Le login de l'utilisateur"
+								},
+								{
+									"key": "password",
+									"value": "sit deserunt adipisicing",
+									"description": "Le mot de passe associé au login"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "S'authentifier avec le token",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/authenticate?jwt=sint fugiat&origin=sint fugiat",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"authenticate"
+					],
+					"query": [
+						{
+							"key": "jwt",
+							"value": "sint fugiat",
+							"description": "(Required) Token d'authentification jwt"
+						},
+						{
+							"key": "origin",
+							"value": "sint fugiat",
+							"description": "(Required) En-tête Origin"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Déconnexion reussi.",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/authenticate?jwt=sint fugiat&origin=sint fugiat",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"authenticate"
+							],
+							"query": [
+								{
+									"key": "jwt",
+									"value": "sint fugiat"
+								},
+								{
+									"key": "origin",
+									"value": "sint fugiat"
+								}
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Le token est invalide.",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/authenticate?jwt=sint fugiat&origin=sint fugiat",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"authenticate"
+							],
+							"query": [
+								{
+									"key": "jwt",
+									"value": "sint fugiat"
+								},
+								{
+									"key": "origin",
+									"value": "sint fugiat"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Le login de l'utilisateur n'existe pas.",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/authenticate?jwt=sint fugiat&origin=sint fugiat",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"authenticate"
+							],
+							"query": [
+								{
+									"key": "jwt",
+									"value": "sint fugiat"
+								},
+								{
+									"key": "origin",
+									"value": "sint fugiat"
+								}
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}
