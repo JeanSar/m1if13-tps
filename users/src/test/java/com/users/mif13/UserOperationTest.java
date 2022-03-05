@@ -152,5 +152,11 @@ public class UserOperationTest {
                         status().isUnauthorized()
                 );
 
+        this.mockMvc.perform(
+                            delete("/users/"+userAPI.login)
+                    )
+                    .andExpect(
+                            status().isNoContent()
+                    );
     }
 }
