@@ -1,0 +1,3962 @@
+{
+	"info": {
+		"_postman_id": "cfe4385e-7297-4e69-b1c7-5441be8689b2",
+		"name": "Users API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Crée un utilisateur [pass]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});",
+							"// test du retour dans récupérer un utilisateur [pass]"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "login",
+							"value": "{{loginUserCreated}}",
+							"description": "Le login de l'utilsateur que l'on veut créer"
+						},
+						{
+							"key": "password",
+							"value": "{{firstPassword}}",
+							"description": "Le mot de passe de l'utilsateur que l'on veut créer"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Utilisateur crée",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "login",
+									"value": "quis enim sunt magna",
+									"description": "Le login de l'utilsateur que l'on veut créer"
+								},
+								{
+									"key": "password",
+									"value": "est exercitation irure",
+									"description": "Le mot de passe de l'utilsateur que l'on veut créer"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								""
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "L'utilisateur n'a pas pu être crée car le login est déjà pris",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "login",
+									"value": "quis enim sunt magna",
+									"description": "Le login de l'utilsateur que l'on veut créer"
+								},
+								{
+									"key": "password",
+									"value": "est exercitation irure",
+									"description": "Le mot de passe de l'utilsateur que l'on veut créer"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								""
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Crée un utilisateur  [fail]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "login",
+							"value": "{{loginUserCreated}}",
+							"description": "Le login de l'utilsateur que l'on veut créer"
+						},
+						{
+							"key": "password",
+							"value": "{{firstPassword}}",
+							"description": "Le mot de passe de l'utilsateur que l'on veut créer"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Utilisteur crée",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "login",
+									"value": "quis enim sunt magna",
+									"description": "Le login de l'utilsateur que l'on veut créer"
+								},
+								{
+									"key": "password",
+									"value": "est exercitation irure",
+									"description": "Le mot de passe de l'utilsateur que l'on veut créer"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								""
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "L'utilisteur n'a pas pu être crée car le login est déjà pris",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "login",
+									"value": "quis enim sunt magna",
+									"description": "Le login de l'utilsateur que l'on veut créer"
+								},
+								{
+									"key": "password",
+									"value": "est exercitation irure",
+									"description": "Le mot de passe de l'utilsateur que l'on veut créer"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								""
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Récupérer un utilisateur JSON [pass]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"Login is present\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.login).to.eql(pm.variables.get(\"loginUserCreated\"));",
+							"    pm.expect(jsonData.connected).to.eql(false);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Origin",
+						"value": "{{origin}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/users/getOne?login={{loginUserCreated}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"getOne"
+					],
+					"query": [
+						{
+							"key": "login",
+							"value": "{{loginUserCreated}}",
+							"description": "(Required) Le login de l'utilisateur recherché"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "L'utilisateur correspondant au login.",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/getOne?login=sint fugiat",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"getOne"
+							],
+							"query": [
+								{
+									"key": "login",
+									"value": "sint fugiat"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"login\": \"labore amet occaecat aliqua\",\n  \"connected\": true\n}"
+				},
+				{
+					"name": "Le login de l'utilisateur n'existe pas.",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/getOne?login=sint fugiat",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"getOne"
+							],
+							"query": [
+								{
+									"key": "login",
+									"value": "sint fugiat"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Récupérer un utilisateur HTML [pass]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"HTML Body contains login\", function () {",
+							"    pm.expect(pm.response.text()).to.include(pm.variables.get(\"loginUserCreated\"));",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "text/html"
+					},
+					{
+						"key": "Origin",
+						"value": "{{origin}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/users/getOne?login={{loginUserCreated}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"getOne"
+					],
+					"query": [
+						{
+							"key": "login",
+							"value": "{{loginUserCreated}}",
+							"description": "(Required) Le login de l'utilisateur recherché"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "L'utilisateur correspondant au login.",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/getOne?login=sint fugiat",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"getOne"
+							],
+							"query": [
+								{
+									"key": "login",
+									"value": "sint fugiat"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"login\": \"labore amet occaecat aliqua\",\n  \"connected\": true\n}"
+				},
+				{
+					"name": "Le login de l'utilisateur n'existe pas.",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/getOne?login=sint fugiat",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"getOne"
+							],
+							"query": [
+								{
+									"key": "login",
+									"value": "sint fugiat"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Récupérer un utilisateur XML [pass]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"HTML Body contains login\", function () {",
+							"    pm.expect(pm.response.text()).to.include(pm.variables.get(\"loginUserCreated\"));",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/xml"
+					},
+					{
+						"key": "Origin",
+						"value": "{{origin}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/users/getOne?login={{loginUserCreated}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"getOne"
+					],
+					"query": [
+						{
+							"key": "login",
+							"value": "{{loginUserCreated}}",
+							"description": "(Required) Le login de l'utilisateur recherché"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "L'utilisateur correspondant au login.",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/getOne?login=sint fugiat",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"getOne"
+							],
+							"query": [
+								{
+									"key": "login",
+									"value": "sint fugiat"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"login\": \"labore amet occaecat aliqua\",\n  \"connected\": true\n}"
+				},
+				{
+					"name": "Le login de l'utilisateur n'existe pas.",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/getOne?login=sint fugiat",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"getOne"
+							],
+							"query": [
+								{
+									"key": "login",
+									"value": "sint fugiat"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Récupérer un utilisateur [fail 400]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Origin",
+						"value": "{{origin}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/users/getOne?login=notexist",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"getOne"
+					],
+					"query": [
+						{
+							"key": "login",
+							"value": "notexist",
+							"description": "(Required) Le login de l'utilisateur recherché"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "L'utilisateur correspondant au login.",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/getOne?login=sint fugiat",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"getOne"
+							],
+							"query": [
+								{
+									"key": "login",
+									"value": "sint fugiat"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"login\": \"labore amet occaecat aliqua\",\n  \"connected\": true\n}"
+				},
+				{
+					"name": "Le login de l'utilisateur n'existe pas.",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/getOne?login=sint fugiat",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"getOne"
+							],
+							"query": [
+								{
+									"key": "login",
+									"value": "sint fugiat"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Récupérer un utilisateur [fail Origin]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 403\", function () {",
+							"    pm.response.to.have.status(403);",
+							"});",
+							"",
+							"pm.test(\"Body contains CORS error\", function () {",
+							"    pm.response.to.have.body(\"Invalid CORS request\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Origin",
+						"value": "https://stackoverflow.com/",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/users/getOne?login=notexist",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"getOne"
+					],
+					"query": [
+						{
+							"key": "login",
+							"value": "notexist",
+							"description": "(Required) Le login de l'utilisateur recherché"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "L'utilisateur correspondant au login.",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/getOne?login=sint fugiat",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"getOne"
+							],
+							"query": [
+								{
+									"key": "login",
+									"value": "sint fugiat"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"login\": \"labore amet occaecat aliqua\",\n  \"connected\": true\n}"
+				},
+				{
+					"name": "Le login de l'utilisateur n'existe pas.",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/getOne?login=sint fugiat",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"getOne"
+							],
+							"query": [
+								{
+									"key": "login",
+									"value": "sint fugiat"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Récupérer la liste utilisateurs  JSON  [pass]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"Login is present\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.contain(pm.variables.get(\"loginUserCreated\"));",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/users/list",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"list"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "La liste des utilisateurs",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/list",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"list"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"all\": [\n    \"dolore enim\",\n    \"reprehenderit elit minim\"\n  ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Récupérer la liste utilisateurs  HTML [pass]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"HTML Body contains login\", function () {",
+							"    pm.expect(pm.response.text()).to.include(pm.variables.get(\"loginUserCreated\"));",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "text/html"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/users/list",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"list"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "La liste des utilisateurs",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/list",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"list"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"all\": [\n    \"dolore enim\",\n    \"reprehenderit elit minim\"\n  ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Récupérer la liste utilisateurs  XML [pass]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"HTML Body contains login\", function () {",
+							"    pm.expect(pm.response.text()).to.include(pm.variables.get(\"loginUserCreated\"));",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/xml"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/users/list",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"list"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "La liste des utilisateurs",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/list",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"list"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"all\": [\n    \"dolore enim\",\n    \"reprehenderit elit minim\"\n  ]\n}"
+				}
+			]
+		},
+		{
+			"name": "MaJ mot de passe utilisateur [pass]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "password",
+							"value": "{{newPassword}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/:login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":login"
+					],
+					"variable": [
+						{
+							"key": "login",
+							"value": "{{loginUserCreated}}",
+							"description": "(Required) Le login de l'utilsateur où le mot de passe doit être modifié"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Mot de passe modifié",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "password",
+									"value": ""
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":login"
+							],
+							"variable": [
+								{
+									"key": "login",
+									"value": "sint fugiat",
+									"description": "(Required) Le login de l'utilsateur où le mot de passe doit être modifié"
+								}
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Le login de l'utilsateur n'existe pas",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "password",
+									"value": ""
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":login"
+							],
+							"variable": [
+								{
+									"key": "login",
+									"value": "sint fugiat",
+									"description": "(Required) Le login de l'utilsateur où le mot de passe doit être modifié"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "MaJ mot de passe utilisateur [fail]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "password",
+							"value": "{{newPassword}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/:login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":login"
+					],
+					"variable": [
+						{
+							"key": "login",
+							"value": "notexist",
+							"description": "(Required) Le login de l'utilsateur où le mot de passe doit être modifié"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Mot de passe modifié",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "password",
+									"value": ""
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":login"
+							],
+							"variable": [
+								{
+									"key": "login",
+									"value": "sint fugiat",
+									"description": "(Required) Le login de l'utilsateur où le mot de passe doit être modifié"
+								}
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Le login de l'utilsateur n'existe pas",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "password",
+									"value": ""
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":login"
+							],
+							"variable": [
+								{
+									"key": "login",
+									"value": "sint fugiat",
+									"description": "(Required) Le login de l'utilsateur où le mot de passe doit être modifié"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Se connecter avec son login [pass]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Authorization is present\", function () {",
+							"    pm.response.to.have.header(\"Authorization\");",
+							"});",
+							"",
+							"pm.globals.set(\"jwt_token\", pm.response.headers.get(\"Authorization\").split(\"Bearer \")[1]);",
+							"",
+							"pm.test(\"Status code is 204\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"description": "(Required) En-tête Origin",
+						"key": "Origin",
+						"value": "{{origin}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "login",
+							"value": "{{loginUserCreated}}",
+							"description": "Le login de l'utilisateur"
+						},
+						{
+							"key": "password",
+							"value": "{{newPassword}}",
+							"description": "Le mot de passe associé au login"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Connexion réussi : le token est renvoyé.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "(Required) En-tête Origin",
+								"key": "Origin",
+								"value": "sint fugiat"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "login",
+									"value": "minim ea aliquip id",
+									"description": "Le login de l'utilisateur"
+								},
+								{
+									"key": "password",
+									"value": "sit deserunt adipisicing",
+									"description": "Le mot de passe associé au login"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Access-Control-Expose-Headers",
+							"value": "",
+							"description": "Origin validé permettant l'accès aux headers"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "\"\""
+				},
+				{
+					"name": "Le mot de passe ne correspond pas au login.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "(Required) En-tête Origin",
+								"key": "Origin",
+								"value": "sint fugiat"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "login",
+									"value": "minim ea aliquip id",
+									"description": "Le login de l'utilisateur"
+								},
+								{
+									"key": "password",
+									"value": "sit deserunt adipisicing",
+									"description": "Le mot de passe associé au login"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Le login de l'utilisateur n'existe pas.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "(Required) En-tête Origin",
+								"key": "Origin",
+								"value": "sint fugiat"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "login",
+									"value": "minim ea aliquip id",
+									"description": "Le login de l'utilisateur"
+								},
+								{
+									"key": "password",
+									"value": "sit deserunt adipisicing",
+									"description": "Le mot de passe associé au login"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 404,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Se connecter avec son login [fail 401]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {",
+							"    pm.response.to.have.status(401);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"description": "(Required) En-tête Origin",
+						"key": "Origin",
+						"value": "{{origin}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "login",
+							"value": "{{loginUserCreated}}",
+							"description": "Le login de l'utilisateur"
+						},
+						{
+							"key": "password",
+							"value": "notexist",
+							"description": "Le mot de passe associé au login"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Connexion réussi : le token est renvoyé.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "(Required) En-tête Origin",
+								"key": "Origin",
+								"value": "sint fugiat"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "login",
+									"value": "minim ea aliquip id",
+									"description": "Le login de l'utilisateur"
+								},
+								{
+									"key": "password",
+									"value": "sit deserunt adipisicing",
+									"description": "Le mot de passe associé au login"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Access-Control-Expose-Headers",
+							"value": "",
+							"description": "Origin validé permettant l'accès aux headers"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "\"\""
+				},
+				{
+					"name": "Le mot de passe ne correspond pas au login.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "(Required) En-tête Origin",
+								"key": "Origin",
+								"value": "sint fugiat"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "login",
+									"value": "minim ea aliquip id",
+									"description": "Le login de l'utilisateur"
+								},
+								{
+									"key": "password",
+									"value": "sit deserunt adipisicing",
+									"description": "Le mot de passe associé au login"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Le login de l'utilisateur n'existe pas.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "(Required) En-tête Origin",
+								"key": "Origin",
+								"value": "sint fugiat"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "login",
+									"value": "minim ea aliquip id",
+									"description": "Le login de l'utilisateur"
+								},
+								{
+									"key": "password",
+									"value": "sit deserunt adipisicing",
+									"description": "Le mot de passe associé au login"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 404,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Se connecter avec son login [fail 404]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"description": "(Required) En-tête Origin",
+						"key": "Origin",
+						"value": "{{origin}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "login",
+							"value": "notexist",
+							"description": "Le login de l'utilisateur"
+						},
+						{
+							"key": "password",
+							"value": "{{newPassword}}",
+							"description": "Le mot de passe associé au login"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Connexion réussi : le token est renvoyé.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "(Required) En-tête Origin",
+								"key": "Origin",
+								"value": "sint fugiat"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "login",
+									"value": "minim ea aliquip id",
+									"description": "Le login de l'utilisateur"
+								},
+								{
+									"key": "password",
+									"value": "sit deserunt adipisicing",
+									"description": "Le mot de passe associé au login"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Access-Control-Expose-Headers",
+							"value": "",
+							"description": "Origin validé permettant l'accès aux headers"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "\"\""
+				},
+				{
+					"name": "Le mot de passe ne correspond pas au login.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "(Required) En-tête Origin",
+								"key": "Origin",
+								"value": "sint fugiat"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "login",
+									"value": "minim ea aliquip id",
+									"description": "Le login de l'utilisateur"
+								},
+								{
+									"key": "password",
+									"value": "sit deserunt adipisicing",
+									"description": "Le mot de passe associé au login"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Le login de l'utilisateur n'existe pas.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "(Required) En-tête Origin",
+								"key": "Origin",
+								"value": "sint fugiat"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "login",
+									"value": "minim ea aliquip id",
+									"description": "Le login de l'utilisateur"
+								},
+								{
+									"key": "password",
+									"value": "sit deserunt adipisicing",
+									"description": "Le mot de passe associé au login"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 404,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Se connecter avec son login [fail Origin]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 403\", function () {",
+							"    pm.response.to.have.status(403);",
+							"});",
+							"",
+							"pm.test(\"Body contains CORS error\", function () {",
+							"    pm.response.to.have.body(\"Invalid CORS request\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"description": "(Required) En-tête Origin",
+						"key": "Origin",
+						"value": "http://stackoverflow.com"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "login",
+							"value": "{{loginUserCreated}}",
+							"description": "Le login de l'utilisateur"
+						},
+						{
+							"key": "password",
+							"value": "{{newPassword}}",
+							"description": "Le mot de passe associé au login"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Connexion réussi : le token est renvoyé.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "(Required) En-tête Origin",
+								"key": "Origin",
+								"value": "sint fugiat"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "login",
+									"value": "minim ea aliquip id",
+									"description": "Le login de l'utilisateur"
+								},
+								{
+									"key": "password",
+									"value": "sit deserunt adipisicing",
+									"description": "Le mot de passe associé au login"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Access-Control-Expose-Headers",
+							"value": "",
+							"description": "Origin validé permettant l'accès aux headers"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "\"\""
+				},
+				{
+					"name": "Le mot de passe ne correspond pas au login.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "(Required) En-tête Origin",
+								"key": "Origin",
+								"value": "sint fugiat"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "login",
+									"value": "minim ea aliquip id",
+									"description": "Le login de l'utilisateur"
+								},
+								{
+									"key": "password",
+									"value": "sit deserunt adipisicing",
+									"description": "Le mot de passe associé au login"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Le login de l'utilisateur n'existe pas.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "(Required) En-tête Origin",
+								"key": "Origin",
+								"value": "sint fugiat"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "login",
+									"value": "minim ea aliquip id",
+									"description": "Le login de l'utilisateur"
+								},
+								{
+									"key": "password",
+									"value": "sit deserunt adipisicing",
+									"description": "Le mot de passe associé au login"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 404,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "S'authentifier avec le token [pass]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Origin",
+						"value": "{{origin}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "jwt",
+							"value": "{{jwt_token}}",
+							"type": "text"
+						},
+						{
+							"key": "origin",
+							"value": "{{origin}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/authenticate?jwt={{jwt_token}}&origin={{origin}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"authenticate"
+					],
+					"query": [
+						{
+							"key": "jwt",
+							"value": "{{jwt_token}}",
+							"description": "(Required) Token d'authentification jwt"
+						},
+						{
+							"key": "origin",
+							"value": "{{origin}}"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Déconnexion reussi.",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/authenticate?jwt=sint fugiat&origin=sint fugiat",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"authenticate"
+							],
+							"query": [
+								{
+									"key": "jwt",
+									"value": "sint fugiat"
+								},
+								{
+									"key": "origin",
+									"value": "sint fugiat"
+								}
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Le token est invalide.",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/authenticate?jwt=sint fugiat&origin=sint fugiat",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"authenticate"
+							],
+							"query": [
+								{
+									"key": "jwt",
+									"value": "sint fugiat"
+								},
+								{
+									"key": "origin",
+									"value": "sint fugiat"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Le login de l'utilisateur n'existe pas.",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/authenticate?jwt=sint fugiat&origin=sint fugiat",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"authenticate"
+							],
+							"query": [
+								{
+									"key": "jwt",
+									"value": "sint fugiat"
+								},
+								{
+									"key": "origin",
+									"value": "sint fugiat"
+								}
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "S'authentifier avec le token [fail 400]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Origin",
+						"value": "{{origin}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "jwt",
+							"value": "{{jwt_token}}",
+							"type": "text"
+						},
+						{
+							"key": "origin",
+							"value": "{{origin}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/authenticate?jwt=notexist&origin={{origin}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"authenticate"
+					],
+					"query": [
+						{
+							"key": "jwt",
+							"value": "notexist",
+							"description": "(Required) Token d'authentification jwt"
+						},
+						{
+							"key": "origin",
+							"value": "{{origin}}",
+							"description": "(Required) En-tête Origin"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Déconnexion reussi.",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/authenticate?jwt=sint fugiat&origin=sint fugiat",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"authenticate"
+							],
+							"query": [
+								{
+									"key": "jwt",
+									"value": "sint fugiat"
+								},
+								{
+									"key": "origin",
+									"value": "sint fugiat"
+								}
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Le token est invalide.",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/authenticate?jwt=sint fugiat&origin=sint fugiat",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"authenticate"
+							],
+							"query": [
+								{
+									"key": "jwt",
+									"value": "sint fugiat"
+								},
+								{
+									"key": "origin",
+									"value": "sint fugiat"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Le login de l'utilisateur n'existe pas.",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/authenticate?jwt=sint fugiat&origin=sint fugiat",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"authenticate"
+							],
+							"query": [
+								{
+									"key": "jwt",
+									"value": "sint fugiat"
+								},
+								{
+									"key": "origin",
+									"value": "sint fugiat"
+								}
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "S'authentifier avec le token [fail Origin]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 403\", function () {",
+							"    pm.response.to.have.status(403);",
+							"});",
+							"",
+							"pm.test(\"Body contains CORS error\", function () {",
+							"    pm.response.to.have.body(\"Invalid CORS request\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Origin",
+						"value": "https://stackoverflow.com",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "jwt",
+							"value": "{{jwt_token}}",
+							"type": "text"
+						},
+						{
+							"key": "origin",
+							"value": "{{origin}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/authenticate?jwt={{jwt_token}}&origin={{origin}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"authenticate"
+					],
+					"query": [
+						{
+							"key": "jwt",
+							"value": "{{jwt_token}}",
+							"description": "(Required) Token d'authentification jwt"
+						},
+						{
+							"key": "origin",
+							"value": "{{origin}}"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Déconnexion reussi.",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/authenticate?jwt=sint fugiat&origin=sint fugiat",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"authenticate"
+							],
+							"query": [
+								{
+									"key": "jwt",
+									"value": "sint fugiat"
+								},
+								{
+									"key": "origin",
+									"value": "sint fugiat"
+								}
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Le token est invalide.",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/authenticate?jwt=sint fugiat&origin=sint fugiat",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"authenticate"
+							],
+							"query": [
+								{
+									"key": "jwt",
+									"value": "sint fugiat"
+								},
+								{
+									"key": "origin",
+									"value": "sint fugiat"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Le login de l'utilisateur n'existe pas.",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/authenticate?jwt=sint fugiat&origin=sint fugiat",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"authenticate"
+							],
+							"query": [
+								{
+									"key": "jwt",
+									"value": "sint fugiat"
+								},
+								{
+									"key": "origin",
+									"value": "sint fugiat"
+								}
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Se deconnecter avec le token [pass]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"description": "(Required) En-tête Origin",
+						"key": "Origin",
+						"value": "{{origin}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "jwt",
+							"value": "{{jwt_token}}"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/logout",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Déconnexion reussi.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "(Required) En-tête Origin",
+								"key": "Origin",
+								"value": "sint fugiat"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "jwt",
+									"value": ""
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/logout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Le token est invalide.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "(Required) En-tête Origin",
+								"key": "Origin",
+								"value": "sint fugiat"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "0",
+									"value": "d"
+								},
+								{
+									"key": "1",
+									"value": "o"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/logout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Le login de l'utilisateur n'existe pas.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "(Required) En-tête Origin",
+								"key": "Origin",
+								"value": "sint fugiat"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "0",
+									"value": "d"
+								},
+								{
+									"key": "1",
+									"value": "o"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/logout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Se deconnecter avec le token [fail 400]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"description": "(Required) En-tête Origin",
+						"key": "Origin",
+						"value": "{{origin}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "jwt",
+							"value": "notexist"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/logout",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Déconnexion reussi.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "(Required) En-tête Origin",
+								"key": "Origin",
+								"value": "sint fugiat"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "jwt",
+									"value": ""
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/logout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Le token est invalide.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "(Required) En-tête Origin",
+								"key": "Origin",
+								"value": "sint fugiat"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "0",
+									"value": "d"
+								},
+								{
+									"key": "1",
+									"value": "o"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/logout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Le login de l'utilisateur n'existe pas.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "(Required) En-tête Origin",
+								"key": "Origin",
+								"value": "sint fugiat"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "0",
+									"value": "d"
+								},
+								{
+									"key": "1",
+									"value": "o"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/logout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Se deconnecter avec le token [fail Origin]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 403\", function () {",
+							"    pm.response.to.have.status(403);",
+							"});",
+							"",
+							"pm.test(\"Body contains CORS error\", function () {",
+							"    pm.response.to.have.body(\"Invalid CORS request\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"description": "(Required) En-tête Origin",
+						"key": "Origin",
+						"value": "https://stackoverflow.com"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "jwt",
+							"value": "{{jwt_token}}"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/logout",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Déconnexion reussi.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "(Required) En-tête Origin",
+								"key": "Origin",
+								"value": "sint fugiat"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "jwt",
+									"value": ""
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/logout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Le token est invalide.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "(Required) En-tête Origin",
+								"key": "Origin",
+								"value": "sint fugiat"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "0",
+									"value": "d"
+								},
+								{
+									"key": "1",
+									"value": "o"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/logout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Le login de l'utilisateur n'existe pas.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "(Required) En-tête Origin",
+								"key": "Origin",
+								"value": "sint fugiat"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "0",
+									"value": "d"
+								},
+								{
+									"key": "1",
+									"value": "o"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/logout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Supprime un utilisateur [pass]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/users/:login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":login"
+					],
+					"variable": [
+						{
+							"key": "login",
+							"value": "{{loginUserCreated}}"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Utilisateur supprimé.",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/:login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":login"
+							],
+							"variable": [
+								{
+									"key": "login",
+									"value": "sint fugiat",
+									"description": "(Required) Le login de l'utilisateur à supprimer."
+								}
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Le login de l'utilisateur n'existe pas.",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/:login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":login"
+							],
+							"variable": [
+								{
+									"key": "login",
+									"value": "sint fugiat",
+									"description": "(Required) Le login de l'utilisateur à supprimer."
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Supprime un utilisateur [fail]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/users/:login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":login"
+					],
+					"variable": [
+						{
+							"key": "login",
+							"value": "{{loginUserCreated}}"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Utilisateur supprimé.",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/:login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":login"
+							],
+							"variable": [
+								{
+									"key": "login",
+									"value": "sint fugiat",
+									"description": "(Required) Le login de l'utilisateur à supprimer."
+								}
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Le login de l'utilisateur n'existe pas.",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/:login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":login"
+							],
+							"variable": [
+								{
+									"key": "login",
+									"value": "sint fugiat",
+									"description": "(Required) Le login de l'utilisateur à supprimer."
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "S'authentifier avec le token [fail 401]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {",
+							"    pm.response.to.have.status(401);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "jwt",
+							"value": "{{badtoken}}",
+							"type": "text"
+						},
+						{
+							"key": "origin",
+							"value": "{{origin}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/authenticate?jwt={{jwt_token}}&origin={{origin}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"authenticate"
+					],
+					"query": [
+						{
+							"key": "jwt",
+							"value": "{{jwt_token}}",
+							"description": "(Required) Token d'authentification jwt"
+						},
+						{
+							"key": "origin",
+							"value": "{{origin}}",
+							"description": "(Required) En-tête Origin"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Déconnexion reussi.",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/authenticate?jwt=sint fugiat&origin=sint fugiat",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"authenticate"
+							],
+							"query": [
+								{
+									"key": "jwt",
+									"value": "sint fugiat"
+								},
+								{
+									"key": "origin",
+									"value": "sint fugiat"
+								}
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Le token est invalide.",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/authenticate?jwt=sint fugiat&origin=sint fugiat",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"authenticate"
+							],
+							"query": [
+								{
+									"key": "jwt",
+									"value": "sint fugiat"
+								},
+								{
+									"key": "origin",
+									"value": "sint fugiat"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Le login de l'utilisateur n'existe pas.",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/authenticate?jwt=sint fugiat&origin=sint fugiat",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"authenticate"
+							],
+							"query": [
+								{
+									"key": "jwt",
+									"value": "sint fugiat"
+								},
+								{
+									"key": "origin",
+									"value": "sint fugiat"
+								}
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Se deconnecter avec le token [fail 401]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {",
+							"    pm.response.to.have.status(401);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"description": "(Required) En-tête Origin",
+						"key": "Origin",
+						"value": "{{origin}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "jwt",
+							"value": "{{jwt_token}}"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/logout",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Déconnexion reussi.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "(Required) En-tête Origin",
+								"key": "Origin",
+								"value": "sint fugiat"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "jwt",
+									"value": ""
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/logout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Le token est invalide.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "(Required) En-tête Origin",
+								"key": "Origin",
+								"value": "sint fugiat"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "0",
+									"value": "d"
+								},
+								{
+									"key": "1",
+									"value": "o"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/logout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Le login de l'utilisateur n'existe pas.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "(Required) En-tête Origin",
+								"key": "Origin",
+								"value": "sint fugiat"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "0",
+									"value": "d"
+								},
+								{
+									"key": "1",
+									"value": "o"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/logout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://192.168.75.13:8443/mif13"
+		},
+		{
+			"key": "origin",
+			"value": "http://localhost"
+		},
+		{
+			"key": "loginUserCreated",
+			"value": "UserTest"
+		},
+		{
+			"key": "firstPassword",
+			"value": "1234"
+		},
+		{
+			"key": "newPassword",
+			"value": "5678"
+		}
+	]
+}
