@@ -48,7 +48,7 @@
 								},
 								{
 									"key": "password",
-									"value": "{{firstPassword}}",
+									"value": "{{newPassword}}",
 									"description": "Le mot de passe associé au login"
 								}
 							]
@@ -800,12 +800,7 @@
 						],
 						"body": {
 							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "password",
-									"value": "{{newPassword}}"
-								}
-							]
+							"urlencoded": []
 						},
 						"url": {
 							"raw": "{{baseUrl}}/users/:login",
@@ -819,7 +814,7 @@
 							"variable": [
 								{
 									"key": "login",
-									"value": "UserTest",
+									"value": "{{loginUserCreated}}",
 									"description": "(Required) Le login de l'utilsateur où le mot de passe doit être modifié"
 								}
 							]
@@ -838,12 +833,7 @@
 								],
 								"body": {
 									"mode": "urlencoded",
-									"urlencoded": [
-										{
-											"key": "password",
-											"value": "{{newPassword}}"
-										}
-									]
+									"urlencoded": []
 								},
 								"url": {
 									"raw": "{{baseUrl}}/users/:login",
@@ -857,7 +847,7 @@
 									"variable": [
 										{
 											"key": "login",
-											"value": "UserTest",
+											"value": "{{loginUserCreated}}",
 											"description": "(Required) Le login de l'utilsateur où le mot de passe doit être modifié"
 										}
 									]
@@ -880,12 +870,7 @@
 								],
 								"body": {
 									"mode": "urlencoded",
-									"urlencoded": [
-										{
-											"key": "password",
-											"value": "{{newPassword}}"
-										}
-									]
+									"urlencoded": []
 								},
 								"url": {
 									"raw": "{{baseUrl}}/users/:login",
@@ -899,7 +884,7 @@
 									"variable": [
 										{
 											"key": "login",
-											"value": "UserTest",
+											"value": "{{loginUserCreated}}",
 											"description": "(Required) Le login de l'utilsateur où le mot de passe doit être modifié"
 										}
 									]

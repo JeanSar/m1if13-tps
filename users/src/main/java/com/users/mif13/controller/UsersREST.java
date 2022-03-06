@@ -131,7 +131,7 @@ public class UsersREST implements WebMvcConfigurer {
                     content = @Content),
             @ApiResponse(responseCode = "400", description = "Le login de l'utilsateur n'existe pas",
                     content = @Content)})
-    @PutMapping(value = "/{login}", consumes = {"application/x-www-form-urlencoded"})
+    @PutMapping(value = "/{login}", consumes = {"multipart/form-data"})
     public ResponseEntity<Void> update( @Parameter(description = "Le nouveau mot de passe") @io.swagger.v3.oas.annotations.parameters.RequestBody String password,
                                         @Parameter(description = "Le login de l'utilsateur où le mot de passe doit être modifié") @PathVariable String login)
     {
