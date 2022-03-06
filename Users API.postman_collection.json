@@ -404,7 +404,7 @@
 								},
 								{
 									"key": "origin",
-									"value": "",
+									"value": "{{origin}}",
 									"type": "text"
 								}
 							]
