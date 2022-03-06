@@ -21,7 +21,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.InternalServerErrorException;
-import java.util.Optional;
 // Si on met seulement l'annotation @Controller, la donc n'est pas généré pour tout les contenue
 // ie url encoded et json
 @RestController
@@ -128,12 +127,15 @@ public class UserOperations {
             if (login.isEmpty()) {
                 throw new InternalServerErrorException();
             }
-            Optional<User> user = dao.get(login);
-            user.ifPresent(User::disconnect);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            if (dao.get(login).isPresent()) {
+                dao.get(login).get().disconnect();
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT); // Déconnecté : 204
+            }
+            System.out.println("Tentative de déconnection d'un utilisateur inexistant");
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); // L'utilisateur n'existe pas : 401
         } catch (NullPointerException e) {
             e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); // Login n'existe pas : 401
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); // Le token n'existe pas : 401
         } catch (JWTVerificationException e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // Le token est invalide : 400
@@ -146,15 +148,18 @@ public class UserOperations {
                                             @RequestHeader("Origin") String origin) {
         try {
             String login = JwtHelper.verifyToken(token.jwt, origin);
-            if (login.isEmpty()) {
+            if(login.isEmpty()){
                 throw new InternalServerErrorException();
             }
-            Optional<User> user = dao.get(login);
-            user.ifPresent(User::disconnect);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            if (dao.get(login).isPresent()) {
+                dao.get(login).get().disconnect();
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT); // Déconnecté : 204
+            }
+            System.out.println("Tentative de déconnection d'un utilisateur inexistant");
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); // L'utilisateur n'existe pas : 401
         } catch (NullPointerException e) {
             e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); // Login n'existe pas : 401
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); // Le token n'existe pas : 401
         } catch (JWTVerificationException e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // Le token est invalide : 400
@@ -188,13 +193,13 @@ public class UserOperations {
                 throw new InternalServerErrorException();
             }
             if (dao.get(login).isPresent() && dao.get(login).get().isConnected()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT); // Authentifié : 204
             }
-            System.out.println("Tentative de connection d'un utilisateur déconnecté");
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); // L'utilisateur n'est pas connecté
+            System.out.println("Tentative de connection d'un utilisateur déconnecté ou inexistant");
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); // L'utilisateur n'est pas connecté ou n'existe pas : 401
         } catch (NullPointerException e) {
             e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); // Login n'existe pas : 401
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); // Le token n'existe pas : 401
         } catch (JWTVerificationException e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // Le token est invalide : 400

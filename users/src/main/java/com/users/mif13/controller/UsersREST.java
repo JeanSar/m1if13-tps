@@ -95,19 +95,19 @@ public class UsersREST implements WebMvcConfigurer {
 
             return modelAndView;
         }
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "L'utilsateur demandé n'existe pas");
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "L'utilisateur demandé n'existe pas");
     }
 
-    @Operation(summary = "Crée un utilsateur")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Utilisteur crée",
-                    content = @Content),
-            @ApiResponse(responseCode = "400", description = "L'utilisteur n'a pas pu être crée car le login est déjà pris",
-                    content = @Content)})
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @Operation(summary = "Crée un utilisateur")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Utilisateur crée",
+                    content = @Content),
+            @ApiResponse(responseCode = "400", description = "L'utilisateur n'a pas pu être crée car le login est déjà pris",
+                    content = @Content)})
     public ResponseEntity<Void> createUrlEncoded(
-            @Parameter(description = "Le login de l'utilsateur que l'on veut créer") @io.swagger.v3.oas.annotations.parameters.RequestBody  String login,
-            @Parameter(description = "Le mot de passe de l'utilsateur que l'on veut créer") @io.swagger.v3.oas.annotations.parameters.RequestBody String password) {
+            @Parameter(description = "Le login de l'utilisateur que l'on veut créer") @io.swagger.v3.oas.annotations.parameters.RequestBody  String login,
+            @Parameter(description = "Le mot de passe de l'utilisateur que l'on veut créer") @io.swagger.v3.oas.annotations.parameters.RequestBody String password) {
         if (userDAO.get(login).isEmpty()) {
             userDAO.save(new User(login, password));
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -125,15 +125,15 @@ public class UsersREST implements WebMvcConfigurer {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @Operation(summary = "Met à jour le mot de passe d'un utilsateur")
+    @Operation(summary = "Met à jour le mot de passe d'un utilisateur")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Mot de passe modifié",
                     content = @Content),
-            @ApiResponse(responseCode = "400", description = "Le login de l'utilsateur n'existe pas",
+            @ApiResponse(responseCode = "400", description = "Le login de l'utilisateur n'existe pas",
                     content = @Content)})
     @PutMapping(value = "/{login}", consumes = {"multipart/form-data"})
     public ResponseEntity<Void> update( @Parameter(description = "Le nouveau mot de passe") @io.swagger.v3.oas.annotations.parameters.RequestBody String password,
-                                        @Parameter(description = "Le login de l'utilsateur où le mot de passe doit être modifié") @PathVariable String login)
+                                        @Parameter(description = "Le login de l'utilisateur où le mot de passe doit être modifié") @PathVariable String login)
     {
         try {
             userDAO.update(new User(login, password));
