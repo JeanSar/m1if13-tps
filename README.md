@@ -1,7 +1,7 @@
 # M1IF13 - TP 1 & 2
 
-# DANTIER Florian p1710759
-# SAURY Jean p1805563
+- DANTIER Florian p1710759
+- SAURY Jean p1805563
 
 ## Information concernant postman
 Une collection postman au format json a été mise en plus du fichier yaml swagger.
