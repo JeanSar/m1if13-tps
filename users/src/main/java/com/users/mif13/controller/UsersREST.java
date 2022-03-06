@@ -85,6 +85,7 @@ public class UsersREST implements WebMvcConfigurer {
     }
 
     @GetMapping(value = "/getOne", produces = MediaType.TEXT_HTML_VALUE)
+    @CrossOrigin(origins = {"http://localhost", "https://192.168.75.13", "http://192.168.75.13"})
     @Hidden
     public ModelAndView getOneHTML(@QueryParam("login") String login, Model model) throws ResponseStatusException {
         Optional<User> user = userDAO.get(login);
