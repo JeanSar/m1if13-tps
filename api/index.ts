@@ -7,7 +7,7 @@ app.use(express.static("public"));
 
 
 app.get("/", (req: Request, res: Response) => {
-    res.send("Hello world !!!!");
+    res.send("Hello worddld !!!!");
 });
 
 app.listen(3000);
