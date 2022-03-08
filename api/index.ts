@@ -1,5 +1,5 @@
 import {Response, Request} from "express/ts4.0";
-const express  = require('express');
+import express from 'express';
 
 const app = express();
 
