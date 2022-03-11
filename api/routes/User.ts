@@ -1,8 +1,8 @@
 import {Request, Response, Router} from "express";
 import {User} from "../Types/types";
-import {body, validationResult} from "express-validator";
+import {body, query, validationResult} from "express-validator";
 
-const users: User[] = [];
+let users: User[] = [];
 users.push({aventurier: {image: "test", ttl: 0, position: {x: 0, y: 0}}, isAdmin: false});
 const userRouter = Router();
 
@@ -15,7 +15,6 @@ const createController = (req: Request, res: Response) => {
     users.push(req.body);
     return res.sendStatus(204);
 }
-
 userRouter.post('/create',
     body("aventurier.image").isString(),
     body("aventurier.ttl").isNumeric(),
@@ -29,14 +28,38 @@ const getOneController = (req: Request, res: Response) => {
     if(!errors.isEmpty()) {
         return res.status(400).json({errors: errors.array()})
     }
-    const id: number = req.body.id;
+    const id = Number.parseInt(req.query.id as string);
+
+    if(users.length - 1 < id && id > -1) {
+      return res.sendStatus(400);
+    }
+    res.status(200);
+    return res.send(users[id]);
 }
-userRouter.get('/getOne', body("id").isNumeric(), getOneController);
+userRouter.get('/getOne', query("id").isNumeric(), getOneController);
 
 
 const getAllController = (req: Request, res: Response) => {
     res.send(users);
 }
 userRouter.get('/getAll', getAllController);
+
+const updateController = (req: Request, res: Response) => {
+    const id = Number.parseInt(req.query.id as string);
+    console.log(id)
+    if(users.length - 1 < id && id > -1) {
+        return res.sendStatus(400);
+    }
+    users[id] = req.body;
+    return res.sendStatus(204);
+}
+userRouter.put('/update', body("aventurier.image").isString(),
+    body("aventurier.ttl").isNumeric(),
+    body("aventurier.position.x").isNumeric(),
+    body("aventurier.position.y").isNumeric(),
+    body("isAdmin").isBoolean(),
+    query("id").isNumeric(),
+    updateController);
+
 
 export default userRouter;
