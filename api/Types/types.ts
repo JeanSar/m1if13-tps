@@ -3,6 +3,13 @@ export interface Position {
     y: number
 }
 
+export interface Limites {
+    limite_NO: Position,
+    limite_NE: Position,
+    limite_SE: Position,
+    limite_SO: Position
+}
+
 export interface Aventurier {
     image: string,
     position: Position,
