@@ -42,7 +42,7 @@ export function CRUDdelete<T>(tab: T[], req: Request, res: Response) {
     if(!errors.isEmpty() || id > tab.length - 1) {
         return res.status(400).json({errors: errors.array()})
     }
-    tab.splice(id);
+    tab.splice(id, 1);
     res.statusMessage = "Delete ok";
     return res.sendStatus(204);
 }
