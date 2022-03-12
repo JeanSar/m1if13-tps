@@ -18,7 +18,7 @@ resourcesRouter.put('/:resourceId',
     (req: Request, res: Response) => {
         const errors = validationResult(req);
         if(!errors.isEmpty()) {
-            return res.status(400).json({errors: errors.array()})
+            return res.status(400).json({errors: errors.array()});
         }
         // GET request to spring server
         axios({
@@ -31,7 +31,7 @@ resourcesRouter.put('/:resourceId',
         })
             .then(function (res: Response) {
                 if(res.status.toString()[0] != "200") {
-
+                    return res.sendStatus(401);
                 } else {
                     return res.sendStatus(200);
                 }
@@ -44,8 +44,27 @@ resourcesRouter.put('/:resourceId/image',
     header('resourceId').isString(),
     header('url').isURL(),
     (req: Request, res: Response) => {
-        return res.sendStatus(400);
-    });
+        const errors = validationResult(req);
+        if(!errors.isEmpty()) {
+            return res.status(400).json({errors: errors.array()});
+        }
+        // GET request to spring server
+        axios({
+            method: 'get',
+            url: 'http://localhost:8080/authenticate',
+            timeout: 1000,
+            params: {
+                jwt: req.headers.authorization
+            }
+        })
+            .then(function (res: Response) {
+                if(res.status.toString()[0] != "200") {
+                    return res.sendStatus(401);
+                } else {
+                    return res.sendStatus(200);
+                }
+            });
+    }
 
-
+);
 export { georesources, resourcesRouter };
