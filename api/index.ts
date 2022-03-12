@@ -5,7 +5,7 @@ import {userRouter} from "./routes/User";
 import {zrrRouter} from './routes/ZRR';
 import {adminRouter} from "./routes/Admin";
 import {tresorRouter} from "./routes/Tresor";
-import {resourcesRouter} from "./routes/Resources"
+import {resourcesRouter} from "./routes/Resources";
 
 const app = express();
 

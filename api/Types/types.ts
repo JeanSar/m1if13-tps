@@ -23,6 +23,16 @@ export interface User {
 }
 
 export interface Tresor {
+    id: string,
     position: Position,
     composition: string | "allReadyOpen"
+}
+
+export interface Georesource {
+    id: Aventurier["id"],
+    url: URL,
+    position: Aventurier["position"],
+    role: "player" | "admin",
+    ttl: Aventurier["ttl"],
+    treasures: Tresor[]
 }

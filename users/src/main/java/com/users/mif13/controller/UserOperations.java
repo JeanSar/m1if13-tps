@@ -178,7 +178,7 @@ public class UserOperations {
     @CrossOrigin(origins = {"http://localhost", "https://192.168.75.13", "http://192.168.75.13"})
     @Operation(summary = "S'authentifier avec le token")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Déconnexion reussi.",
+            @ApiResponse(responseCode = "204", description = "Authentification réussi.",
                     content = @Content),
             @ApiResponse(responseCode = "401", description = "Le login de l'utilisateur n'existe pas.",
                     content = @Content),
