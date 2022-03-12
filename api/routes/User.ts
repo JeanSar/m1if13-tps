@@ -27,12 +27,12 @@ userRouter.put('/update', body("aventurier.image").isString(),
     body("aventurier.position.x").isNumeric(),
     body("aventurier.position.y").isNumeric(),
     body("isAdmin").isBoolean(),
-    query("id").isInt({min: 0, max: users.length - 1}),
+    query("id").isInt({min: 0}),
     (req: Request, res: Response) => CRUDupdate<User>(users, req, res));
 
 
 userRouter.delete('/delete',
-    query("id").isInt({min: 0, max: users.length - 1}),
+    query("id").isInt({min: 0}),
     (req: Request, res: Response) => CRUDdelete<User>(users, req, res));
 
 export {users, userRouter};
