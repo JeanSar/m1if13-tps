@@ -7,7 +7,8 @@ export function CRUDcreate<T>(tab: T[], req: Request, res: Response) {
         return res.status(400).json({errors: errors.array()})
     }
     tab.push(req.body);
-    return res.sendStatus(204);
+    res.status(201);
+    return res.send(`L'objet nouvellement créé a pour id : ${tab.indexOf(req.body)}`);
 }
 
 export function CRUDupdate<T>(tab: T[], req: Request, res: Response) {
