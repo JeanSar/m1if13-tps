@@ -5,6 +5,7 @@ import {userRouter} from "./routes/User";
 import {zrrRouter} from './routes/ZRR';
 import {adminRouter} from "./routes/Admin";
 import {tresorRouter} from "./routes/Tresor";
+import {resourcesRouter} from "./routes/Resources"
 
 const app = express();
 
@@ -17,7 +18,7 @@ app.use('/admin', adminRouter);
 app.use('/user', userRouter);
 app.use('/zrr', zrrRouter);
 app.use('/tresor', tresorRouter);
-
+app.use('/resources', resourcesRouter);
 
 
 // Après toutes nos routes car si on le met avant, ce code sera appelé avant nos routes et on aura donc tout le temps
