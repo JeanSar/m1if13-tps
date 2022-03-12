@@ -26,16 +26,3 @@ export interface Tresor {
     position: Position,
     composition: string | "allReadyOpen"
 }
-
-export interface Ressource {
-    id: string,
-    imageUrl: string,
-    position: Position,
-    role: string,
-    ttl: number,
-    treasures: Tresor[]
-}
-
-const ressources: Ressource[] = [];
-
-export {ressources}
