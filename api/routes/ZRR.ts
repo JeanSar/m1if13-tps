@@ -93,4 +93,4 @@ const deleteController = (req: Request, res: Response) => {
 };
 zrrRouter.delete('/delete', query("id").isNumeric(), deleteController);
 
-export default zrrRouter;
+export {zrrRouter, zrrs};

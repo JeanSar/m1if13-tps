@@ -4,7 +4,6 @@ import {body, query, validationResult} from "express-validator";
 import {CRUDdelete, CRUDgetAll, CRUDgetOne, CRUDupdate, CRUDcreate} from "./genericsCRUD"
 
 const users: User[] = [];
-users.push({aventurier: {image: "test", ttl: 0, position: {x: 0, y: 0}}, isAdmin: false});
 const userRouter = Router();
 
 userRouter.post('/create',
@@ -36,4 +35,4 @@ userRouter.delete('/delete',
     query("id").isInt({min: 0, max: users.length - 1}),
     (req: Request, res: Response) => CRUDdelete<User>(users, req, res));
 
-export default userRouter;
+export {users, userRouter};
