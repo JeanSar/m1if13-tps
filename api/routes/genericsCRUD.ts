@@ -24,10 +24,11 @@ export function CRUDupdate<T>(tab: T[], req: Request, res: Response) {
 
 export function CRUDgetOne<T>(tab: T[], req: Request, res: Response) {
     const errors = validationResult(req);
-    if(!errors.isEmpty()) {
+    const id = Number.parseInt(req.query.id as string);
+
+    if(!errors.isEmpty() || id > tab.length - 1) {
         return res.status(400).json({errors: errors.array()})
     }
-    const id = Number.parseInt(req.query.id as string);
     res.status(200);
     return res.send(tab[id]);
 }
