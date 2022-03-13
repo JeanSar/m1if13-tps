@@ -1,5 +1,5 @@
 import { Request, Response, Router } from "express";
-import { Limites, Position } from "../Types/types";
+import { Limites } from "../Types/types";
 import { body, query, validationResult } from "express-validator";
 import {CRUDdelete, CRUDgetAll, CRUDgetOne, CRUDupdate, CRUDcreate} from "./genericsCRUD"
 
