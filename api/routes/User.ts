@@ -16,7 +16,7 @@ userRouter.post('/create',
 
 
 userRouter.get('/getOne',
-    query("id").isInt({min: 0, max: users.length - 1}),
+    query("id").isInt({min: 0}),
     (req: Request, res: Response) => CRUDgetOne<User>(users, req, res));
 
 userRouter.get('/getAll', (req: Request, res: Response) => CRUDgetAll<User>(users, req, res));
