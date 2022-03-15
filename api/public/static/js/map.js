@@ -23,11 +23,50 @@ L.tileLayer('https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}@2x.jpg90?acc
 // Ajout d'un marker
 L.marker([45.78207, 4.86559]).addTo(mymap).bindPopup('Entrée du bâtiment<br><strong>Nautibus</strong>.').openPopup();
 
+
+let pt1 = {lat: 0, lng: 0};
+let pt2 = {lat: 0.1, lng: 0.1};
+
+let onCreateArea = false;
+let countClick = 0;
+
+let rectangle = undefined;
+
+document.querySelector("#createArea").addEventListener("click", (e) => {
+	onCreateArea = true;
+	if(rectangle !== undefined) {
+		mymap.removeLayer(rectangle);
+	}
+});
+
 // Clic sur la carte
 mymap.on('click', e => {
-	lat = e.latlng.lat;
-	lng = e.latlng.lng;
-	updateMap();
+	if(onCreateArea) {
+		countClick++;
+		console.log({countClick})
+		if(countClick === 1) {
+			pt1.lat = e.latlng.lat;
+			pt1.lng = e.latlng.lng;
+			console.log({pt1})
+		} else if (countClick === 2) {
+			pt2.lat = e.latlng.lat;
+			pt2.lng = e.latlng.lng;
+			console.log({pt2})
+			countClick = 0;
+			onCreateArea = false;
+
+			let bounds = [[pt1.lat, pt1.lng], [e.latlng.lat, e.latlng.lng]];
+			rectangle = L.rectangle(bounds).addTo(mymap);
+		}
+
+
+	} else {
+		lat = e.latlng.lat;
+		lng = e.latlng.lng;
+		console.log("A cliquer à la pos : ", {lat}, {lng});
+		updateMap();
+	}
+
 });
 
 // Mise à jour de la map
