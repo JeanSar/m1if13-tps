@@ -25,7 +25,7 @@ adminRouter.post("/areaLimit",
 }));
 
 adminRouter.post('/ttlInit',
-    body('ttl').isInt({min: 0}),
+    body('ttl').isInt({min: 0}).optional(),
     ((req: Request, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -33,7 +33,7 @@ adminRouter.post('/ttlInit',
     }
 
     for(let user of users){
-        user.aventurier.ttl = req.body.ttl;
+        user.aventurier.ttl = req.body.ttl === undefined ? 1 : req.body.ttl;
     }
 
     res.statusMessage = "ttl init"
@@ -46,8 +46,8 @@ adminRouter.post('/startGame', ((req: Request, res: Response) => {
 }));
 
 adminRouter.post('/popTresor',
-    body('position.x').isNumeric(),
-    body('position.y').isNumeric(),
+    body('position.x').isFloat(),
+    body('position.y').isFloat(),
     body('composition').isString(),
     ((req: Request, res: Response) => {
         CRUDcreate<Tresor>(tresors, req, res);
@@ -75,17 +75,17 @@ adminRouter.get('/playerTtl', ((req: Request, res: Response) => {
     res.send({ttl: user.aventurier.ttl});
 }));
 
-adminRouter.put('/foundTresor',
-    query('x').isNumeric(),
-    query('y').isNumeric(),
+adminRouter.post('/foundTresor',
+    body('x').isNumeric(),
+    body('y').isNumeric(),
     ((req: Request, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() })
     }
-    const x = Number.parseInt(req.query.x as string);
-    const y = Number.parseInt(req.query.y as string);
-    const tresor = tresors.find(e => e.position.x === x && e.position.y === y);
+    const x = Number.parseInt(req.body.x as string);
+    const y = Number.parseInt(req.body.y as string);
+    const tresor = tresors.find(e => e.position.x === x && e.position.y === y); //
     if(tresor === undefined) {
         res.statusMessage = "Coffre n'existe pas"
         return res.sendStatus(400);

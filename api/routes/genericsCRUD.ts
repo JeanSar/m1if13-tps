@@ -6,7 +6,7 @@ export function CRUDcreate<T>(tab: T[], req: Request, res: Response) {
     if(!errors.isEmpty()) {
         return res.status(400).json({errors: errors.array()})
     }
-    tab.push(req.body);
+    tab.push(req.body as T);
     res.status(201);
     return res.send(`L'objet nouvellement créé a pour indice (ATTENTION !! c'est juste l'indice du tableau): ${tab.indexOf(req.body)}`);
 }

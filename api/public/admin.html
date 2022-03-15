@@ -5,14 +5,62 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="script.js"></script>
     <title>Document</title>
 </head>
 <body>
-    <h1>Pop tresor</h1>
-    <label for="x">Position x</label>
-    <input type="number" id="x" name="x">
-    <label for="y">Position y</label>
-    <input type="number" id="y" name="y">
+    <div>
+        <div id="tresor">
+            <h1>Pop tresor</h1>
+            <label for="x">Position x</label>
+            <input type="number" id="x" name="x">
+            <label for="y">Position y</label>
+            <input type="number" id="y" name="y">
+            <label for="composition">Composition</label>
+            <input type="text" id="composition" name="composition">
+            <button id="ok">Ajouter un coffre !</button>
+        </div>
+        <div id="foundTresor">
+            <h1>Tresor trouvé</h1>
+            <label for="foundTresorX">Position x</label>
+            <input type="number" id="foundTresorX" name="x">
+            <label for="foundTresorY">Position y</label>
+            <input type="number" id="foundTresorY" name="y">
+            <button id="foundTresorOk">Marquer le coffre trouvé</button>
+        </div>
+        <div id="initTTL">
+            <h1>Initialisation du ttl</h1>
+            <label for="ttl">Montant du ttl</label>
+            <input type="number" id="ttl" name="ttl">
+            <button id="okTTL">Initialisation du ttl</button>
+        </div>
+        <div id="getPos">
+            <h1>Obtenir la position d'un joueur</h1>
+            <label for="player">Id du joueur</label>
+            <input type="text" id="player" name="player">
+            <span id="showPos">Position du joueur : </span>
+            <br/>
+            <button id="okGetPos">Obtenir la position du joueur</button>
+        </div>
+        <div id="getTTL">
+            <h1>Obtenir le ttl d'un joueur</h1>
+            <label for="ttl">Obtenir le ttl du joueur</label>
+            <input type="text" id="tll" name="ttl">
+            <span id="showTTL">TTL du joueur : </span>
+            <br/>
+            <button id="okGetTTL">Obtenir le ttl du joueur</button>
+        </div>
+        <div id="startGame">
+            <h1>Commencer la partie !</h1>
+            <button id="okStartGame">Commencer la partie !</button>
+        </div>
+    </div>
 </body>
+<footer>
+    <script src="script.js"></script>
+</footer>
+<style>
+    div {
+        padding: 2em;
+    }
+</style>
 </html>
