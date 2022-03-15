@@ -18,7 +18,7 @@ app.use('/admin', adminRouter);
 app.use('/user', userRouter);
 app.use('/zrr', zrrRouter);
 app.use('/tresor', tresorRouter);
-app.use('/resources', resourcesRouter);
+app.use('/api', resourcesRouter);
 
 
 // Après toutes nos routes car si on le met avant, ce code sera appelé avant nos routes et on aura donc tout le temps
