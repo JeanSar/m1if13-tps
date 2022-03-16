@@ -58,14 +58,15 @@
 				</form>
 				<form id="setTreasureType" onsubmit="return sendTreasure();" class="pure-form">
 					<fieldset>
-						<label for="treasureType">Type de trésor : </label> <select name="treasureType" id="pet-select">
+						<label for="treasureType">Type de trésor : </label>
+						<select id="treasureType" name="treasureType">
 						    <option value="lune" selected>potion de lune</option>
 						    <option value="dissimulation">potion de dissimulation</option>
 						    <option value="Bêta-X">Bêta-X</option>
 						</select>
 						<br>
 						<label for="sendTreasure">Passer en mode de déclenchement d'impact (démarre le jeu) : </label> 
-						<input type="submit" name="sendTreasure" value="Feu!" class="pure-button pure-button-active">
+						<input id="sendTreasure" type="submit" name="sendTreasure" value="Feu!" class="pure-button pure-button-active">
 					</fieldset>
 				</form>
 			</div>
