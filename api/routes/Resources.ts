@@ -5,7 +5,7 @@ import { CRUDdelete, CRUDgetAll, CRUDgetOne, CRUDupdate, CRUDcreate } from "./ge
 import {users} from "./User";
 import {tresors} from "./Tresor";
 
-const georesources: Georesource[] = [];
+// TODO - Middleware pour l'auth
 
 const resourcesRouter = Router();
 const axios = require('axios');
@@ -145,4 +145,4 @@ resourcesRouter.put('/:resourceId/image',
     //             }
     //         });
 });
-export { georesources, resourcesRouter };
+export { resourcesRouter };
