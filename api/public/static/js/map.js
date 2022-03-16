@@ -92,7 +92,7 @@ mymap.on('click', async e => {
 				})
 				// TODO - Centrer le coffre via une fonction, puis récupré la vrai position via l'inverse de cette fonction
 				L.marker([coffre_lat, coffre_lng], {icon: coffreIcon})
-					.addTo(mymap).bindPopup(`Coffre contenant:<br><strong>${composition}}</strong>.`)
+					.addTo(mymap).bindPopup(`Coffre contenant:<br><strong>${composition}</strong>.`)
 					.openPopup();
 
 				if(gameStarted === false) {
