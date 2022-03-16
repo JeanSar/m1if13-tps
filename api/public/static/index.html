@@ -26,25 +26,21 @@
 			<h2>ZRR</h2>
 			<div class="content">
 				<p><span class="elanor">TODO:</span> modifier ce formulaire pour que les valeurs s'affichent dans le formulaire quand on clique sur la carte et que le bouton "Send" appelle la bonne fonctionnalité de votre serveur Express.</p>
-				<p>Appuyez sur "Set" pour sélectionner un point de la carte :</p>
-				<form id="setCorner1" onsubmit="return updateCorner1();" class="pure-form">
+				<p>Cliquer sur Créer la zone pour créer la ZRR sur la carte.</p>
+				<form id="setCorners" class="pure-form">
 					<fieldset>
-						<input type="submit" value="Set" class="pure-button pure-button-active">&nbsp;&nbsp;
-						<label for="lat1">Lattitude : </label> <input type="text" id="lat1" name="lat1">&nbsp;&nbsp;
-						<label for="lon1">Longitude : </label> <input type="text" id="lon1" name="lon1">
+						<label for="lat1">Lattitude : </label> <input type="text" id="lat1" name="lat1" disabled>&nbsp;&nbsp;
+						<label for="lon1">Longitude : </label> <input type="text" id="lon1" name="lon1" disabled>
 					</fieldset>
-		<span class="elanor">TODO:</span>		</form>
-				<form id="setCorner2" onsubmit="return updateCorner2();" class="pure-form">
 					<fieldset>
-						<input type="submit" value="Set" class="pure-button pure-button-active">&nbsp;&nbsp;
-						<label for="lat2">Lattitude : </label> <input type="text" id="lat2" name="lat2">&nbsp;&nbsp;
-						<label for="lon2">Longitude : </label> <input type="text" id="lon2" name="lon2">
+						<label for="lat2">Lattitude : </label> <input type="text" id="lat2" name="lat2" disabled>&nbsp;&nbsp;
+						<label for="lon2">Longitude : </label> <input type="text" id="lon2" name="lon2" disabled>
 					</fieldset>
 				</form>
-				<form id="sendZrr" onsubmit="return sendZrr();" class="pure-form">
+				<form id="sendZrr" class="pure-form">
 					<fieldset>
 						<label for="sendZrr">Valider la position de la ZRR : </label>&nbsp;&nbsp;
-						<input type="submit" name="sendZrr" value="Send" class="pure-button pure-button-active">
+						<input type="submit" name="sendZrr" id="submitSendZrr" value="Send" class="pure-button pure-button-active">
 					</fieldset>
 				</form>
 			</div>
@@ -62,15 +58,14 @@
 				</form>
 				<form id="setTreasureType" onsubmit="return sendTreasure();" class="pure-form">
 					<fieldset>
-						<label for="treasureType">Type de trésor : </label>
-						<select id="treasureType" name="treasureType">
+						<label for="treasureType">Type de trésor : </label> <select name="treasureType" id="pet-select">
 						    <option value="lune" selected>potion de lune</option>
 						    <option value="dissimulation">potion de dissimulation</option>
 						    <option value="Bêta-X">Bêta-X</option>
 						</select>
 						<br>
 						<label for="sendTreasure">Passer en mode de déclenchement d'impact (démarre le jeu) : </label> 
-						<input id="sendTreasure" type="submit" name="sendTreasure" value="Feu!" class="pure-button pure-button-active">
+						<input type="submit" name="sendTreasure" value="Feu!" class="pure-button pure-button-active">
 					</fieldset>
 				</form>
 			</div>
