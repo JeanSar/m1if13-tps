@@ -157,7 +157,7 @@ async function sendZRR() {
 		);
 		console.log(body);
 		try {
-		const res = await fetch(`${baseURL}/areaLimit`, {
+		const res = await fetch(`${apiPath}/areaLimit`, {
 			method: "POST",
 			body: body,
 			headers: {'content-type': "application/json"}
