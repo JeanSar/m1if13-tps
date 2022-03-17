@@ -76,15 +76,16 @@
 			<div class="content">
 				<p><span class="elanor">TODO:</span> placer ici les informations sur le joueur et les liens pour les modifier. Exemple :</p>
 				<div>
-					<a href="javascript:updateImage('Toto');"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Pediculus_humanus_var_capitis.jpg/800px-Pediculus_humanus_var_capitis.jpg?uselang=fr" alt="Pediculus humanus var capitis AKA head louse; public domain from http://phil.cdc.gov/" class="icon"></a>&nbsp;&nbsp;-&nbsp;&nbsp;
-					<a href="javascript:updateName('Toto');">Toto</a>&nbsp;&nbsp;-&nbsp;&nbsp;
+					<label for="namePlayer">Nom du joueur : </label>
+					<input type="text" id="namePlayer" name="namePlayer">
+					<img src="" class="icon">
 					<strong>TTL</strong> <span id="showPlayerTTL"> </span> &nbsp;&nbsp;-&nbsp;&nbsp;
 					<strong>Trophys</strong><span id="showTresorPlayer"> </span>
 				</div>
-				<form id="addUser" onsubmit="return sendTreasure();" class="pure-form">
+				<form class="pure-form">
 					<fieldset>
 						<label for="addUser">Inscrire un joueur dans la ZRR : </label> 
-						<input type="submit" name="addUser" value="Add" class="pure-button pure-button-active">
+						<input type="submit" id="addUser" name="addUser" value="Add" class="pure-button pure-button-active">
 					</fieldset>
 				</form>
 			</div>
