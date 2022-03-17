@@ -1,17 +1,4 @@
-import $ from 'jquery';
-
-const apiPath = 'http://localhost:3376/admin'
-// MàJ de l'indicateur numérique du zoom
-function updateZoomValue() {
-    $('#zoomValue').html($('#zoom').val());
-	updateMap();
-}
-
-
-// // Abonnement aux événements de changement
-// $('#lat').change(updateMap);
-// $('#lon').change(updateMap);
-// $('#zoom').change(updateZoomValue);
+import apiPath from './apiPath-dev';
 
 console.log("Form.js loaded...")
 
