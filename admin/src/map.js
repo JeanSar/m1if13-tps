@@ -37,13 +37,15 @@ let fire = false;
 let countClick = 0;
 
 let rectangle = undefined;
+let markerpt1 = undefined;
+let markerpt2 = undefined;
 
 document.querySelector("#createArea").addEventListener("click", (e) => {
 	e.preventDefault();
 	onCreateArea = true;
-	if (rectangle !== undefined) {
-		mymap.removeLayer(rectangle);
-	}
+	removeLayer(rectangle);
+	removeLayer(markerpt1);
+	removeLayer(markerpt2);
 });
 
 document.querySelector("#sendTreasure").addEventListener("click", (e) => {
@@ -59,19 +61,18 @@ mymap.on('click', async e => {
 		if (countClick === 1) {
 			pt1.lat = e.latlng.lat;
 			pt1.lng = e.latlng.lng;
-			console.log({ pt1 })
+			markerpt1 = L.marker(pt1).addTo(mymap);
 		} else if (countClick === 2) {
 			pt2.lat = e.latlng.lat;
 			pt2.lng = e.latlng.lng;
-			console.log({ pt2 })
+			markerpt2 = L.marker(pt2).addTo(mymap);
 			countClick = 0;
 			onCreateArea = false;
-
 			let bounds = [[pt1.lat, pt1.lng], [e.latlng.lat, e.latlng.lng]];
-			rectangle = L.rectangle(bounds).addTo(mymap);
+			rectangle = L.rectangle(bounds, {color: "#ff7800", weight: 5, fill: false}).addTo(mymap);
 			setZRR(rectangle.getBounds());
 		}
-	} else if (fire) { // Si on a presser le bouton fire, un clique sur la map déclenche le pop d'un coffre
+	} else if (fire && zrrCreated) { // Si on a presser le bouton fire, un clique sur la map déclenche le pop d'un coffre
 		const { lat: coffre_lat, lng: coffre_lng } = e.latlng;
 		const composition = document.querySelector("#treasureType").value;
 		const body = {
@@ -136,8 +137,11 @@ function setZRR(bounds) {
 
 document.querySelector('#submitSendZrr').addEventListener('click', e => {
 	e.preventDefault();
+	removeLayer(markerpt1);
+	removeLayer(markerpt2);
 	sendZRR();
 });
+
 async function sendZRR() {
 	if (zrrCreated) {
 		const xNO = Number.parseFloat(document.querySelector("#lat1").value);
@@ -180,4 +184,10 @@ function updateMap() {
 
 	// La fonction de validation du formulaire renvoie false pour bloquer le rechargement de la page.
 	return false;
+}
+
+function removeLayer(layer) {
+	if(layer !== undefined) {
+		mymap.removeLayer(layer);
+	}
 }
