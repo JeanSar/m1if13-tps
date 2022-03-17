@@ -1,3 +1,5 @@
+import * as L from 'leaflet';
+
 // initialisation de la map
 let lat = 45.782, lng = 4.8656, zoom = 19;
 const apiPath = 'http://localhost:3376/admin'
