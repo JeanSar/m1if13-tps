@@ -6,30 +6,30 @@ let lat = 45.782, lng = 4.8656, zoom = 19;
 let gameStarted = false;
 
 let mymap = L.map('map', {
-    center: [lat, lng],
-    zoom: zoom
+	center: [lat, lng],
+	zoom: zoom
 });
 //updateMap();
 
 // Création d'un "tile layer" (permet l'affichage sur la carte)
 L.tileLayer('https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}@2x.jpg90?access_token=pk.eyJ1IjoibTFpZjEzIiwiYSI6ImNqczBubmhyajFnMnY0YWx4c2FwMmRtbm4ifQ.O6W7HeTW3UvOVgjCiPrdsA', {
-		maxZoom: 22,
-		minZoom: 1,
-		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
-			'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-		id: 'mapbox/streets-v11',
-		tileSize: 512,
-		zoomOffset: -1,
-		accessToken: 'pk.eyJ1IjoibTFpZjEzIiwiYSI6ImNqczBubmhyajFnMnY0YWx4c2FwMmRtbm4ifQ.O6W7HeTW3UvOVgjCiPrdsA'
-	}).addTo(mymap);
+	maxZoom: 22,
+	minZoom: 1,
+	attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+		'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+		'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+	id: 'mapbox/streets-v11',
+	tileSize: 512,
+	zoomOffset: -1,
+	accessToken: 'pk.eyJ1IjoibTFpZjEzIiwiYSI6ImNqczBubmhyajFnMnY0YWx4c2FwMmRtbm4ifQ.O6W7HeTW3UvOVgjCiPrdsA'
+}).addTo(mymap);
 
 // Ajout d'un marker
 L.marker([45.78207, 4.86559]).addTo(mymap).bindPopup('Entrée du bâtiment<br><strong>Nautibus</strong>.').openPopup();
 
 
-let pt1 = {lat: 0, lng: 0};
-let pt2 = {lat: 0.1, lng: 0.1};
+let pt1 = { lat: 0, lng: 0 };
+let pt2 = { lat: 0.1, lng: 0.1 };
 
 let onCreateArea = false;
 let zrrCreated = false;
@@ -41,7 +41,7 @@ let rectangle = undefined;
 document.querySelector("#createArea").addEventListener("click", (e) => {
 	e.preventDefault();
 	onCreateArea = true;
-	if(rectangle !== undefined) {
+	if (rectangle !== undefined) {
 		mymap.removeLayer(rectangle);
 	}
 });
@@ -53,17 +53,17 @@ document.querySelector("#sendTreasure").addEventListener("click", (e) => {
 
 // Clic sur la carte
 mymap.on('click', async e => {
-	if(onCreateArea) {
+	if (onCreateArea) {
 		countClick++;
-		console.log({countClick})
+		console.log({ countClick })
 		if (countClick === 1) {
 			pt1.lat = e.latlng.lat;
 			pt1.lng = e.latlng.lng;
-			console.log({pt1})
+			console.log({ pt1 })
 		} else if (countClick === 2) {
 			pt2.lat = e.latlng.lat;
 			pt2.lng = e.latlng.lng;
-			console.log({pt2})
+			console.log({ pt2 })
 			countClick = 0;
 			onCreateArea = false;
 
@@ -71,8 +71,8 @@ mymap.on('click', async e => {
 			rectangle = L.rectangle(bounds).addTo(mymap);
 			setZRR(rectangle.getBounds());
 		}
-	} else if(fire) { // Si on a presser le bouton fire, un clique sur la map déclenche le pop d'un coffre
-		const {lat: coffre_lat ,lng : coffre_lng} = e.latlng;
+	} else if (fire) { // Si on a presser le bouton fire, un clique sur la map déclenche le pop d'un coffre
+		const { lat: coffre_lat, lng: coffre_lng } = e.latlng;
 		const composition = document.querySelector("#treasureType").value;
 		const body = {
 			position: {
@@ -84,27 +84,27 @@ mymap.on('click', async e => {
 		try {
 			const res = await fetch(`${apiPath}/popTresor`, {
 				method: "POST",
-				headers: {'content-type': "application/json"},
+				headers: { 'content-type': "application/json" },
 				body: JSON.stringify(body)
 			});
 
-			if(res.status === 201) { // Le trésor a bien été ajouté
+			if (res.status === 201) { // Le trésor a bien été ajouté
 				const coffreIcon = L.icon({
 					iconUrl: "./icon_coffre.png"
 				})
 				// TODO - Centrer le coffre via une fonction, puis récupré la vrai position via l'inverse de cette fonction
-				L.marker([coffre_lat, coffre_lng], {icon: coffreIcon})
+				L.marker([coffre_lat, coffre_lng], { icon: coffreIcon })
 					.addTo(mymap).bindPopup(`Coffre contenant:<br><strong>${composition}}</strong>.`)
 					.openPopup();
 
-				if(gameStarted === false) {
+				if (gameStarted === false) {
 					const res2 = await fetch(`${apiPath}/startGame`, {
 						method: "POST",
-						headers: {'content-type': "application/json"}
+						headers: { 'content-type': "application/json" }
 					});
 
 					console.log(res2)
-					if(res2.status === 204) { // Le serveur a bien commencé partie
+					if (res2.status === 204) { // Le serveur a bien commencé partie
 						gameStarted = true;
 					}
 				}
@@ -118,7 +118,7 @@ mymap.on('click', async e => {
 	} else {
 		lat = e.latlng.lat;
 		lng = e.latlng.lng;
-		console.log("A cliquer à la pos : ", {lat}, {lng});
+		console.log("A cliquer à la pos : ", { lat }, { lng });
 		updateMap();
 	}
 
@@ -139,7 +139,7 @@ document.querySelector('#submitSendZrr').addEventListener('click', e => {
 	sendZRR();
 });
 async function sendZRR() {
-	if(zrrCreated) {
+	if (zrrCreated) {
 		const xNO = Number.parseFloat(document.querySelector("#lat1").value);
 		const yNO = Number.parseFloat(document.querySelector("#lon1").value);
 		const xSE = Number.parseFloat(document.querySelector("#lat2").value);
@@ -148,28 +148,28 @@ async function sendZRR() {
 		const yNE = yNO;
 		const xSO = xNO;
 		const ySO = ySE;
-	
+
 		const body = JSON.stringify(
 			{
-				limite_NE: {x: xNE, y: yNE},
-				limite_NO: {x: xNO, y: yNO},
-				limite_SE: {x: xSE, y: ySE},
-				limite_SO: {x: xSO, y: ySO}		
+				limite_NE: { x: xNE, y: yNE },
+				limite_NO: { x: xNO, y: yNO },
+				limite_SE: { x: xSE, y: ySE },
+				limite_SO: { x: xSO, y: ySO }
 			}
 		);
 		console.log(body);
 		try {
-		const res = await fetch(`${apiPath}/areaLimit`, {
-			method: "POST",
-			body: body,
-			headers: {'content-type': "application/json"}
-		});
-		console.log('ZRR envoyé.')
-		} catch(e) {
+			await fetch(`${apiPath}/areaLimit`, {
+				method: "POST",
+				body: body,
+				headers: { 'content-type': "application/json" }
+			});
+			console.log('ZRR envoyé.')
+		} catch (e) {
 			console.error(e.message);
 		}
 
-		
+
 	}
 }
 

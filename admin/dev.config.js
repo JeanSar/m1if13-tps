@@ -1,4 +1,5 @@
 const path = require('path');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
 module.exports = {
   entry: ['./src/form.js', './src/map.js', './src/apiPath-dev.js'],
@@ -7,5 +8,6 @@ module.exports = {
     path: path.resolve(__dirname, '..', 'api', 'public', 'static', 'dist'),
   },
   mode: 'development',
-  watch: true
+  watch: true,
+  plugins: [new ESLintPlugin()],
 };
