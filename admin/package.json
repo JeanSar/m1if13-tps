@@ -2,9 +2,10 @@
   "name": "admin",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "private":  true,
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "build": "webpack --config webpack.config.js"
   },
   "author": "",
   "license": "ISC",
