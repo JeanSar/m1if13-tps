@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "test": "test",
-    "build": "webpack --config webpack.config.js"
+    "builddev": "webpack --config dev.config.js",
+    "buildprod": "webpack --config prod.config.js"
   },
   "author": "",
   "license": "ISC",

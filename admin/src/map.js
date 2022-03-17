@@ -1,10 +1,9 @@
 import * as L from 'leaflet';
+import {apiPath} from './apiPath-dev';
 
 // initialisation de la map
 let lat = 45.782, lng = 4.8656, zoom = 19;
-const apiPath = 'http://localhost:3376/admin'
 let gameStarted = false;
-
 
 let mymap = L.map('map', {
     center: [lat, lng],
@@ -33,6 +32,7 @@ let pt1 = {lat: 0, lng: 0};
 let pt2 = {lat: 0.1, lng: 0.1};
 
 let onCreateArea = false;
+let zrrCreated = false;
 let fire = false;
 let countClick = 0;
 
