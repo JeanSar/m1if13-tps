@@ -1,11 +1,11 @@
 const path = require('path');
 
 module.exports = {
-  entry: ['./src/map.js', './src/form.js'],
+  entry: ['./src/form.js', './src/map.js'],
   output: {
     filename: 'main.js',
-    path: path.resolve(__dirname, '../api/public/static/dist/'),
+    path: path.resolve(__dirname, '..', 'api', 'public', 'static', 'dist'),
   },
-  mode: "development",
+  mode: 'development',
   watch: true
 };
