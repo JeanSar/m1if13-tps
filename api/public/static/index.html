@@ -48,10 +48,11 @@
 			<h2>Paramètres</h2>
 			<div class="content">
 				<p><span class="elanor">TODO:</span> Mettre en place les scripts nécessaires au fonctionnement de l'interface et à l'appel de l'API du jeu.</p>
-				<form id="setTtl" onsubmit="return setTtl();" class="pure-form">
+				<form id="setTtl" class="pure-form">
 					<fieldset>
-						<label for="ttl">Temps de Tranquillité et de Liberté (TTL) par défaut : </label> <input type="number" min="0" max="180" value="60" id="ttl" name="ttl">&nbsp;&nbsp;
-						<input type="submit" name="setTtl" value="Set" class="pure-button pure-button-active">
+						<label for="ttl">Temps de Tranquillité et de Liberté (TTL) par défaut : </label>
+						<input type="number" min="0" max="180" value="60" id="ttl" name="ttl">&nbsp;&nbsp;
+						<input type="submit" name="setTtl" value="Set" id="okTTL" class="pure-button pure-button-active">
 					</fieldset>
 				</form>
 				<form id="setTreasureType" onsubmit="return sendTreasure();" class="pure-form">
@@ -77,8 +78,8 @@
 				<div>
 					<a href="javascript:updateImage('Toto');"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Pediculus_humanus_var_capitis.jpg/800px-Pediculus_humanus_var_capitis.jpg?uselang=fr" alt="Pediculus humanus var capitis AKA head louse; public domain from http://phil.cdc.gov/" class="icon"></a>&nbsp;&nbsp;-&nbsp;&nbsp;
 					<a href="javascript:updateName('Toto');">Toto</a>&nbsp;&nbsp;-&nbsp;&nbsp;
-					<strong>TTL</strong> : 180s&nbsp;&nbsp;-&nbsp;&nbsp;
-					<strong>Trophys</strong> : none
+					<strong>TTL</strong> <span id="showPlayerTTL"> </span> &nbsp;&nbsp;-&nbsp;&nbsp;
+					<strong>Trophys</strong><span id="showTresorPlayer"> </span>
 				</div>
 				<form id="addUser" onsubmit="return sendTreasure();" class="pure-form">
 					<fieldset>

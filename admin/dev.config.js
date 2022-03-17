@@ -6,5 +6,6 @@ module.exports = {
     filename: 'main.js',
     path: path.resolve(__dirname, '..', 'api', 'public', 'static', 'dist'),
   },
-  mode: 'development'
+  mode: 'development',
+  watch: true
 };
