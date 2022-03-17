@@ -1,5 +1,5 @@
 import * as L from 'leaflet';
-import {apiPath} from './apiPath-dev';
+import apiPath from './apiPath-dev';
 
 // initialisation de la map
 let lat = 45.782, lng = 4.8656, zoom = 19;
