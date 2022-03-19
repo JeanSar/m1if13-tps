@@ -126,6 +126,12 @@ adminRouter.post('/registerPlayerZZR', ((req: Request, res: Response) => {
     const user = users.find(e => e.aventurier.id === idPlayer);
     if(user !== undefined) {
         user.isRegisterInToZRR = true;
+        if(zrrs.length > 0) {
+            user.aventurier.position = zrrs[0].limite_SE;
+        } else {
+            res.status(400);
+            return res.send("La zrr n'a pas été crée");
+        }
         return res.sendStatus(204);
     }
 

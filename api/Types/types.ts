@@ -39,7 +39,7 @@ export interface Georesource {
 }
 
 export function convertToGeoResource (users: User[], treasures: Tresor[], id: string): Georesource | undefined {
-    const user = users.find(e => e.aventurier.id === id);
+    const user = users.find(e => e.aventurier.id === id && e.isRegisterInToZRR);
     if(user === undefined) {
         return undefined;
     }
