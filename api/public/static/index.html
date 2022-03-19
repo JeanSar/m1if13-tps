@@ -15,15 +15,13 @@
 
 		<section>
 			<h2>Carte</h2>
+			<div id="map"></div> </br>
 			<button id="createArea">Créer la zone</button>
-			<p class="content"><span class="elanor">TODO:</span> mettre à jour les positions des différents objets sur la carte.</p>
-			<div id="map"></div>
 		</section>
 
 		<section>
 			<h2>ZRR</h2>
 			<div class="content">
-				<p><span class="elanor">TODO:</span> modifier ce formulaire pour que les valeurs s'affichent dans le formulaire quand on clique sur la carte et que le bouton "Send" appelle la bonne fonctionnalité de votre serveur Express.</p>
 				<p>Cliquer sur Créer la zone pour créer la ZRR sur la carte.</p>
 				<form id="setCorners" class="pure-form" autocomplete="off">
 					<fieldset>
@@ -47,7 +45,6 @@
 		<section>
 			<h2>Paramètres</h2>
 			<div class="content">
-				<p><span class="elanor">TODO:</span> Mettre en place les scripts nécessaires au fonctionnement de l'interface et à l'appel de l'API du jeu.</p>
 				<form id="setTtl" class="pure-form">
 					<fieldset>
 						<label for="ttl">Temps de Tranquillité et de Liberté (TTL) par défaut : </label>
@@ -78,7 +75,7 @@
 				<div>
 					<label for="namePlayer">Nom du joueur : </label>
 					<input type="text" id="namePlayer" name="namePlayer">
-					<img src="" class="icon">
+					<img src="" id="playerImage" class="icon">
 					<strong>TTL</strong> <span id="showPlayerTTL"> </span> &nbsp;&nbsp;-&nbsp;&nbsp;
 					<strong>Trophys</strong><span id="showTresorPlayer"> </span>
 				</div>

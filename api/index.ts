@@ -6,12 +6,13 @@ import {zrrRouter} from './routes/ZRR';
 import {adminRouter} from "./routes/Admin";
 import {tresorRouter} from "./routes/Tresor";
 import {resourcesRouter} from "./routes/Resources";
-
+const cors = require('cors');
 const app = express();
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+app.use(cors()); // Pour pouvoir tester les routes depuis les tests jasmine
 app.use(express.static("public"));
 app.use(express.json());
 app.use('/admin', adminRouter);
