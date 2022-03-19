@@ -19,7 +19,8 @@ export interface Aventurier {
 
 export interface User {
     aventurier: Aventurier,
-    isAdmin: boolean
+    isAdmin: boolean,
+    isRegisterInToZRR?: boolean
 }
 
 export interface Tresor {

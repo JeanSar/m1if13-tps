@@ -6,12 +6,6 @@ import {CRUDdelete, CRUDgetAll, CRUDgetOne, CRUDupdate, CRUDcreate} from "./gene
 
 
 const zrrs: Limites[] = []
-zrrs.push({
-    limite_NE: { x: 45, y: 56 },
-    limite_NO: { x: 45, y: 56 },
-    limite_SE: { x: 45, y: 56 },
-    limite_SO: { x: 45, y: 56 }
-});
 
 const zrrRouter = Router();
 

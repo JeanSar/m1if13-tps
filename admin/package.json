@@ -5,9 +5,8 @@
   "private": true,
   "scripts": {
     "test": "test",
-    "validate": "",
-    "builddev": "webpack --config dev.config.js",
-    "buildprod": "webpack --config prod.config.js"
+    "build": "webpack --mode=development --config webpack.config.js ",
+    "buildprod": "webpack --mode=production --config prod.config.js"
   },
   "author": "",
   "license": "ISC",
