@@ -15,7 +15,7 @@ const origin = "http://localhost"
 const notFoudRessourceIdMsg = "L'id spécifié n'existe pas ou l'utilsateur n'est pas inscrit à la ZRR";
 
 resourcesRouter.use(async (req: Request, res: Response, next: NextFunction) => {
-    if(!(req.headers['x-admin-authorization'] == 'true')) { // Ce header est mis si l'on reqûete depuis la page admin
+    if(!(req.headers['x-admin-authorization'] !== undefined && req.headers['x-admin-authorization'] == 'true')) { // Ce header est mis si l'on reqûete depuis la page admin
         const jwt_token = req.headers.authorization;
         try {
             const response = await axios.get(`http://localhost:8080/authenticate?jwt=${jwt_token}&origin=${origin}`);
