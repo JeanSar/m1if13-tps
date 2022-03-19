@@ -66,6 +66,11 @@ function fillFieldSelectedResources(resource) {
     console.log({resource})
     document.querySelector("#playerImage").setAttribute("src", resource.url);
     document.querySelector("#showPlayerTTL").innerHTML = resource.ttl;
+    let tresors = " : ";
+    resource.treasures.forEach(t => {
+        tresors += t.composition + " ; ";
+    })
+    document.querySelector("#showTresorPlayer").innerHTML = tresors;
 }
 
 
