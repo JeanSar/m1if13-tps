@@ -77,33 +77,18 @@ resourcesRouter.put('/:resourceId/image',
             return res.status(400).json({errors: errors.array()});
         }
         const newImage: string = req.body.url;
-        const jwt_token: string = req.headers.authorization as string;
         const resourceId: string = req.params.resourceId;
 
-        let status: number;
-        try {
-            const response = await axios.get(`http://localhost:8080/authenticate?jwt=${jwt_token}&origin=${origin}`);
-            status = response.status;
-        } catch (e) {
-            status = -1;
+        const user = users.find(e => e.aventurier.id === resourceId);
+        if (user != undefined) {
+            // L'id fournit dans le body existe bien
+            user.aventurier.image = newImage;
+            res.status(200)
+            return res.send("Image modifié");
+        } else {
+            // Aucun id ne corespond à celui fournit
+            res.status(400);
+            return res.send(notFoudRessourceIdMsg);
         }
-
-        // L'authentification s'est bien passée
-        if(status === 204) {
-            const user = users.find(e => e.aventurier.id === resourceId);
-            if (user != undefined) {
-                // L'id fournit dans le body existe bien
-                user.aventurier.image = newImage;
-                res.status(200)
-                return res.send("Image modifié");
-            } else {
-                // Aucun id ne corespond à celui fournit
-                res.status(400);
-                return res.send(notFoudRessourceIdMsg);
-            }
-        }
-        // A partir d'ici, si on atteint le code ci-dessous, c'est que l'authentification via le serveur spring a échoué
-        res.status(400)
-        return res.send(notFoudRessourceIdMsg);
 });
 export { resourcesRouter };
