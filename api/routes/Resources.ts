@@ -15,14 +15,19 @@ const origin = "http://localhost"
 const notFoudRessourceIdMsg = "L'id spécifié n'existe pas ou l'utilsateur n'est pas inscrit à la ZRR";
 
 resourcesRouter.use(async (req: Request, res: Response, next: NextFunction) => {
-    const jwt_token = req.headers.authorization;
-    try {
-        const response = await axios.get(`http://localhost:8080/authenticate?jwt=${jwt_token}&origin=${origin}`);
-        res.status(response.status);
+    if(!(req.headers['x-admin-authorization'] == 'true')) { // Ce header est mis si l'on reqûete depuis la page admin
+        const jwt_token = req.headers.authorization;
+        try {
+            const response = await axios.get(`http://localhost:8080/authenticate?jwt=${jwt_token}&origin=${origin}`);
+            res.status(response.status);
+            next();
+        } catch (e) {
+            return res.sendStatus(401); // Non authentifié
+        }
+    } else { // C'est que la requête vien de la page admin
         next();
-    } catch (e) {
-        return res.sendStatus(401); // Non authentifié
     }
+
 });
 
 resourcesRouter.get('/:resourceId',
