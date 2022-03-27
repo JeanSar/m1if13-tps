@@ -1,17 +1,27 @@
 import apiPath from './apiPath-dev';
+import axios from "axios";
 
 console.log("Form.js loaded...")
 
-async function setTTL(ttlValue) {
+async function setTTL(ttlValue, isNodeEnv) {
     const body = JSON.stringify({ttl: ttlValue});
+    const url = `${apiPath}/ttlInit`;
+    let res;
     try {
-        const res = await fetch(`${apiPath}/ttlInit`, {
-            method: "POST",
-            body: body,
-            headers: {
-                'content-type': 'application/json'
-            }
-        });
+
+        if(!isNodeEnv) {
+            console.log("In browser env");
+            res = await fetch(url, {
+                method: "POST",
+                body: body,
+                headers: {
+                    'content-type': 'application/json'
+                }
+            });
+        } else {
+            console.log("In node env");
+            res = await axios.post(url, body);
+        }
         if(res.status === 204) {
             console.log(res);
             console.log("TTl initialisé");
@@ -19,7 +29,10 @@ async function setTTL(ttlValue) {
     } catch (e) {
         console.error(e.message);
     }
+
+    return res;
 }
+
 
 document.querySelector("#okTTL").addEventListener("click", async (e) => {
     e.preventDefault();
@@ -27,14 +40,21 @@ document.querySelector("#okTTL").addEventListener("click", async (e) => {
     await setTTL(ttlValue);
 });
 
-async function addUser(namePlayer) {
+async function addUser(namePlayer, isNodeEnv) {
     const body = JSON.stringify({id: namePlayer});
+    const url = `${apiPath}/registerPlayerZZR`;
+    let res;
     try {
-        const res = await fetch(`${apiPath}/registerPlayerZZR`, {
-            method: "POST",
-            body: body,
-            headers: {'content-type': 'application/json'}
-        });
+        if(!isNodeEnv) {
+            res = await fetch(url, {
+                method: "POST",
+                body: body,
+                headers: {'content-type': 'application/json'}
+            });
+        } else {
+            res = await axios.post(url, body)
+        }
+
         if(res.status === 204) {
             window.alert("Joueur ajouté dans la zrr");
         } else {
