@@ -4,7 +4,7 @@
   "description": "client pour l'admin du jeu",
   "private": true,
   "scripts": {
-    "test": "test",
+    "test": "jasmine-browser-runner",
     "build": "webpack --mode=development --config webpack.config.js ",
     "buildprod": "webpack --mode=production --config prod.config.js"
   },
@@ -15,6 +15,8 @@
     "@types/leaflet": "^1.7.9",
     "eslint": "^8.10.0",
     "eslint-webpack-plugin": "^3.1.1",
+    "jasmine-browser-runner": "^1.0.0",
+    "jasmine-core": "^4.0.1",
     "webpack": "^5.70.0",
     "webpack-cli": "^4.9.2"
   },
