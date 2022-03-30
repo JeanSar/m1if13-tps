@@ -6,10 +6,10 @@ let apiHost = ""
 
 let setupAPI = function() {
   switch (process.env.NODE_ENV) {
-    case 'production':
+    case 'development':
       apiHost = "'http://localhost:3376/admin'";
       break;
-    case 'development':
+    case 'production':
       apiHost = "'https://192.168.75.13:8080/mif13/admin'";
       break;
   }

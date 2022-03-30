@@ -1,3 +1,3 @@
-const apiPath = __API__//'http://localhost:3376/admin';
+const apiPath = __API__;
 
 export default apiPath;
