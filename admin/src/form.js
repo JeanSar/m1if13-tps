@@ -1,4 +1,4 @@
-import apiPath from './apiPath-dev';
+import apiPath from './apiPath';
 import axios from "axios";
 
 console.log("Form.js loaded...")
