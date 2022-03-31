@@ -22,7 +22,7 @@ module.exports = {
     filename: 'main.js',
     path: path.resolve(__dirname, '..', 'api', 'public', 'static', 'dist'),
   },
-  watch: true,
+  watch: process.env.NODE_ENV==='development' ? true : false,
   plugins: [
     new ESLintPlugin(),
     new webpack.DefinePlugin({
