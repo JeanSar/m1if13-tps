@@ -4,12 +4,11 @@
   "description": "client pour l'admin du jeu",
   "private": true,
   "scripts": {
-    "build": "webpack --mode=development --config webpack.config.js ",
-    "buildprod": "webpack --mode=production --config prod.config.js",
     "test": "jasmine",
-    "validate": "",
-    "builddev": "webpack --config dev.config.js",
-    "buildprod_merge": "webpack --config prod.config.js"
+    "prebuild": "",
+    "build": "webpack --config webpack.config.js",
+    "build:prod": "NODE_ENV=production npm run build",
+    "build:dev": "NODE_ENV=development npm run build"
   },
   "author": "",
   "license": "ISC",
