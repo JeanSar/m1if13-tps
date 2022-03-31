@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "test": "jasmine",
-    "prebuild": "",
+    "prebuild": "npm run test",
     "build": "webpack --config webpack.config.js",
     "build:prod": "NODE_ENV=production npm run build",
     "build:dev": "NODE_ENV=development npm run build"

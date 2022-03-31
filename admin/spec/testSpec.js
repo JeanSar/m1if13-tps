@@ -1,7 +1,7 @@
 const axios = require("axios");
 
 
-const apiPath = 'http://localhost:3376/admin';
+const apiPath = 'https://192.168.75.13:8080/mif13/admin';
 
 async function setTTL(ttlValue, isNodeEnv) {
     const body = JSON.stringify({ttl: ttlValue});
