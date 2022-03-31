@@ -10,7 +10,7 @@ let setupAPI = function() {
       apiHost = "'http://localhost:3376/admin'";
       break;
     case 'production':
-      apiHost = "'https://192.168.75.13:8080/mif13/admin'";
+      apiHost = "'https://192.168.75.13/game/admin'";
       break;
   }
 }
