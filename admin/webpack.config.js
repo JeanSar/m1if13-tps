@@ -24,7 +24,7 @@ module.exports = {
   },
   watch: true,
   plugins: [
-    //new ESLintPlugin(),
+    new ESLintPlugin(),
     new webpack.DefinePlugin({
       __API__: apiHost
     })
