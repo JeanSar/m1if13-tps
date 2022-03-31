@@ -5,7 +5,7 @@ console.log("Form.js loaded...")
 
 async function setTTL(ttlValue, isNodeEnv) {
     const body = JSON.stringify({ttl: ttlValue});
-    const url = `${apiPath}/ttlInit`;
+    const url = `http://localhost:3376/api/admin/ttlInit`;
     let res;
     try {
 
@@ -42,7 +42,7 @@ document.querySelector("#okTTL").addEventListener("click", async (e) => {
 
 async function addUser(namePlayer, isNodeEnv) {
     const body = JSON.stringify({id: namePlayer});
-    const url = `${apiPath}/registerPlayerZZR`;
+    const url = `http://localhost:3376/api/admin/registerPlayerZZR`;
     let res;
     try {
         if(!isNodeEnv) {
