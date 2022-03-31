@@ -8,9 +8,7 @@
     "build:prod": "NODE_ENV=production npm run build",
     "build:dev": "NODE_ENV=development npm run build",
     "test": "jasmine",
-    "validate": "",
-    "builddev": "webpack --config dev.config.js",
-    "buildprod_merge": "webpack --config prod.config.js"
+    "validate": ""
   },
   "author": "",
   "license": "ISC",
