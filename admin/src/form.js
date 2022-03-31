@@ -75,13 +75,27 @@ addUserIntoZRR.addEventListener("click", async (e) => {
     fillFieldSelectedResources(resource);
 });
 
-async function getSelectedResources(namePlayer) {
-    const res = await fetch(`http://localhost:3376/api/${namePlayer}`, {
-        method: "GET",
-        headers: {'X-Admin-Authorization': true}
-    });
+async function getSelectedResources(namePlayer, isNodeEnv) {
+    const url = `http://localhost:3376/api/${namePlayer}`;
+    let res;
+    try {
+        if(!isNodeEnv) {
+            res = await fetch(url, {
+                method: "GET",
+                headers: {'X-Admin-Authorization': true}
+            });
+        } else {
+            res = await axios.get(url);
+        }
+    } catch (e) {
+        res = e.response.status;
+        return res;
+    }
+
+
     return await res.json();
 }
+
 function fillFieldSelectedResources(resource) {
     console.log({resource})
     document.querySelector("#playerImage").setAttribute("src", resource.url);
