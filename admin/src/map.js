@@ -125,6 +125,8 @@ mymap.on('click', async e => {
 
 });
 
+
+
 function setZRR(bounds) {
 	let a = bounds.getNorthWest(); //Point a
 	let b = bounds.getSouthEast(); // Point b

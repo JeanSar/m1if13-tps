@@ -61,6 +61,26 @@ async function addUser(namePlayer, isNodeEnv) {
     return res;
 }
 
+async function getSelectedResources(namePlayer, isNodeEnv) {
+    const url = `http://localhost:3376/api/${namePlayer}`;
+    let res;
+    try {
+        if(!isNodeEnv) {
+            res = await fetch(url, {
+                method: "GET",
+                headers: {'X-Admin-Authorization': true}
+            });
+        } else {
+            res = await axios.get(url);
+        }
+    } catch (e) {
+        res = e.response.status;
+        return res;
+    }
+
+
+    return await res.json();
+}
 
 describe("Init TTL test",  function() {
     it("res status response = 204", async function() {
@@ -76,5 +96,19 @@ describe("Add user into zrr test",  function() {
     });
 });
 
+describe("Fetch resources for one player fail",  function() {
+    it("res status response not equal to 204 (player does'nt exists)", async function() {
+        const res = await getSelectedResources("Toto", true);
+        expect(res.status).not.toBe(204);
+    });
+});
 
+describe('MyApp', function() {
+    beforeEach(function() {
+        browser().navigateTo('../index.html');
+    });
 
+    it('should be true', function() {
+        expect(true).toBe(true);
+    });
+});
