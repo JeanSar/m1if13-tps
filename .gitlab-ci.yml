@@ -29,4 +29,15 @@ deploy:
     script:
         - mvn clean package --batch-mode
         - scp -o StrictHostKeyChecking=no -i $CI_SSH_KEY /builds/p1710759/m1if13-tps/users/target/mif13.war gitlabci@192.168.75.13:/opt/tomcat/webapps/mif13.war
+
+deploynode:
+    image: node:16.14.2
+    before_script:
+        - chmod 400 $CI_SSH_KEY
+        - cd admin/
+        - npm i
+        - npm run build:prod
+    script:
+        - scp -o StrictHostKeyChecking=no -i $CI_SSH_KEY /builds/p1710759/m1if13-tps/api/public/dist/main.js gitlabci@192.168.75.13:/home/p1805563/game-express/public/static/dist/main.js
         
+
