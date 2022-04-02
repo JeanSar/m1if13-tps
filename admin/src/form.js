@@ -9,7 +9,7 @@ async function setTTL(ttlValue, isNodeEnv) {
     let res;
     try {
 
-        if(!isNodeEnv) {
+        if (!isNodeEnv) {
             console.log("In browser env");
             res = await fetch(url, {
                 method: "POST",
@@ -22,7 +22,7 @@ async function setTTL(ttlValue, isNodeEnv) {
             console.log("In node env");
             res = await axios.post(url, body);
         }
-        if(res.status === 204) {
+        if (res.status === 204) {
             console.log(res);
             console.log("TTl initialisé");
         }
@@ -45,7 +45,7 @@ async function addUser(namePlayer, isNodeEnv) {
     const url = `${apiPath}/registerPlayerZZR`;
     let res;
     try {
-        if(!isNodeEnv) {
+        if (!isNodeEnv) {
             res = await fetch(url, {
                 method: "POST",
                 body: body,
@@ -55,7 +55,7 @@ async function addUser(namePlayer, isNodeEnv) {
             res = await axios.post(url, body)
         }
 
-        if(res.status === 204) {
+        if (res.status === 204) {
             window.alert("Joueur ajouté dans la zrr");
         } else {
             window.alert("Aucun joueur de ce nom ou la ZRR n'a pas encore été crée ");
@@ -79,7 +79,7 @@ async function getSelectedResources(namePlayer, isNodeEnv) {
     const url = `http://localhost:3376/api/${namePlayer}`;
     let res;
     try {
-        if(!isNodeEnv) {
+        if (!isNodeEnv) {
             res = await fetch(url, {
                 method: "GET",
                 headers: {'X-Admin-Authorization': true}
