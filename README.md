@@ -25,6 +25,36 @@ Ces tests couvrent la partie qui consommes du json et sont éxécutés par la pi
 Egalement, un scnéario postman est fournit à la racine du dépôt et ce scénario couvre
 la consommation en url encoded pour l'ensemble des méthodes (ou form-data pour la méthode PUT).
 
+## Information concernant le client
+
+Sur l'adresse ~/static est présent le client admin qui permet de configurer une partie avec les fonctionnalités suivantes :
+ - Création de la ZRR :
+    - En cliquant sur le bouton "créer la zone" situé en dessous de la carte, on peut en cliquant sur deux points, construire la ZRR.
+    - On peut ensuite cliquer sur send pour envoyer l'information au serveur.
+    - Pour la modifier il suffit de refaire les étapes précédente et cela sera mis à jour sur le serveur.
+ - Ajout des coffres :
+    - Dans la section paramêtre, via le picker, on séléctionne le contenu du coffre.
+    - En appuyant sur le bouton feu, on peut désormais placer les coffres sur la carte en cliquant sur cette dernière.
+- Initialisation de la TTL :
+  -   Toujours dans la section paramêtre on peut initialiser le TTL par défaut des joueurs en saisissant la valeur adéquate dans le champ associé puis en cliquant sur le bouton "Set". 
+- Inscription du joueur dans la ZRR :
+   - Dans la section aventurier, en saisissant un nom de joueur (inscris au préalable), nous pouvons l'inscrire dans la ZRR.
+   - Cela récupèrera ses informations : avatar, TTL et trésors récupérés.
+   - Il est à noter qu'en cas d'inscription d'un joueur inscris, ses données seront réinitialisées.
+
+
+## Information concernant webpack
+
+> npm run test
+
+> npm run build:dev
+
+> npm run build:prod
+
+NODE_ENV ne fonctionne que sur Linux donc pour lancer webpack en local sur Windows il faut rentrer la commande : npm run build sans préciser d'environement.
+
+Les tests de Jasmine se lance via la commande npm run test, ils fonctionnent en Local et ne peuvent pas être tourné sur docker car il nécéssiterais de lancer le serveur. Il ne sont pas présent en production.
+
 ## Liens vers les différentes ressource :
 
 ####[Collection postman](https://forge.univ-lyon1.fr/p1710759/m1if13-tps/-/blob/main/Users%20API.postman_collection.json)
