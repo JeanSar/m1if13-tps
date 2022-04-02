@@ -84,7 +84,7 @@ mymap.on('click', async e => {
             composition: composition
         }
         try {
-            const res = await fetch(`${apiPath}/popTresor`, {
+            const res = await fetch(`${apiPath}/admin/popTresor`, {
                 method: "POST",
                 headers: { 'content-type': "application/json" },
                 body: JSON.stringify(body)
@@ -100,7 +100,7 @@ mymap.on('click', async e => {
                     .openPopup();
 
                 if (gameStarted === false) {
-                    const res2 = await fetch(`${apiPath}/startGame`, {
+                    const res2 = await fetch(`${apiPath}/admin/startGame`, {
                         method: "POST",
                         headers: { 'content-type': "application/json" }
                     });
@@ -166,7 +166,7 @@ async function sendZRR() {
         );
         console.log(body);
         try {
-            await fetch(`${apiPath}/areaLimit`, {
+            await fetch(`${apiPath}/admin/areaLimit`, {
                 method: "POST",
                 body: body,
                 headers: { 'content-type': "application/json" }

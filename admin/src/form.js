@@ -5,7 +5,7 @@ console.log("Form.js loaded...")
 
 async function setTTL(ttlValue, isNodeEnv) {
     const body = JSON.stringify({ttl: ttlValue});
-    const url = `${apiPath}/ttlInit`;
+    const url = `${apiPath}/admin/ttlInit`;
     let res;
     try {
 
@@ -42,7 +42,7 @@ document.querySelector("#okTTL").addEventListener("click", async (e) => {
 
 async function addUser(namePlayer, isNodeEnv) {
     const body = JSON.stringify({id: namePlayer});
-    const url = `${apiPath}/registerPlayerZZR`;
+    const url = `${apiPath}/admin/registerPlayerZZR`;
     let res;
     try {
         if (!isNodeEnv) {
@@ -76,7 +76,7 @@ addUserIntoZRR.addEventListener("click", async (e) => {
 });
 
 async function getSelectedResources(namePlayer, isNodeEnv) {
-    const url = `${apiPath}/${namePlayer}`;
+    const url = `${apiPath}/api/${namePlayer}`;
     let res;
     try {
         if (!isNodeEnv) {

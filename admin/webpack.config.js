@@ -7,10 +7,14 @@ let apiHost = ""
 let setupAPI = function() {
   switch (process.env.NODE_ENV) {
     case 'development':
-      apiHost = "'http://localhost:3376/admin'";
+      apiHost = "'http://localhost:3376'";
       break;
     case 'production':
-      apiHost = "'https://192.168.75.13/game/admin'";
+      apiHost = "'https://192.168.75.13/game'";
+      break;
+
+    default:
+      apiHost = "'http://localhost:3376'";
       break;
   }
 }
