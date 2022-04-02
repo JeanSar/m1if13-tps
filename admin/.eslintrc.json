@@ -9,7 +9,6 @@
         "sourceType": "module"
     },
     "rules": {
-        // TODO : "indent": ["error", 4] 
-        
+        "indent": ["error", 4]
     }
 }

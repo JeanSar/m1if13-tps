@@ -5,28 +5,32 @@ const webpack = require('webpack');
 let apiHost = ""
 
 let setupAPI = function() {
-  switch (process.env.NODE_ENV) {
-    case 'development':
-      apiHost = "'http://localhost:3376/admin'";
-      break;
-    case 'production':
-      apiHost = "'https://192.168.75.13:8080/mif13/admin'";
-      break;
-  }
+    switch (process.env.NODE_ENV) {
+        case 'development':
+            apiHost = "'http://localhost:3376/admin'";
+            break;
+        case 'production':
+            apiHost = "'https://192.168.75.13:8080/mif13/admin'";
+            break;
+
+        default:
+            apiHost = "'http://localhost:3376/admin'";
+            break;
+    }
 }
 setupAPI()
 
 module.exports = {
-  entry: ['./src/form.js', './src/map.js', './src/apiPath.js'],
-  output: {
-    filename: 'main.js',
-    path: path.resolve(__dirname, '..', 'api', 'public', 'static', 'dist'),
-  },
-  watch: process.env.NODE_ENV==='development' ? true : false,
-  plugins: [
-    new ESLintPlugin(),
-    new webpack.DefinePlugin({
-      __API__: apiHost
-    })
-  ]
+    entry: ['./src/form.js', './src/map.js', './src/apiPath.js'],
+    output: {
+        filename: 'main.js',
+        path: path.resolve(__dirname, '..', 'api', 'public', 'static', 'dist'),
+    },
+    watch: process.env.NODE_ENV==='development' ? true : false,
+    plugins: [
+        new ESLintPlugin(),
+        new webpack.DefinePlugin({
+            __API__: apiHost
+        })
+    ]
 }
