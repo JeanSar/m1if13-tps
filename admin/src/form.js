@@ -76,7 +76,7 @@ addUserIntoZRR.addEventListener("click", async (e) => {
 });
 
 async function getSelectedResources(namePlayer, isNodeEnv) {
-    const url = `${apiPath}${namePlayer}`;
+    const url = `${apiPath}/${namePlayer}`;
     let res;
     try {
         if (!isNodeEnv) {
