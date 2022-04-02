@@ -1,22 +1,21 @@
-import apiPath from './apiPath';
+import apiPath from "./apiPath";
 import axios from "axios";
 
-console.log("Form.js loaded...")
+console.log("Form.js loaded...");
 
 async function setTTL(ttlValue, isNodeEnv) {
-    const body = JSON.stringify({ttl: ttlValue});
+    const body = JSON.stringify({ ttl: ttlValue });
     const url = `${apiPath}/admin/ttlInit`;
     let res;
     try {
-
         if (!isNodeEnv) {
             console.log("In browser env");
             res = await fetch(url, {
                 method: "POST",
                 body: body,
                 headers: {
-                    'content-type': 'application/json'
-                }
+                    "content-type": "application/json",
+                },
             });
         } else {
             console.log("In node env");
@@ -33,7 +32,6 @@ async function setTTL(ttlValue, isNodeEnv) {
     return res;
 }
 
-
 document.querySelector("#okTTL").addEventListener("click", async (e) => {
     e.preventDefault();
     const ttlValue = document.querySelector("#ttl").value;
@@ -41,7 +39,7 @@ document.querySelector("#okTTL").addEventListener("click", async (e) => {
 });
 
 async function addUser(namePlayer, isNodeEnv) {
-    const body = JSON.stringify({id: namePlayer});
+    const body = JSON.stringify({ id: namePlayer });
     const url = `${apiPath}/admin/registerPlayerZZR`;
     let res;
     try {
@@ -49,16 +47,18 @@ async function addUser(namePlayer, isNodeEnv) {
             res = await fetch(url, {
                 method: "POST",
                 body: body,
-                headers: {'content-type': 'application/json'}
+                headers: { "content-type": "application/json" },
             });
         } else {
-            res = await axios.post(url, body)
+            res = await axios.post(url, body);
         }
 
         if (res.status === 204) {
             window.alert("Joueur ajouté dans la zrr");
         } else {
-            window.alert("Aucun joueur de ce nom ou la ZRR n'a pas encore été crée ");
+            window.alert(
+                "Aucun joueur de ce nom ou la ZRR n'a pas encore été crée "
+            );
         }
     } catch (e) {
         console.log(e.message);
@@ -82,7 +82,7 @@ async function getSelectedResources(namePlayer, isNodeEnv) {
         if (!isNodeEnv) {
             res = await fetch(url, {
                 method: "GET",
-                headers: {'X-Admin-Authorization': true}
+                headers: { "X-Admin-Authorization": true },
             });
         } else {
             res = await axios.get(url);
@@ -92,21 +92,16 @@ async function getSelectedResources(namePlayer, isNodeEnv) {
         return res;
     }
 
-
     return await res.json();
 }
 
 function fillFieldSelectedResources(resource) {
-    console.log({resource})
+    console.log({ resource });
     document.querySelector("#playerImage").setAttribute("src", resource.url);
     document.querySelector("#showPlayerTTL").innerHTML = resource.ttl;
     let tresors = " : ";
-    resource.treasures.forEach(t => {
+    resource.treasures.forEach((t) => {
         tresors += t.composition + " ; ";
-    })
+    });
     document.querySelector("#showTresorPlayer").innerHTML = tresors;
 }
-
-
-
-
