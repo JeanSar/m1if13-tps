@@ -62,6 +62,7 @@ Sur l'adresse ~/static est présent le client admin qui permet de configurer une
 
 Une config prettier a été mise (minimaliste).  
 Pour l'exécuter : ``npm run prettier``
+#### [Lien vers le client d'admin (VM)](https://192.168.75.13/game/static/)
 
 ## Information concernant webpack
 
