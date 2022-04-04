@@ -60,6 +60,8 @@ Sur l'adresse ~/static est présent le client admin qui permet de configurer une
    - Cela récupèrera ses informations : avatar, TTL et trésors récupérés.
    - Il est à noter qu'en cas d'inscription d'un joueur inscris, ses données seront réinitialisées.
 
+Une config prettier a été mise (minimaliste).  
+Pour l'exécuter : ``npm run prettier``
 
 ## Information concernant webpack
 
