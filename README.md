@@ -42,7 +42,7 @@ Nous avons également fait, sur quelques routes, de la validation de donné avec
 Ces validations ne sont pas présentes sur toutes les routes, car le but était avant tout de se rajouter une lib à découvrir sans y passer trop de temps non plus.  
 
 
-#TP4
+# TP4
 ## Information concernant le client
 
 Sur l'adresse ~/static est présent le client admin qui permet de configurer une partie avec les fonctionnalités suivantes :
