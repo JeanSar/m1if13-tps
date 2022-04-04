@@ -24,12 +24,12 @@ Ces tests couvrent la partie qui consomme du json et sont exécutés par la pipe
 
 Egalement, un scenario postman est fourni à la racine du dépôt et ce scénario couvre
 la consommation en url encoded pour l'ensemble des méthodes (ou form-data pour la méthode PUT).
-#TP3
+# TP3
 Ce tp a été réalisé en Typescript. 
 On y retrouve, comme demandé une api pour gérer les ressource et une api "Admin" pour configurer une partie.
 #### [Lien de l'api "Resource" : https://192.168.75.13/game/api](https://192.168.75.13/game/api)  
 #### [Lien de l'api "Admin" : https://192.168.75.13/game/admin](https://192.168.75.13/game/admin)
-###Attention : Nous avons fait certains choix pour l'URL des api qui ne corresponde pas forcément avec l'énoncé.
+### Attention : Nous avons fait certains choix pour l'URL des api qui ne corresponde pas forcément avec l'énoncé.
 ### Bien respecté, pour d'éventuel test, les url indiqué ci-dessus.
 En plus de ces deux api, nous avons fait un CRUD sur chaque type d'objet sur lesquelles on travaille, à savoir :  
 1. User
