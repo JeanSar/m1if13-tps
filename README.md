@@ -24,7 +24,22 @@ Ces tests couvrent la partie qui consommes du json et sont éxécutés par la pi
 
 Egalement, un scnéario postman est fournit à la racine du dépôt et ce scénario couvre
 la consommation en url encoded pour l'ensemble des méthodes (ou form-data pour la méthode PUT).
+#TP3
+Ce tp a été réalisé en Typescript. 
+On y retrouve, comme demandé une api pour gérer les ressource et une api "Admin" pour configurer une partie.
+#### [Lien de l'api "Resource" : https://192.168.75.13/game/api](https://192.168.75.13/game/api)  
+#### [Lien de l'api "Admin" : https://192.168.75.13/game/admin](https://192.168.75.13/game/admin)
+En plus de ces deux api, nous avons fais un CRUD sur chaque type d'objet sur lesquelles on travaille, à savoir :  
+1. User
+2. Zrr
+3. Trésor  
+Nous avons fait cela car, nous avions compris qu'il fallait faire ces routes (avant de se rendre compte que non).  
+Nous les avons tout de même gardé car cela permet malgrés tout de présenter du contenue, comme les fonctions générique gérant les opérations CRUD.  
+Nous avons également fait, sur quelques routes, de la validation de donné avec express-validator.  
+Ces validations ne sont pas préssentes sur toutes les routes, car le bbut était avant tout de se rajouter une lib à découvrir sans y passer trop de temps non plus.
+4. 
 
+#TP4
 ## Information concernant le client
 
 Sur l'adresse ~/static est présent le client admin qui permet de configurer une partie avec les fonctionnalités suivantes :

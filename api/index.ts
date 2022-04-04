@@ -20,9 +20,6 @@ app.use('/user', userRouter);
 app.use('/zrr', zrrRouter);
 app.use('/tresor', tresorRouter);
 app.use('/api', resourcesRouter);
-// app.use('/admin/areaLimite', (req, res, next) => {
-//
-// });
 
 
 // Après toutes nos routes car si on le met avant, ce code sera appelé avant nos routes et on aura donc tout le temps
