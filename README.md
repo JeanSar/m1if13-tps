@@ -10,8 +10,8 @@ qui ont été corrigées dans le fichier json postman.
 ###Il est donc important d'importer de fichier-ci pour avoir la bonne api dans postman.
 
 ## Information concernant l'api swager
-Malgès plusieurs heures de recherche, nous n'avons trouvé aucun moyen, pour les requête 
-comportant une seule "String" en paramêtre, de générer corectement la documentation
+Malgré plusieurs heures de recherche, nous n'avons trouvé aucun moyen, pour les requêtes 
+comportant une seule "String" en paramètre, de générer correctement la documentation
 swagger, ainsi, si on teste depuis swagger ces routes qui sont : la route "PUT", pour 
 modifier le mot de passe et la route "POST" logout, pour se déconnecter, cela ne fonctionnera pas.
 
@@ -20,24 +20,27 @@ Cela fonctionne en revanche très bien depuis postman.
 ## Test unitaire et scénario postman
 
 Beaucoup de tests ont été effectués grâce à MockMVC de spring boot.
-Ces tests couvrent la partie qui consommes du json et sont éxécutés par la pipeline.
+Ces tests couvrent la partie qui consomme du json et sont exécutés par la pipeline.
 
-Egalement, un scnéario postman est fournit à la racine du dépôt et ce scénario couvre
+Egalement, un scenario postman est fourni à la racine du dépôt et ce scénario couvre
 la consommation en url encoded pour l'ensemble des méthodes (ou form-data pour la méthode PUT).
 #TP3
 Ce tp a été réalisé en Typescript. 
 On y retrouve, comme demandé une api pour gérer les ressource et une api "Admin" pour configurer une partie.
 #### [Lien de l'api "Resource" : https://192.168.75.13/game/api](https://192.168.75.13/game/api)  
 #### [Lien de l'api "Admin" : https://192.168.75.13/game/admin](https://192.168.75.13/game/admin)
-En plus de ces deux api, nous avons fais un CRUD sur chaque type d'objet sur lesquelles on travaille, à savoir :  
+###Attention : Nous avons fait certains choix pour l'URL des api qui ne corresponde pas forcément avec l'énoncé.
+### Bien respecté, pour d'éventuel test, les url indiqué ci-dessus.
+En plus de ces deux api, nous avons fait un CRUD sur chaque type d'objet sur lesquelles on travaille, à savoir :  
 1. User
 2. Zrr
 3. Trésor  
+
 Nous avons fait cela car, nous avions compris qu'il fallait faire ces routes (avant de se rendre compte que non).  
-Nous les avons tout de même gardé car cela permet malgrés tout de présenter du contenue, comme les fonctions générique gérant les opérations CRUD.  
+Nous les avons tout de même gardé, car cela permet malgré tout de présenter du contenu, comme les fonctions générique gérant les opérations CRUD.  
 Nous avons également fait, sur quelques routes, de la validation de donné avec express-validator.  
-Ces validations ne sont pas préssentes sur toutes les routes, car le bbut était avant tout de se rajouter une lib à découvrir sans y passer trop de temps non plus.
-4. 
+Ces validations ne sont pas présentes sur toutes les routes, car le but était avant tout de se rajouter une lib à découvrir sans y passer trop de temps non plus.  
+
 
 #TP4
 ## Information concernant le client
