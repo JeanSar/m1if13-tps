@@ -27,8 +27,11 @@ export default {
   },
   methods: {
     login() {
-      console.log("Login cliqué.");
+      console.log("Connexion...");
       console.log(this.loginValue);
+      if(true) {
+        alert("Le mot de passe ou le login ne correspond pas.")
+      }
     },
   },
 };
