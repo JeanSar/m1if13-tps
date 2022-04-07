@@ -8,6 +8,9 @@
     <br />
     <button @click="login">Send</button>
   </form>
+  <div>
+
+  </div>
 </template>
 
 <script>
@@ -20,7 +23,7 @@ export default {
     }
   },
   methods: {
-    login (e) {
+    login: (e) =>  {
       e.preventDefault();
       console.log("Login cliqué.");
       console.log(this.loginValue);
