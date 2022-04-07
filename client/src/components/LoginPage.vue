@@ -11,12 +11,15 @@
       id="password"
     />
     <br />
-    <button @click.prevent="login">Send</button>
+    <button @click.prevent="login">Se connecter</button>
+    <button @click.prevent="createAccount">Créer un compte</button>
   </form>
   <div></div>
 </template>
 
 <script>
+import { createAnAccount, loginFunction } from "@/utils/loginFunction";
+
 export default {
   name: "LoginPage",
   data() {
@@ -26,13 +29,36 @@ export default {
     };
   },
   methods: {
-    login() {
-      console.log("Connexion...");
-      console.log(this.loginValue);
-      if(true) {
-        alert("Le mot de passe ou le login ne correspond pas.")
+    async login() {
+      const res = await loginFunction(this);
+      if(res.status === 204) { // La création de compte s'est bien passé
+        window.alert("Connection réussi !");
+        // this.loginValue = "";
+        // this.passwordValue = "";
       }
+
+      if(res.status === 400) { // Le nom de compte renseigné est déjà pris
+        window.alert("Utilisateur inexistant ou mot de passe incorrect");
+        this.passwordValue = "";
+        this.loginValue = "";
+      }
+      const token = res.headers.get("Authorization").split("Bearer ")[1];
+      sessionStorage.setItem("token", token);
+
     },
+    async createAccount() {
+      const res = await createAnAccount(this);
+      if(res.status === 204) { // La création de compte s'est bien passé
+        window.alert("Compte crée ! ");
+        // this.loginValue = "";
+        // this.passwordValue = "";
+      }
+
+      if(res.status === 400) { // Le nom de compte renseigné est déjà pris
+        window.alert("Nom d'utilisateur non disponible");
+        this.loginValue = "";
+      }
+    }
   },
 };
 </script>
