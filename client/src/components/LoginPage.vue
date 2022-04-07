@@ -4,13 +4,16 @@
     <input v-model="loginValue" type="text" name="login" id="login" />
     <br />
     <label for="password">Password :</label>
-    <input v-model="passwordValue" type="password" name="password" id="password" />
+    <input
+      v-model="passwordValue"
+      type="password"
+      name="password"
+      id="password"
+    />
     <br />
     <button @click="login">Send</button>
   </form>
-  <div>
-
-  </div>
+  <div></div>
 </template>
 
 <script>
@@ -19,15 +22,14 @@ export default {
   data() {
     return {
       loginValue: "",
-      passwordValue: ""
-    }
+      passwordValue: "",
+    };
   },
   methods: {
-    login: (e) =>  {
+    login: (e) => {
       e.preventDefault();
       console.log("Login cliqué.");
       console.log(this.loginValue);
-
     },
   },
 };
