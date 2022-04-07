@@ -1,17 +1,20 @@
 <template>
   <LoginPage />
-  <HomePage msg="Hello world !" />
+  <HomePage msg="Hello world!" />
+  <MyMap />
 </template>
 
 <script>
 import HomePage from "@/components/HomePage";
 import LoginPage from "@/components/LoginPage";
+import MyMap from "@/components/MyMap";
 
 export default {
   name: "App",
   components: {
     LoginPage,
     HomePage,
+    MyMap,
   },
 };
 </script>
