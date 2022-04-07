@@ -11,3 +11,6 @@ TODO :
 
 # Pas trouver le composant pour leaflet (Partie 2)
 Il faudra donc le trouvé 
+
+
+# Une fois tout cela fait, il faudra mettre en place le routeur : pour l'instant on aura qu'une page, avec tous les composants les uns en dessous des autres
