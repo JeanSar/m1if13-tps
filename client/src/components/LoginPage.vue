@@ -11,7 +11,7 @@
       id="password"
     />
     <br />
-    <button @click="login">Send</button>
+    <button @click.prevent="login">Send</button>
   </form>
   <div></div>
 </template>
@@ -26,8 +26,7 @@ export default {
     };
   },
   methods: {
-    login: (e) => {
-      e.preventDefault();
+    login() {
       console.log("Login cliqué.");
       console.log(this.loginValue);
     },
