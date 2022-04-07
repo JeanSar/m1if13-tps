@@ -9,8 +9,7 @@ TODO :
 - Sinon voir partie 4
 
 
-# Pas trouver le composant pour leaflet (Partie 2)
-Il faudra donc le trouvé 
+# Composants leaflet : https://perso.liris.cnrs.fr/lionel.medini/enseignement/M1IF13/VueJS/
 
 
 # Une fois tout cela fait, il faudra mettre en place le routeur : pour l'instant on aura qu'une page, avec tous les composants les uns en dessous des autres
