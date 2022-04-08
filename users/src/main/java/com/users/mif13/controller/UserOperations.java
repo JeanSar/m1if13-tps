@@ -77,7 +77,7 @@ public class UserOperations {
         }
     }
 
-    @CrossOrigin(origins = {"http://localhost", "https://192.168.75.13", "http://192.168.75.13"})
+    // @CrossOrigin(origins = {"http://localhost", "https://192.168.75.13", "http://192.168.75.13"})
     @PostMapping(value = "/login", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Void> loginJSON(@RequestBody UserAPI userAPI,
                                           @RequestHeader("Origin") String origin) {
