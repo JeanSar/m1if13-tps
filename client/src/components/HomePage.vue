@@ -18,7 +18,8 @@ export default {
     msg: String,
   },
 };
-// http://localhost:3376/api/
+// créer un objet dans data avec a resultat de la request dans mounted()
+// http://localhost:3376/api/joueur1
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
