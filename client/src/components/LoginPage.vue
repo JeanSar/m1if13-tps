@@ -44,6 +44,7 @@ export default {
         window.alert("Connection réussi !");
         // this.loginValue = "";
         // this.passwordValue = "";
+        await this.$router.push("/home");
       }
 
       if(res.status === 400) { // Le nom de compte renseigné est déjà pris

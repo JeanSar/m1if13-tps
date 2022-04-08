@@ -1,20 +1,10 @@
 <template>
-  <LoginPage />
-  <HomePage msg="Hello World"/>
+  <nav>
+    <router-link to="/">Sign in / Sign up</router-link>
+    <router-link to="/home">Accueil</router-link>
+  </nav>
+  <router-view/>
 </template>
-
-<script>
-import HomePage from "@/components/HomePage";
-import LoginPage from "@/components/LoginPage";
-
-export default {
-  name: "App",
-  components: {
-    LoginPage,
-    HomePage,
-  },
-};
-</script>
 
 <style>
 #app {
@@ -23,6 +13,18 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+
+nav {
+  padding: 30px;
+}
+
+nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+nav a.router-link-exact-active {
+  color: #42b983;
 }
 </style>
