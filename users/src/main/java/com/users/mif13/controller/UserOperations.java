@@ -24,6 +24,7 @@ import javax.ws.rs.InternalServerErrorException;
 // Si on met seulement l'annotation @Controller, la donc n'est pas généré pour tout les contenue
 // ie url encoded et json
 @RestController
+@CrossOrigin
 public class UserOperations {
 
     @Autowired
@@ -37,7 +38,7 @@ public class UserOperations {
      * @return Une ResponseEntity avec le JWT dans le header "Authentication" si le login s'est bien passé, et le code de statut approprié (204, 401 ou 404).
      */
     @PostMapping(value = "/login", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
-    @CrossOrigin(origins = {"http://localhost", "https://192.168.75.13", "http://192.168.75.13"})
+    // @CrossOrigin(origins = {"http://localhost", "https://192.168.75.13", "http://192.168.75.13"})
     @Operation(summary = "Se connecter avec son login")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Connexion réussi : le token est renvoyé.", headers = {
@@ -91,7 +92,7 @@ public class UserOperations {
                 HttpHeaders headers = new HttpHeaders();
                 headers.setContentType(MediaType.APPLICATION_JSON);
                 headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + token);
-                headers.add(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, origin);
+                headers.add(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, "Authorization");
                 return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);// succeed : 204
             } catch (Exception e) {
                 System.out.println("Error password, excecption catch and return error code 401 unauthorized");
@@ -110,7 +111,7 @@ public class UserOperations {
      * @return Une réponse vide avec un code de statut approprié (204, 400, 401).
      */
     @PostMapping(value = "/logout", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
-    @CrossOrigin(origins = {"http://localhost", "https://192.168.75.13", "http://192.168.75.13"})
+    // @CrossOrigin(origins = {"http://localhost", "https://192.168.75.13", "http://192.168.75.13"})
     @Operation(summary = "Se deconnecter avec le token")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Déconnexion reussi.",
@@ -144,7 +145,7 @@ public class UserOperations {
     }
 
     @PostMapping(value = "/logout", consumes = {MediaType.APPLICATION_JSON_VALUE})
-    @CrossOrigin(origins = {"http://localhost", "https://192.168.75.13", "http://192.168.75.13"})
+    // @CrossOrigin(origins = {"http://localhost", "https://192.168.75.13", "http://192.168.75.13"})
     public ResponseEntity<Void> logoutJSON( @RequestBody Token token,
                                             @RequestHeader("Origin") String origin) {
         try {
@@ -175,7 +176,7 @@ public class UserOperations {
      * @return Une réponse vide avec un code de statut approprié (204, 400, 401).
      */
     @GetMapping("/authenticate")
-    @CrossOrigin(origins = {"http://localhost", "https://192.168.75.13", "http://192.168.75.13"})
+    // @CrossOrigin(origins = {"http://localhost", "https://192.168.75.13", "http://192.168.75.13"})
     @Operation(summary = "S'authentifier avec le token")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Authentification réussi.",

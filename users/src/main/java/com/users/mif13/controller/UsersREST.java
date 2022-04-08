@@ -28,6 +28,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @EnableWebMvc
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/users")
 public class UsersREST implements WebMvcConfigurer {
