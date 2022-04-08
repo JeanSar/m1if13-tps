@@ -8,7 +8,7 @@
 
 <script>
 import MyMap from "@/components/MyMap";
-
+// Pour récupérer le token, une fois connecté : sessionStorage.getItem("token")
 export default {
   name: "HomePage",
   components: {
