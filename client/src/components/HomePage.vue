@@ -9,6 +9,8 @@
 
 <script>
 import MyMap from "@/components/MyMap";
+import { fetchResources } from "@/utils/apiFunction";
+
 // Pour récupérer le token, une fois connecté : sessionStorage.getItem("token")
 export default {
   name: "HomePage",
@@ -25,7 +27,7 @@ export default {
     };
   },
   methods: {
-    let getData() {
+    async getData() {
       this.loginValue = sessionStorage.getItem("login");
       this.token = sessionStorage.getItem("token");
 
