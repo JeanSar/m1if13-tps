@@ -10,7 +10,7 @@ import {tresors} from "./Tresor";
 const resourcesRouter = Router();
 const axios = require('axios');
 
-const origin = "http://localhost"
+const origin = "http://localhost:3000"
 
 const notFoudRessourceIdMsg = "L'id spécifié n'existe pas ou l'utilsateur n'est pas inscrit à la ZRR";
 
@@ -18,7 +18,7 @@ const notFoudRessourceIdMsg = "L'id spécifié n'existe pas ou l'utilsateur n'es
 // Middleware gérant l'authentification
 resourcesRouter.use(async (req: Request, res: Response, next: NextFunction) => {
     if(!(req.headers['x-admin-authorization'] !== undefined && req.headers['x-admin-authorization'] == 'true')) { // Ce header est mis si l'on reqûete depuis la page admin
-        const jwt_token = req.headers.authorization;
+        const jwt_token = req.headers.authorization;        
         try {
             const response = await axios.get(`http://localhost:8080/authenticate?jwt=${jwt_token}&origin=${origin}`);
             res.status(response.status);
