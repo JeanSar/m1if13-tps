@@ -3,6 +3,7 @@
     <h1>{{ msg }}</h1>
     <h2>Bienvenue : </h2>
   </div>
+  <button @click.prevent="getData">Afficher profil</button>
   <MyMap />
 </template>
 
@@ -17,6 +18,20 @@ export default {
   props: {
     msg: String,
   },
+  data() {
+    return {
+      loginValue: "",
+      token: ""
+    };
+  },
+  methods: {
+    let getData() {
+      this.loginValue = sessionStorage.getItem("login");
+      this.token = sessionStorage.getItem("token");
+
+    }
+  }
+
 };
 // créer un objet dans data avec a resultat de la request dans mounted()
 // http://localhost:3376/api/joueur1
