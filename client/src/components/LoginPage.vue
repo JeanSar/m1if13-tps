@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { createAnAccount, loginFunction } from "@/utils/loginFunction";
+import { createAnAccountOnNode, createAnAccountOnSpring, loginFunction } from "@/utils/loginFunction";
 
 export default {
   name: "LoginPage",
@@ -55,27 +55,9 @@ export default {
 
     },
     async createAccount() {
-      const res = await createAnAccount(this);
+      const res = await createAnAccountOnSpring(this);
       if(res.status === 204) { // La création de compte s'est bien passé
-        fetch('http://localhost:3376/user/create', {
-          method: "POST",
-          body: JSON.stringify({
-            "aventurier": {
-              "id": this.loginValue,
-              "image": this.imageValue,
-              "ttl": this.ttlValue,
-              "position": {
-                "x": 0,
-                "y": 0
-              },
-              "tresors": []
-            },
-            "isAdmin": false
-          }),
-          headers: {
-            "content-type": "application/json"
-          }
-        })
+        await createAnAccountOnNode(this);
         window.alert("Compte crée ! ");
         // this.loginValue = "";
         // this.passwordValue = "";
