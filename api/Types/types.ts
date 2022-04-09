@@ -38,11 +38,12 @@ export interface Georesource {
     position: Position,
     role: "player" | "admin",
     ttl: number,
-    treasures: Tresor[]
+    treasures: Tresor[],
+    registered: boolean
 }
 
 export function convertToGeoResource (users: User[], treasures: Tresor[], id: string): Georesource | undefined {
-    const user = users.find(e => e.aventurier.id === id && e.isRegisterInToZRR);
+    const user = users.find(e => e.aventurier.id === id);
     if(user === undefined) {
         return undefined;
     }
@@ -52,6 +53,7 @@ export function convertToGeoResource (users: User[], treasures: Tresor[], id: st
         position: user.aventurier.position,
         role: user.isAdmin ? "admin" : "player",
         ttl: user.aventurier.ttl,
-        treasures: user.aventurier.tresors
+        treasures: user.aventurier.tresors,
+        registered: user.isRegisterInToZRR===undefined ? false : user.isRegisterInToZRR
     }
 }

@@ -12,7 +12,7 @@ const axios = require('axios');
 
 const origin = "http://localhost:3000"
 
-const notFoudRessourceIdMsg = "L'id spécifié n'existe pas ou l'utilsateur n'est pas inscrit à la ZRR";
+const notFoudRessourceIdMsg = "L'id spécifié n'existe pas";
 
 
 // Middleware gérant l'authentification
@@ -36,7 +36,7 @@ resourcesRouter.get('/:resourceId',
     param('user').isString(),
     (req: Request, res: Response) => {
         const resourceId: string = req.params.resourceId;
-        const user = users.find(e => e.aventurier.id === resourceId && e.isRegisterInToZRR);
+        const user = users.find(e => e.aventurier.id === resourceId );
         if(user === undefined) {
             res.status(400);
             return res.send(notFoudRessourceIdMsg);
