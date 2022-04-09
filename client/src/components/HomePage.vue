@@ -7,7 +7,7 @@
   <h2>{{ message }}</h2>
   <ul>
     <p>
-      <img :src="resources.url" alt="" class="icon">
+      <img :src="resources.url" alt="" style="width: 100px;border-radius: 50%;opacity: 50%;">
     </p>
     <p>
       <b><u>Identifiant de joueur</u>: {{ resources.id }}</b>
