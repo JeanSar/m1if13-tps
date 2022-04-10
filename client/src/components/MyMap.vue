@@ -11,6 +11,7 @@
 
 <script>
 import "leaflet/dist/leaflet.css";
+import { fetchZRR } from "@/utils/apiFunction";
 
 // This part resolves an issue where the markers would not appear in webpack
 import { Icon } from "leaflet";
@@ -29,6 +30,29 @@ let mymap = {};
 
 export default {
   name: "MyMap",
+  data() {
+    return {
+      ping: undefined,
+      zrr: {
+        limite_NE: {
+          x: 45.78,
+          y: 4.86,
+        },
+        limite_NO: {
+          x: 45.78,
+          y: 4.86,
+        },
+        limite_SE: {
+          x: 45.78,
+          y: 4.86,
+        },
+        limite_SO: {
+          x: 45.78,
+          y: 4.86,
+        },
+      },
+    };
+  },
   methods: {
     // Procédure de mise à jour de la map
     updateMap: function () {
@@ -38,8 +62,22 @@ export default {
       // La fonction de validation du formulaire renvoie false pour bloquer le rechargement de la page.
       return false;
     },
+    async getData() {
+      const res = await fetchZRR();
+      if (res.status === 200) {
+        // Les ressources on été récuperées
+        console.log("response : ", res);
+        this.zrr = await res.json();
+      }
+
+      if (res.status === 400) {
+        // Le nom de compte renseigné est déjà pris
+        console.log("Impossible de récupérer la ZRR");
+      }
+    },
   },
   async beforeMount() {
+    console.log("Generate Map");
     // HERE is where to load Leaflet components!
     const L = await import("leaflet");
     // Procédure d'initialisation
@@ -47,7 +85,6 @@ export default {
       center: [lat, lng],
       zoom: zoom,
     });
-    //updateMap();
 
     // Création d'un "tile layer" (permet l'affichage sur la carte)
     L.tileLayer(
@@ -79,6 +116,23 @@ export default {
       lng = e.latlng.lng;
       this.updateMap();
     });
+    await this.getData();
+    let bounds = [
+      [this.zrr.limite_NO.x, this.zrr.limite_NO.y],
+      [this.zrr.limite_SE.x, this.zrr.limite_SE.y],
+    ];
+    let rectangle = L.rectangle(bounds, {
+      color: "#ff7800",
+      weight: 5,
+      fill: false,
+    }).addTo(mymap);
+  },
+  async mounted() {
+    
+    this.ping = setInterval(() => {}, 5000);
+  },
+  async beforeUnmount() {
+    clearInterval(this.ping);
   },
 };
 </script>
