@@ -30,6 +30,9 @@ let mymap = {};
 
 export default {
   name: "MyMap",
+  props: {
+    joueur: Object,
+  },
   data() {
     return {
       ping: undefined,
@@ -142,9 +145,21 @@ export default {
     for (let i = 0; i < this.tresors.length; i++) {
       L.marker([this.tresors[i].position.x, this.tresors[i].position.y], { icon: coffreIcon })
         .addTo(mymap)
-        .bindPopup(`Coffre contenant:<br><strong>${this.tresors[i].composition}}</strong>.`)
-        .openPopup();
+        .bindPopup(`Coffre contenant:<br><strong>${this.tresors[i].composition}}</strong>.`);
     }
+
+    const playerIcon = L.icon({
+      iconUrl: this.joueur.url,
+      iconSize: [30, 30],
+    });
+    let player_marker = L.marker([this.joueur.position.x, this.joueur.position.y], { icon: playerIcon })
+        .addTo(mymap)
+        .bindPopup(`Joueur:<br><strong>${this.joueur.id}}</strong>.`)
+        .openPopup();
+    this.ping = setInterval(() => {
+      console.log(this.joueur);
+      player_marker.setLatLng([this.joueur.position.x, this.joueur.position.y]);
+    }, 5000);
 
     // Clic sur la carte
     mymap.on("click", (e) => {
@@ -152,9 +167,6 @@ export default {
       lng = e.latlng.lng;
       this.updateMap();
     });
-  },
-  async mounted() {
-    this.ping = setInterval(() => {}, 5000);
   },
   async beforeUnmount() {
     clearInterval(this.ping);

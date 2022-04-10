@@ -32,7 +32,7 @@
   </ul>
 
   <br />
-  <div v-if="resources.registered"><MyMap /></div>
+  <div v-if="resources.registered"><MyMap :joueur="resources"/></div>
   <div v-else>Le joueur n'a pas encore été attribué à une partie.</div>
 </template>
 
@@ -51,6 +51,7 @@ export default {
   },
   data() {
     return {
+      ping: undefined,
       loginValue: "",
       token: "",
       message: "Votre profil de joueur :",
@@ -90,8 +91,14 @@ export default {
       }
     },
   },
-  mounted() {
+  async mounted() {
     this.getData();
+    this.ping = setInterval(() => {
+      this.getData();
+    }, 5000);
+  },
+  async beforeUnmount() {
+    clearInterval(this.ping);
   },
   
 };
