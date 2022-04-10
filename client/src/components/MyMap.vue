@@ -11,7 +11,7 @@
 
 <script>
 import "leaflet/dist/leaflet.css";
-import { fetchZRR } from "@/utils/apiFunction";
+import { fetchZRR, fetchTresors } from "@/utils/apiFunction";
 
 // This part resolves an issue where the markers would not appear in webpack
 import { Icon } from "leaflet";
@@ -51,6 +51,7 @@ export default {
           y: 4.86,
         },
       },
+      tresors: [],
     };
   },
   methods: {
@@ -62,7 +63,7 @@ export default {
       // La fonction de validation du formulaire renvoie false pour bloquer le rechargement de la page.
       return false;
     },
-    async getData() {
+    async getZRR() {
       const res = await fetchZRR();
       if (res.status === 200) {
         // Les ressources on été récuperées
@@ -73,6 +74,19 @@ export default {
       if (res.status === 400) {
         // Le nom de compte renseigné est déjà pris
         console.log("Impossible de récupérer la ZRR");
+      }
+    },
+    async getTresors() {
+      const res = await fetchTresors();
+      if (res.status === 200) {
+        // Les ressources on été récuperées
+        console.log("response : ", res);
+        this.tresors = await res.json();
+      }
+
+      if (res.status === 404) {
+        // Le nom de compte renseigné est déjà pris
+        console.log("Impossible de récupérer les Tresors");
       }
     },
   },
@@ -110,13 +124,7 @@ export default {
       .bindPopup("Entrée du bâtiment<br><strong>Nautibus</strong>.")
       .openPopup();
 
-    // Clic sur la carte
-    mymap.on("click", (e) => {
-      lat = e.latlng.lat;
-      lng = e.latlng.lng;
-      this.updateMap();
-    });
-    await this.getData();
+    await this.getZRR();
     let bounds = [
       [this.zrr.limite_NO.x, this.zrr.limite_NO.y],
       [this.zrr.limite_SE.x, this.zrr.limite_SE.y],
@@ -126,9 +134,26 @@ export default {
       weight: 5,
       fill: false,
     }).addTo(mymap);
+
+    await this.getTresors();
+    const coffreIcon = L.icon({
+      iconUrl: require("@/assets/icon_coffre.png"),
+    });
+    for (let i = 0; i < this.tresors.length; i++) {
+      L.marker([this.tresors[i].position.x, this.tresors[i].position.y], { icon: coffreIcon })
+        .addTo(mymap)
+        .bindPopup(`Coffre contenant:<br><strong>${this.tresors[i].composition}}</strong>.`)
+        .openPopup();
+    }
+
+    // Clic sur la carte
+    mymap.on("click", (e) => {
+      lat = e.latlng.lat;
+      lng = e.latlng.lng;
+      this.updateMap();
+    });
   },
   async mounted() {
-    
     this.ping = setInterval(() => {}, 5000);
   },
   async beforeUnmount() {

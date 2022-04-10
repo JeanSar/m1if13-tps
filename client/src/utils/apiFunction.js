@@ -18,3 +18,12 @@ export async function fetchZRR() {
     },
   });
 }
+
+export async function fetchTresors(){
+  return await fetch(`${url}/tresor/getAll`, {
+    method: "GET",
+    headers: {
+      "content-type": "*/*",
+    },
+  });
+}
