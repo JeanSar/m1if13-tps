@@ -91,10 +91,11 @@ select {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-bottom: 0.4em;
+  margin-bottom: 0.6em;
   border-radius: 100px;
   border-color: red;
   border-width: 20px;
+  font-weight: bold;
 }
 
 .centerInputAndText {
@@ -102,6 +103,7 @@ select {
   flex-direction: column;
   justify-content: center;
 }
+
 
 button {
   border-radius: 1em;
@@ -125,7 +127,7 @@ button {
 
 input {
   padding-left: 1em;
-  height: 2em;
+  height: 2.5em;
   font-size: 14pt;
   width: 15em;
   border-radius: 0.6em;
