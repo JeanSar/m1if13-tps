@@ -1,7 +1,7 @@
 <template>
-  <nav>
-    <router-link to="/">Sign in / Sign up</router-link>
-    <router-link to="/home">Accueil</router-link>
+  <nav class="navBar">
+      <router-link class="router-link" to="/home">Accueil</router-link>
+      <router-link class="router-link" to="/">Sign in / Sign up</router-link>
   </nav>
   <router-view/>
 </template>
@@ -21,10 +21,24 @@ nav {
 
 nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: #17191c;
 }
 
 nav a.router-link-exact-active {
-  color: #42b983;
+  color: #ffffff;
+}
+
+.router-link {
+  margin-right: 0.5em;
+  margin-left: 0.5em;
+}
+
+.navBar {
+  display: flex;
+  justify-content: space-evenly;
+  background-color: #0b7350;
+  margin-bottom: 3em;
+  color: white;
+  border-radius: 0.5em;
 }
 </style>
