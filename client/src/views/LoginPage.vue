@@ -1,30 +1,29 @@
 <template>
-  <form id="loginForm" class="formulaire">
-    <div class="inputAndLabel">
-      <label class="centerInputAndText" for="login">Login :</label>
-      <input class="centerInputAndText" v-model="loginValue" type="text" name="login" id="login" />
-    </div>
-    <div class="inputAndLabel">
+  <div class="formulaire">
+    <form id="loginForm" >
+      <div class="inputAndLabel">
+        <label class="centerInputAndText" for="login">Login :</label>
+        <input class="centerInputAndText" v-model="loginValue" type="text" name="login" id="login" />
+      </div>
+      <div class="inputAndLabel">
         <label class="centerInputAndText" for="password">Password :</label>
         <input class="centerInputAndText" v-model="passwordValue" type="password" name="password" id="password" />
-    </div>
-    <div class="inputAndLabel">
-      <label class="centerInputAndText" for="image">Image :</label>
-      <input class="centerInputAndText" v-model="imageValue" type="url" name="image" id="image" />
-    </div>
-    <div class="inputAndLabel">
-      <label class="centerInputAndText" for="ttl">TTL :</label>
-      <input class="centerInputAndText" v-model="ttlValue" type="number" name="ttl" id="ttl" />
-    </div>
-    <div class="submitButton">
-      <button class="primaryBtn" @click.prevent="login">Se connecter</button>
-      <button class="secondaryBtn" @click.prevent="createAccount">Créer un compte</button>
-    </div>
+      </div>
+      <div class="inputAndLabel">
+        <label class="centerInputAndText" for="image">Image :</label>
+        <input class="centerInputAndText" v-model="imageValue" type="url" name="image" id="image" />
+      </div>
+      <div class="inputAndLabel">
+        <label class="centerInputAndText" for="ttl">TTL :</label>
+        <input class="centerInputAndText" v-model="ttlValue" type="number" name="ttl" id="ttl" />
+      </div>
+      <div class="submitButton">
+        <button class="primaryBtn" @click.prevent="login">Se connecter</button>
+        <button class="secondaryBtn" @click.prevent="createAccount">Créer un compte</button>
+      </div>
+    </form>
+  </div>
 
-
-
-
-  </form>
   <div></div>
 </template>
 
@@ -125,15 +124,17 @@ button {
 }
 
 input {
-  height: 4em;
-  width: 20em;
+  padding-left: 1em;
+  height: 2em;
+  font-size: 14pt;
+  width: 15em;
   border-radius: 0.6em;
   border-color: white;
 }
 .formulaire {
   display: flex;
   flex-direction: column;
-  max-width: 23em;
+  max-width: 25em;
   margin-left: auto;
   margin-right: auto;
 }
