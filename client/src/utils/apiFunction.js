@@ -6,8 +6,20 @@ export async function fetchResources(loginValue, token) {
       headers: {
         "content-type": "application/json",
         "authorization": token,
-      },
+      }
     });
+}
+
+export async function updatePlayerPos(loginValue, token, pos){
+  const body = JSON.stringify({position : pos});
+  return await fetch(`${url}/api/${loginValue}`, {
+    method: "PUT",
+    headers: {
+      "content-type": "application/json",
+      "authorization": token,
+    },
+    body: body
+  });
 }
 
 export async function fetchZRR() {

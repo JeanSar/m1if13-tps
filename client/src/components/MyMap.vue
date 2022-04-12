@@ -11,7 +11,7 @@
 
 <script>
 import "leaflet/dist/leaflet.css";
-import { fetchZRR, fetchTresors } from "@/utils/apiFunction";
+import { fetchZRR, fetchTresors, updatePlayerPos } from "@/utils/apiFunction";
 
 // This part resolves an issue where the markers would not appear in webpack
 import { Icon } from "leaflet";
@@ -32,6 +32,8 @@ export default {
   name: "MyMap",
   props: {
     joueur: Object,
+    loginValue: String,
+    token: String,
   },
   data() {
     return {
@@ -55,6 +57,10 @@ export default {
         },
       },
       tresors: [],
+      position: {
+        x: this.joueur.position.x,
+        y: this.joueur.position.y
+      }
     };
   },
   methods: {
@@ -73,10 +79,9 @@ export default {
         console.log("response : ", res);
         this.zrr = await res.json();
       }
-
-      if (res.status === 400) {
+      else {
         // Le nom de compte renseigné est déjà pris
-        console.log("Impossible de récupérer la ZRR");
+        console.log("Impossible de récupérer la ZRR, code : " + res.status);
       }
     },
     async getTresors() {
@@ -86,10 +91,20 @@ export default {
         console.log("response : ", res);
         this.tresors = await res.json();
       }
-
-      if (res.status === 404) {
+      else {
         // Le nom de compte renseigné est déjà pris
-        console.log("Impossible de récupérer les Tresors");
+        console.log("Impossible de récupérer les Tresors, code : " + res.status);
+      }
+    },
+    async updatePosition(pos) {
+      const res = await updatePlayerPos(this.loginValue, this.token, pos);
+      if (res.status === 200) {
+        // Les ressources on été récuperées
+        console.log("response de position : ", res);
+      }
+      else {
+        // Le nom de compte renseigné est déjà pris
+        console.log("Impossible de mettre a jour les positions, code : " + res.status);
       }
     },
   },
@@ -143,22 +158,34 @@ export default {
       iconUrl: require("@/assets/icon_coffre.png"),
     });
     for (let i = 0; i < this.tresors.length; i++) {
-      L.marker([this.tresors[i].position.x, this.tresors[i].position.y], { icon: coffreIcon })
+      if(!this.tresors[i].isOpen) {
+              L.marker([this.tresors[i].position.x, this.tresors[i].position.y], {
+        icon: coffreIcon,
+      })
         .addTo(mymap)
-        .bindPopup(`Coffre contenant:<br><strong>${this.tresors[i].composition}}</strong>.`);
+        .bindPopup(
+          `Coffre contenant:<br><strong>${this.tresors[i].composition}}</strong>.`
+      );
+      }
     }
 
     const playerIcon = L.icon({
       iconUrl: this.joueur.url,
       iconSize: [30, 30],
     });
-    let player_marker = L.marker([this.joueur.position.x, this.joueur.position.y], { icon: playerIcon })
-        .addTo(mymap)
-        .bindPopup(`Joueur:<br><strong>${this.joueur.id}}</strong>.`)
-        .openPopup();
+    let player_marker = L.marker(
+      [this.joueur.position.x, this.joueur.position.y],
+      { icon: playerIcon }
+    )
+      .addTo(mymap)
+      .bindPopup(`Joueur:<br><strong>${this.joueur.id}</strong>`)
+      .openPopup();
     this.ping = setInterval(() => {
-      console.log(this.joueur);
-      player_marker.setLatLng([this.joueur.position.x, this.joueur.position.y]);
+      // Todo : Dans les prochains tp, mettre à jour la position via l'api de géolocalisation
+      this.position.x = this.position.x + 0.00001;
+      this.position.y = this.position.y - 0.00001;
+      this.updatePosition(this.position);
+      player_marker.setLatLng([this.position.x, this.position.y]);
     }, 5000);
 
     // Clic sur la carte

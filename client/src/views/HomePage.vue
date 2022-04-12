@@ -29,10 +29,10 @@
       </a>
       </b>
     </p>
-  </ul>
+  </ul> 
 
   <br />
-  <div v-if="resources.registered"><MyMap :joueur="resources"/></div>
+  <div v-if="resources.registered"><MyMap :joueur="resources" :loginValue="loginValue" :token="token"/></div>
   <div v-else>Le joueur n'a pas encore été attribué à une partie.</div>
 </template>
 
@@ -92,7 +92,7 @@ export default {
     },
   },
   async mounted() {
-    this.getData();
+    await this.getData();
     this.ping = setInterval(() => {
       this.getData();
     }, 5000);
