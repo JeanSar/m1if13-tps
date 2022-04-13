@@ -1,6 +1,7 @@
 import {status} from "@/store/modules/status";
+import { fetchZRR } from "@/utils/apiFunction";
 
-const Zrr = {
+export const Zrr = {
     state () {
         return {
             limite_NE: {
@@ -22,11 +23,25 @@ const Zrr = {
         }
     },
     mutations: {
-        setZrr(NE, NO, SE, SO) {
-            status.limite_NE = NE;
-            status.limite_NO = NO;
-            status.limite_SE = SE;
-            status.limite_SO = SO;
+        setZrr(state, { limite_NE, limite_NO, limite_SE, limite_SO }) {
+            state.limite_NE = limite_NE;
+            state.limite_NO = limite_NO;
+            state.limite_SE = limite_SE;
+            state.limite_SO = limite_SO;
+        }
+    },
+    actions: {
+        async initZrr ({commit}, payload) {
+            const res = await fetchZRR();
+            if (res.status === 200) {
+                // Les ressources on été récuperées
+                const resJSON = await res.json();
+                commit('setZrr', resJSON);
+            }
+            if (res.status === 400) {
+                // Le nom de compte renseigné est déjà pris
+                window.alert("Impossible de récupérer la ZRR");
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 import { createStore } from 'vuex'
 import { count } from "@/store/modules/count";
+import { Zrr } from "@/store/modules/Zrr";
 
 export default createStore({
   state() {
@@ -15,6 +16,7 @@ export default createStore({
 
   },
   modules: {
-    count: count
+    count: count,
+    zrr: Zrr
   }
 })

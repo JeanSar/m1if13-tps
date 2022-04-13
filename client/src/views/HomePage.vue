@@ -79,7 +79,6 @@ export default {
         if (res.body == "L'id spécifié n'existe pas") {
           this.message = res.body;
         } else {
-          console.log("response : ", res);
           this.resources = await res.json();
         }
       }

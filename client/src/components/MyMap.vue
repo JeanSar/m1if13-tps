@@ -36,24 +36,6 @@ export default {
   data() {
     return {
       ping: undefined,
-      zrr: {
-        limite_NE: {
-          x: 45.78,
-          y: 4.86,
-        },
-        limite_NO: {
-          x: 45.78,
-          y: 4.86,
-        },
-        limite_SE: {
-          x: 45.78,
-          y: 4.86,
-        },
-        limite_SO: {
-          x: 45.78,
-          y: 4.86,
-        },
-      },
       tresors: [],
     };
   },
@@ -65,19 +47,6 @@ export default {
 
       // La fonction de validation du formulaire renvoie false pour bloquer le rechargement de la page.
       return false;
-    },
-    async getZRR() {
-      const res = await fetchZRR();
-      if (res.status === 200) {
-        // Les ressources on été récuperées
-        console.log("response : ", res);
-        this.zrr = await res.json();
-      }
-
-      if (res.status === 400) {
-        // Le nom de compte renseigné est déjà pris
-        console.log("Impossible de récupérer la ZRR");
-      }
     },
     async getTresors() {
       const res = await fetchTresors();
@@ -127,10 +96,10 @@ export default {
       .bindPopup("Entrée du bâtiment<br><strong>Nautibus</strong>.")
       .openPopup();
 
-    await this.getZRR();
+    await this.$store.dispatch({type: "initZrr"});
     let bounds = [
-      [this.zrr.limite_NO.x, this.zrr.limite_NO.y],
-      [this.zrr.limite_SE.x, this.zrr.limite_SE.y],
+      [this.$store.state.zrr.limite_NO.x, this.$store.state.zrr.limite_NO.y],
+      [this.$store.state.zrr.limite_SE.x, this.$store.state.zrr.limite_SE.y],
     ];
     let rectangle = L.rectangle(bounds, {
       color: "#ff7800",
