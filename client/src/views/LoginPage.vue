@@ -53,8 +53,6 @@ export default {
       if(res.status === 204) { // La création de compte s'est bien passé
         sessionStorage.setItem("login", this.loginValue);
         window.alert("Connection réussi !");
-        // this.loginValue = "";
-        // this.passwordValue = "";
         await this.$router.push("/home");
       }
 
