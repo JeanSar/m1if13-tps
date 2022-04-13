@@ -118,16 +118,16 @@ export default {
     }
 
     const playerIcon = L.icon({
-      iconUrl: this.joueur.url,
+      iconUrl: this.$store.state.user.resources.url,
       iconSize: [30, 30],
     });
-    let player_marker = L.marker([this.joueur.position.x, this.joueur.position.y], { icon: playerIcon })
+    let player_marker = L.marker([this.$store.state.user.resources.position.x, this.$store.state.user.resources.position.y], { icon: playerIcon })
         .addTo(mymap)
-        .bindPopup(`Joueur:<br><strong>${this.joueur.id}}</strong>.`)
+        .bindPopup(`Joueur:<br><strong>${this.$store.state.user.resources.id}}</strong>.`)
         .openPopup();
     this.ping = setInterval(() => {
       console.log(this.joueur);
-      player_marker.setLatLng([this.joueur.position.x, this.joueur.position.y]);
+      player_marker.setLatLng([this.$store.state.user.resources.position.x, this.$store.state.user.resources.position.y]);
     }, 5000);
 
     // Clic sur la carte
