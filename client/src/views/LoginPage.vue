@@ -22,6 +22,10 @@
         <button class="secondaryBtn" @click.prevent="createAccount">Créer un compte</button>
       </div>
     </form>
+    <div>
+      <p>Hello {{this.$store.state.count}}</p>
+      <button @click="increment">Incremente</button>
+    </div>
   </div>
 
   <div></div>
@@ -41,6 +45,9 @@ export default {
     };
   },
   methods: {
+    increment() {
+      this.$store.commit('increment')
+    },
     async login() {
       const res = await loginFunction(this);
       if(res.status === 204) { // La création de compte s'est bien passé
