@@ -1,32 +1,32 @@
-const idle = 'idle';
+import {status} from "@/store/modules/status";
 
 const Zrr = {
     state () {
         return {
             limite_NE: {
-                x: idle,
-                y: idle,
+                x: status.idle,
+                y: status.idle,
             },
             limite_NO: {
-                x: idle,
-                y: idle,
+                x: status.idle,
+                y: status.idle,
             },
             limite_SE: {
-                x: idle,
-                y: idle,
+                x: status.idle,
+                y: status.idle,
             },
             limite_SO: {
-                x: idle,
-                y: idle,
+                x: status.idle,
+                y: status.idle,
             }
         }
     },
     mutations: {
         setZrr(NE, NO, SE, SO) {
-            state.limite_NE = NE;
-            state.limite_NO = NO;
-            state.limite_SE = SE;
-            state.limite_SO = SO;
+            status.limite_NE = NE;
+            status.limite_NO = NO;
+            status.limite_SE = SE;
+            status.limite_SO = SO;
         }
     }
 }
