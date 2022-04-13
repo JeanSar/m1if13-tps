@@ -38,6 +38,7 @@ export default {
   data() {
     return {
       ping: undefined,
+      ping_tresors: undefined,
       zrr: {
         limite_NE: {
           x: 45.78,
@@ -57,10 +58,11 @@ export default {
         },
       },
       tresors: [],
+      marker_tresors: new Map(),
       position: {
         x: this.joueur.position.x,
-        y: this.joueur.position.y
-      }
+        y: this.joueur.position.y,
+      },
     };
   },
   methods: {
@@ -78,8 +80,7 @@ export default {
         // Les ressources on été récuperées
         console.log("response : ", res);
         this.zrr = await res.json();
-      }
-      else {
+      } else {
         // Le nom de compte renseigné est déjà pris
         console.log("Impossible de récupérer la ZRR, code : " + res.status);
       }
@@ -90,10 +91,11 @@ export default {
         // Les ressources on été récuperées
         console.log("response : ", res);
         this.tresors = await res.json();
-      }
-      else {
+      } else {
         // Le nom de compte renseigné est déjà pris
-        console.log("Impossible de récupérer les Tresors, code : " + res.status);
+        console.log(
+          "Impossible de récupérer les Tresors, code : " + res.status
+        );
       }
     },
     async updatePosition(pos) {
@@ -101,10 +103,11 @@ export default {
       if (res.status === 200) {
         // Les ressources on été récuperées
         console.log("response de position : ", res);
-      }
-      else {
+      } else {
         // Le nom de compte renseigné est déjà pris
-        console.log("Impossible de mettre a jour les positions, code : " + res.status);
+        console.log(
+          "Impossible de mettre a jour les positions, code : " + res.status
+        );
       }
     },
   },
@@ -141,6 +144,8 @@ export default {
       .addTo(mymap)
       .bindPopup("Entrée du bâtiment<br><strong>Nautibus</strong>.")
       .openPopup();
+    
+    // GESTION DE LA ZRR
 
     await this.getZRR();
     let bounds = [
@@ -153,21 +158,40 @@ export default {
       fill: false,
     }).addTo(mymap);
 
-    await this.getTresors();
+    // GESTION DES COFFRES AVEC SYNCHRO
+
     const coffreIcon = L.icon({
       iconUrl: require("@/assets/icon_coffre.png"),
     });
-    for (let i = 0; i < this.tresors.length; i++) {
-      if(!this.tresors[i].isOpen) {
-              L.marker([this.tresors[i].position.x, this.tresors[i].position.y], {
-        icon: coffreIcon,
-      })
-        .addTo(mymap)
-        .bindPopup(
-          `Coffre contenant:<br><strong>${this.tresors[i].composition}}</strong>.`
-      );
+    this.ping_tresors = setInterval(async () => {
+      await this.getTresors();
+
+      for (let i = 0; i < this.tresors.length; i++) {
+        let id = this.tresors[i].position;
+        let opened = this.tresors[i].isOpen;
+        let marked = !(this.marker_tresors.get(id) === undefined);
+
+        if(!opened && !marked) {
+          console.log("Adding ...");
+          this.marker_tresors.set(
+            id,
+            L.marker([this.tresors[i].position.x, this.tresors[i].position.y], {
+              icon: coffreIcon,
+            })
+              .addTo(mymap)
+              .bindPopup(
+                `Coffre contenant:<br><strong>${this.tresors[i].composition}}</strong>.`
+              )
+          );
+        } 
+        else if(opened && marked){
+          this.marker_tresors.get(id).remove();
+          this.marker_tresors.delete(id);
+        }
       }
-    }
+    }, 3000);
+
+    // GESTION DU JOUEUR ET DE SA POSITION AVEC UPDATE
 
     const playerIcon = L.icon({
       iconUrl: this.joueur.url,
@@ -180,6 +204,7 @@ export default {
       .addTo(mymap)
       .bindPopup(`Joueur:<br><strong>${this.joueur.id}</strong>`)
       .openPopup();
+
     this.ping = setInterval(() => {
       // Todo : Dans les prochains tp, mettre à jour la position via l'api de géolocalisation
       this.position.x = this.position.x + 0.00001;
@@ -197,6 +222,7 @@ export default {
   },
   async beforeUnmount() {
     clearInterval(this.ping);
+    clearInterval(this.ping_tresors);
   },
 };
 </script>

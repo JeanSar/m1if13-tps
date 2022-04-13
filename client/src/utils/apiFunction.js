@@ -39,3 +39,12 @@ export async function fetchTresors(){
     },
   });
 }
+
+export async function fetchGameStatus(){
+  return await fetch(`${url}/admin/startGame`, {
+    method: "GET",
+    headers: {
+      "content-type": "application/json"
+    }
+  });
+}

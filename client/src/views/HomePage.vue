@@ -7,7 +7,11 @@
   <h2>{{ message }}</h2>
   <ul>
     <p>
-      <img :src="resources.url" alt="" style="width: 100px;border-radius: 50%;opacity: 50%;">
+      <img
+        :src="resources.url"
+        alt=""
+        style="width: 100px; border-radius: 50%; opacity: 50%"
+      />
     </p>
     <p>
       <b><u>Identifiant de joueur</u>: {{ resources.id }}</b>
@@ -22,23 +26,26 @@
       <b><u>TTL</u>: {{ resources.ttl }}</b>
     </p>
     <p>
-      <b><u>Trésors</u>: 
-      <a v-if="!resources.treasures.length"> Vous n'avez aucun trésors...</a>
-      <a v-else>
-        <div v-for="r in resources.treasures" v-bind:key="r">{{r}}</div>
-      </a>
+      <b
+        ><u>Trésors</u>:
+        <a v-if="!resources.treasures.length"> Vous n'avez aucun trésors...</a>
+        <a v-else>
+          <div v-for="r in resources.treasures" v-bind:key="r">{{ r }}</div>
+        </a>
       </b>
     </p>
-  </ul> 
+  </ul>
 
   <br />
-  <div v-if="resources.registered"><MyMap :joueur="resources" :loginValue="loginValue" :token="token"/></div>
+  <div v-if="resources.registered">
+    <MyMap :joueur="resources" :loginValue="loginValue" :token="token" />
+  </div>
   <div v-else>Le joueur n'a pas encore été attribué à une partie.</div>
 </template>
 
 <script>
 import MyMap from "@/components/MyMap";
-import { fetchResources } from "@/utils/apiFunction";
+import { fetchResources, fetchGameStatus } from "@/utils/apiFunction";
 
 // Pour récupérer le token, une fois connecté : sessionStorage.getItem("token")
 export default {
@@ -52,6 +59,7 @@ export default {
   data() {
     return {
       ping: undefined,
+      time: undefined,
       loginValue: "",
       token: "",
       message: "Votre profil de joueur :",
@@ -93,14 +101,19 @@ export default {
   },
   async mounted() {
     await this.getData();
-    this.ping = setInterval(() => {
-      this.getData();
+    this.ping = setInterval(async () => {
+      await this.getData();
     }, 5000);
+    this.time = setInterval(() => {
+      if (this.resources.ttl != 0) {
+        this.resources.ttl--;
+      }
+    }, 1000);
   },
   async beforeUnmount() {
     clearInterval(this.ping);
+    clearInterval(this.time);
   },
-  
 };
 </script>
 
