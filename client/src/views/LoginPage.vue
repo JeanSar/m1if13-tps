@@ -23,7 +23,7 @@
       </div>
     </form>
     <div>
-      <p>Hello {{this.$store.state.count}}</p>
+      <p>Hello {{this.$store.state.count.count}}</p>
       <button @click="increment">Incremente</button>
     </div>
   </div>
@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     increment() {
-      this.$store.commit('increment')
+      this.$store.dispatch({type: "incrementNFois", n: 10 })
     },
     async login() {
       const res = await loginFunction(this);

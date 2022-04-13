@@ -1,21 +1,20 @@
 import { createStore } from 'vuex'
+import { count } from "@/store/modules/count";
 
 export default createStore({
   state() {
-    return {
-      count: 0
-    }
+
   },
   getters: {
 
   },
   mutations: {
-    increment (state) {
-      state.count++
-    }
+
   },
   actions: {
+
   },
   modules: {
+    count: count
   }
 })
