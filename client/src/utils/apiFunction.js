@@ -48,3 +48,14 @@ export async function fetchGameStatus(){
     }
   });
 }
+
+export async function foundTresor(loginValue, pos) {
+  const body = JSON.stringify({id: loginValue, position : {x: pos.lat, y: pos.lng}});
+  return await fetch(`${url}/admin/foundTresor`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json"
+    },
+    body: body,
+  });
+}

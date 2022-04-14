@@ -88,7 +88,7 @@ export default {
         if (res.body == "L'id spécifié n'existe pas") {
           this.message = res.body;
         } else {
-          console.log("response : ", res);
+          //console.log("response : ", res);
           this.resources = await res.json();
         }
       }
@@ -103,7 +103,7 @@ export default {
       const res = await fetchGameStatus();
       if (res.status === 200) {
         // Les ressources on été récuperées
-        console.log("response game status : ", res);
+        //console.log("response game status : ", res);
         this.isGameStarted = (await res.json())["isGameStarted"];
       } else {
         // Le nom de compte renseigné est déjà pris

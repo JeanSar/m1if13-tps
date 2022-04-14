@@ -11,7 +11,7 @@
 
 <script>
 import "leaflet/dist/leaflet.css";
-import { fetchZRR, fetchTresors, updatePlayerPos } from "@/utils/apiFunction";
+import { fetchZRR, fetchTresors, updatePlayerPos, foundTresor } from "@/utils/apiFunction";
 
 // This part resolves an issue where the markers would not appear in webpack
 import { Icon } from "leaflet";
@@ -90,7 +90,7 @@ export default {
       const res = await fetchTresors();
       if (res.status === 200) {
         // Les ressources on été récuperées
-        console.log("response : ", res);
+        //console.log("response : ", res);
         this.tresors = await res.json();
       } else {
         // Le nom de compte renseigné est déjà pris
@@ -103,7 +103,7 @@ export default {
       const res = await updatePlayerPos(this.loginValue, this.token, pos);
       if (res.status === 200) {
         // Les ressources on été récuperées
-        console.log("response de position : ", res);
+        //console.log("response de position : ", res);
       } else {
         // Le nom de compte renseigné est déjà pris
         console.log(
@@ -138,6 +138,27 @@ export default {
           this.marker_tresors = this.marker_tresors.filter(e => e !== obj);
         }
       }
+    },
+    async takeTresor(pos) {
+      const res = await foundTresor(this.loginValue, pos);
+      if (res.status === 204) {
+        // Les ressources on été récuperées
+        console.log("response de foundTresor : ", res);
+        console.log("Coffre récupéré");
+      } else{
+        // Le nom de compte renseigné est déjà pris
+        console.log(
+          "Impossible de récupérer le trésor, code : " + res.status
+        );
+      }
+    },
+    async checkTresor(player_pos){
+      this.marker_tresors.forEach(element => {
+        if(element.getLatLng().distanceTo(player_pos) <= 2.0){
+          console.log("Coffre a proximité");
+          this.takeTresor(element.getLatLng());
+        }
+      });
     },
   },
   async beforeMount() {
@@ -213,10 +234,10 @@ export default {
 
     this.ping = setInterval(() => {
       // Todo : Dans les prochains tp, mettre à jour la position via l'api de géolocalisation
-      this.position.x = this.position.x + 0.00001;
-      this.position.y = this.position.y - 0.00001;
-      this.updatePosition(this.position);
+      this.position.x = this.position.x + 0.000001;
+      this.position.y = this.position.y - 0.000001;
       player_marker.setLatLng([this.position.x, this.position.y]);
+      this.updatePosition(this.position);
     }, 5000);
 
     // Clic sur la carte
@@ -224,6 +245,11 @@ export default {
       lat = e.latlng.lat;
       lng = e.latlng.lng;
       this.updateMap();
+    });
+
+    // Déplacement du joueur
+    player_marker.on('move', (player) => {
+      this.checkTresor(player.latlng);
     });
   },
   async beforeUnmount() {
