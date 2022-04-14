@@ -30,22 +30,13 @@ let mymap = {};
 
 export default {
   name: "MyMap",
-  props: {
-    joueur: Object,
-    loginValue: String,
-    token: String,
-  },
   data() {
     return {
       ping: undefined,
       ping_tresors: undefined,
-      tresors: []
+      tresors: [],
       marker_tresors: [],
-      coffreIcon: undefined,
-      position: {
-        x: this.joueur.position.x,
-        y: this.joueur.position.y,
-      },
+      coffreIcon: undefined
     };
   },
   methods: {
@@ -61,12 +52,15 @@ export default {
       const res = await fetchTresors();
       if (res.status === 200) {
         // Les ressources on été récuperées
-        console.log("response : ", res);
         this.tresors = await res.json();
       }
     },
     async updatePosition(pos) {
-      const res = await updatePlayerPos(this.loginValue, this.token, pos);
+      const res = await updatePlayerPos(
+        sessionStorage.getItem("login"),
+        sessionStorage.getItem("token"),
+        pos
+      );
       if (res.status === 200) {
         // Les ressources on été récuperées
         //console.log("response de position : ", res);
@@ -196,11 +190,11 @@ export default {
         .openPopup();
     this.ping = setInterval(() => {
       // Todo : Dans les prochains tp, mettre à jour la position via l'api de géolocalisation
-      this.position.x = this.position.x + 0.000001;
-      this.position.y = this.position.y - 0.000001; // TODO - Faire un setter pour la positio dans le store
-      this.updatePosition(this.position);
+
+      this.$store.commit('movePlayer', {x: 0.00001, y: -0.00001});
+      this.updatePosition(this.$store.state.user.resources.position);
       player_marker.setLatLng([this.$store.state.user.resources.position.x, this.$store.state.user.resources.position.y]);
-    }, 5000);
+    }, 1000);
 
     // Clic sur la carte
     mymap.on("click", (e) => {

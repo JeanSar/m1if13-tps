@@ -21,6 +21,13 @@ export const User = {
   mutations: {
     setResource(state, resource) {
       state.resources = resource;
+    },
+    movePlayer(state, {x, y}) {
+      const tmp = {... state.resources};
+      let newPos = tmp.position;
+      newPos.x += x;
+      newPos.y += y;
+      state.resources = {... state.resources, position: newPos}
     }
   },
   actions: {
@@ -33,7 +40,6 @@ export const User = {
         const resJSON = await res.json();
         commit('setResource', resJSON);
         sessionStorage.setItem("imageURL", resJSON.url);
-        console.log(sessionStorage.getItem("imageURL"));
       }
       if (res.status === 400) {
         // Le nom de compte renseigné est déjà pris

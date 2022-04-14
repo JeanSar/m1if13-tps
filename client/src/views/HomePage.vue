@@ -64,12 +64,6 @@ export default {
     };
   },
   methods: {
-
-  },
-
-  beforeMount() {
-    this.$store.dispatch('readResource');
-  },
     async getGameStatus() {
       const res = await fetchGameStatus();
       if (res.status === 200) {
@@ -82,19 +76,24 @@ export default {
           "Impossible de récupérer le status de la partie, code : " + res.status
         );
       }
-    },
+    }
+  },
+
+  beforeMount() {
+    this.$store.dispatch('readResource');
+  },
   async mounted() {
     this.ping = setInterval(() => {
       this.$store.dispatch('readResource');
     }, 5000);
     this.time = setInterval(async () => {
       if(this.isGameStarted) {
-        if (this.resources.ttl != 0)
+        if (this.$store.state.user.resources.ttl != 0)
           this.resources.ttl--;
       } else {
         await this.getGameStatus();
         if(this.isGameStarted) {
-          if (this.resources.ttl != 0)
+          if (this.$store.state.user.resources.ttl != 0)
             this.resources.ttl--;
         }
       }
