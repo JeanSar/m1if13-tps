@@ -62,7 +62,6 @@ export default {
     this.$store.dispatch('readResource');
   },
   async mounted() {
-
     this.ping = setInterval(() => {
       this.$store.dispatch('readResource');
     }, 5000);

@@ -96,7 +96,7 @@ export default {
       .bindPopup("Entrée du bâtiment<br><strong>Nautibus</strong>.")
       .openPopup();
 
-    await this.$store.dispatch({type: "initZrr"});
+    await this.$store.dispatch({type: "readZrr"});
     let bounds = [
       [this.$store.state.zrr.limite_NO.x, this.$store.state.zrr.limite_NO.y],
       [this.$store.state.zrr.limite_SE.x, this.$store.state.zrr.limite_SE.y],

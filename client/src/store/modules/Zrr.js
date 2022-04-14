@@ -31,7 +31,7 @@ export const Zrr = {
         }
     },
     actions: {
-        async initZrr ({commit}, payload) {
+        async readZrr ({commit}, payload) {
             const res = await fetchZRR();
             if (res.status === 200) {
                 // Les ressources on été récuperées
