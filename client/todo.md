@@ -6,7 +6,8 @@ TODO :
     - [X] Afficher la zzr sur la carte (après l'avoir récupérer via l'api : il faudra au préalable en avoir créer une)
     - [X] Stocker toutes les informations (constante ?) via l'api webstorage
     - [X] "Ping" le serv toutes les 5 sec pour renvoyer la pos du joueurs (le but est d'anticiper quand le joueur se déplacera)
-    - [ ] Mettre a jour les coffres sur la map en cas d'ajout / disparition + mécanisme de récupération des coffres
+    - [X] Mettre a jour les coffres sur la map en cas d'ajout / disparition 
+    - [ ] Mécanisme de récupération des coffres + Action
     - [X] Gérer le TTL chez le client (simulé la décrémentation + synchro sur le serveur)
     - [ ] Gestion de la fin du jeu (popup)
 - [ ] Sinon voir partie 4

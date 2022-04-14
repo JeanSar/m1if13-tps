@@ -59,6 +59,7 @@ export default {
       },
       tresors: [],
       marker_tresors: [],
+      coffreIcon: undefined,
       position: {
         x: this.joueur.position.x,
         y: this.joueur.position.y,
@@ -108,6 +109,34 @@ export default {
         console.log(
           "Impossible de mettre a jour les positions, code : " + res.status
         );
+      }
+    },
+    async updateTresors(L, mymap){
+      await this.getTresors();
+
+      for (let i = 0; i < this.tresors.length; i++) {
+        let id = this.tresors[i].position;
+        let obj = this.marker_tresors.find(e => e.getLatLng().equals([id.x, id.y]));
+        let opened = this.tresors[i].isOpen;
+        let notadded = (obj === undefined);
+
+        if(!opened && notadded) {
+          console.log("Adding ...");
+          this.marker_tresors.push(
+            L.marker([id.x, id.y], {
+              icon: this.coffreIcon,
+            })
+              .addTo(mymap)
+              .bindPopup(
+                `Coffre contenant:<br><strong>${this.tresors[i].composition}}</strong>.`
+              )
+          );
+        } 
+        else if(opened && !notadded){
+          console.log("Removing ...");
+          obj.remove();
+          this.marker_tresors = this.marker_tresors.filter(e => e !== obj);
+        }
       }
     },
   },
@@ -160,37 +189,12 @@ export default {
 
     // GESTION DES COFFRES AVEC SYNCHRO
 
-    const coffreIcon = L.icon({
+    this.coffreIcon = L.icon({
       iconUrl: require("@/assets/icon_coffre.png"),
     });
+    await this.updateTresors(L, mymap);
     this.ping_tresors = setInterval(async () => {
-      await this.getTresors();
-
-      for (let i = 0; i < this.tresors.length; i++) {
-        let id = this.tresors[i].position;
-        let obj = this.marker_tresors.find(e => e.getLatLng().equals([id.x, id.y]));
-        console.log(obj);
-        let opened = this.tresors[i].isOpen;
-        let notadded = (obj === undefined);
-
-        if(!opened && notadded) {
-          console.log("Adding ...");
-          this.marker_tresors.push(
-            L.marker([this.tresors[i].position.x, this.tresors[i].position.y], {
-              icon: coffreIcon,
-            })
-              .addTo(mymap)
-              .bindPopup(
-                `Coffre contenant:<br><strong>${this.tresors[i].composition}}</strong>.`
-              )
-          );
-        } 
-        else if(opened && !notadded){
-          console.log("Removing ...");
-          obj.remove();
-          this.marker_tresors = this.marker_tresors.filter(e => e !== obj);
-        }
-      }
+      await this.updateTresors(L, mymap);
     }, 3000);
 
     // GESTION DU JOUEUR ET DE SA POSITION AVEC UPDATE
