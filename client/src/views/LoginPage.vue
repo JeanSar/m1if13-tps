@@ -22,13 +22,7 @@
         <button class="secondaryBtn" @click.prevent="createAccount">Créer un compte</button>
       </div>
     </form>
-    <div>
-      <p>Hello {{this.$store.state.count.count}}</p>
-      <button @click="increment">Incremente</button>
-    </div>
   </div>
-
-  <div></div>
 </template>
 
 <script>
@@ -45,13 +39,12 @@ export default {
     };
   },
   methods: {
-    increment() {
-      this.$store.dispatch({type: "incrementNFois", n: 10 })
-    },
     async login() {
       const res = await loginFunction(this);
       if(res.status === 204) { // La création de compte s'est bien passé
         sessionStorage.setItem("login", this.loginValue);
+        const token = res.headers.get("Authorization").split("Bearer ")[1];
+        sessionStorage.setItem("token", token);
         window.alert("Connection réussi !");
         await this.$router.push("/home");
       }
@@ -61,8 +54,7 @@ export default {
         this.passwordValue = "";
         this.loginValue = "";
       }
-      const token = res.headers.get("Authorization").split("Bearer ")[1];
-      sessionStorage.setItem("token", token);
+
 
     },
     async createAccount() {
