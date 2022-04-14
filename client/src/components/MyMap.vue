@@ -34,7 +34,6 @@ export default {
     return {
       ping: undefined,
       ping_tresors: undefined,
-      tresors: [],
       marker_tresors: [],
       coffreIcon: undefined
     };
@@ -47,13 +46,6 @@ export default {
 
       // La fonction de validation du formulaire renvoie false pour bloquer le rechargement de la page.
       return false;
-    },
-    async getTresors() {
-      const res = await fetchTresors();
-      if (res.status === 200) {
-        // Les ressources on été récuperées
-        this.tresors = await res.json();
-      }
     },
     async updatePosition(pos) {
       const res = await updatePlayerPos(
@@ -72,12 +64,14 @@ export default {
       }
     },
     async updateTresors(L, mymap){
-      await this.getTresors();
+      await this.$store.dispatch('readTreasures');
+      for (let i = 0; i < this.$store.state.treasures.items.length; i++) {
 
-      for (let i = 0; i < this.tresors.length; i++) {
-        let id = this.tresors[i].position;
+
+        let id = this.$store.state.treasures.items[i].position;
+        console.log("id", id);
         let obj = this.marker_tresors.find(e => e.getLatLng().equals([id.x, id.y]));
-        let opened = this.tresors[i].isOpen;
+        let opened = this.$store.state.treasures.items[i].isOpen;
         let notadded = (obj === undefined);
 
         if(!opened && notadded) {
@@ -88,7 +82,7 @@ export default {
             })
               .addTo(mymap)
               .bindPopup(
-                `Coffre contenant:<br><strong>${this.tresors[i].composition}}</strong>.`
+                `Coffre contenant:<br><strong>${this.$store.state.treasures.items.composition}}</strong>.`
               )
           );
         }
@@ -100,7 +94,7 @@ export default {
       }
     },
     async takeTresor(pos) {
-      const res = await foundTresor(this.loginValue, pos);
+      const res = await foundTresor(sessionStorage.getItem("login"), pos);
       if (res.status === 204) {
         // Les ressources on été récuperées
         console.log("response de foundTresor : ", res);
@@ -112,7 +106,7 @@ export default {
         );
       }
     },
-    async checkTresor(player_pos){
+    checkTresor(player_pos){
       this.marker_tresors.forEach(element => {
         if(element.getLatLng().distanceTo(player_pos) <= 2.0){
           console.log("Coffre a proximité");

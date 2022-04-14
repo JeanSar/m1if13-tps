@@ -60,7 +60,8 @@ export default {
   data() {
     return {
       ping: undefined,
-      time: undefined
+      time: undefined,
+      isGameStarted: undefined
     };
   },
   methods: {
@@ -86,14 +87,16 @@ export default {
     this.ping = setInterval(() => {
       this.$store.dispatch('readResource');
     }, 5000);
+
     this.time = setInterval(async () => {
+      console.log(this.$store.state.user.resources.ttl);
       if(this.isGameStarted) {
-        if (this.$store.state.user.resources.ttl != 0)
+        if (this.$store.state.user.resources.ttl !== 0)
           this.resources.ttl--;
       } else {
         await this.getGameStatus();
         if(this.isGameStarted) {
-          if (this.$store.state.user.resources.ttl != 0)
+          if (this.$store.state.user.resources.ttl !== 0)
             this.resources.ttl--;
         }
       }
