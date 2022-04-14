@@ -30,7 +30,7 @@
         ><u>Trésors</u>:
         <a v-if="!resources.treasures.length"> Vous n'avez aucun trésors...</a>
         <a v-else>
-          <div v-for="r in resources.treasures" v-bind:key="r">{{ r }}</div>
+          <div v-for="r in resources.treasures" v-bind:key="r"> Coffre : {{ r.composition }}</div>
         </a>
       </b>
     </p>
