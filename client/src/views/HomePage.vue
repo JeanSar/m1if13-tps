@@ -10,7 +10,7 @@
       <img :src="this.$store.state.user.resources.url" alt="" style="width: 100px;border-radius: 50%;opacity: 50%;">
     </p>
     <p>
-      <b><u>Identifiant de joueur</u>: {{ this.$store.state.resources?.id }}</b>
+      <b><u>Identifiant de joueur</u>: {{ this.$store.state.user.resources?.id }}</b>
     </p>
     <p>
       <b>
@@ -42,7 +42,6 @@
   <div v-else>
     Le joueur n'a pas encore été attribué à une partie.
   </div>
-  <div v-else>Le joueur n'a pas encore été attribué à une partie.</div>
 </template>
 
 <script>
