@@ -58,7 +58,7 @@ export default {
         },
       },
       tresors: [],
-      marker_tresors: new Map(),
+      marker_tresors: [],
       position: {
         x: this.joueur.position.x,
         y: this.joueur.position.y,
@@ -168,13 +168,14 @@ export default {
 
       for (let i = 0; i < this.tresors.length; i++) {
         let id = this.tresors[i].position;
+        let obj = this.marker_tresors.find(e => e.getLatLng().equals([id.x, id.y]));
+        console.log(obj);
         let opened = this.tresors[i].isOpen;
-        let marked = !(this.marker_tresors.get(id) === undefined);
+        let notadded = (obj === undefined);
 
-        if(!opened && !marked) {
+        if(!opened && notadded) {
           console.log("Adding ...");
-          this.marker_tresors.set(
-            id,
+          this.marker_tresors.push(
             L.marker([this.tresors[i].position.x, this.tresors[i].position.y], {
               icon: coffreIcon,
             })
@@ -184,9 +185,10 @@ export default {
               )
           );
         } 
-        else if(opened && marked){
-          this.marker_tresors.get(id).remove();
-          this.marker_tresors.delete(id);
+        else if(opened && !notadded){
+          console.log("Removing ...");
+          obj.remove();
+          this.marker_tresors = this.marker_tresors.filter(e => e !== obj);
         }
       }
     }, 3000);

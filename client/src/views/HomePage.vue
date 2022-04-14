@@ -60,6 +60,7 @@ export default {
     return {
       ping: undefined,
       time: undefined,
+      isGameStarted: false,
       loginValue: "",
       token: "",
       message: "Votre profil de joueur :",
@@ -98,15 +99,35 @@ export default {
         this.message = "L'id spécifié n'existe pas";
       }
     },
+    async getGameStatus() {
+      const res = await fetchGameStatus();
+      if (res.status === 200) {
+        // Les ressources on été récuperées
+        console.log("response game status : ", res);
+        this.isGameStarted = (await res.json())["isGameStarted"];
+      } else {
+        // Le nom de compte renseigné est déjà pris
+        console.log(
+          "Impossible de récupérer le status de la partie, code : " + res.status
+        );
+      }
+    }
   },
   async mounted() {
     await this.getData();
     this.ping = setInterval(async () => {
       await this.getData();
     }, 5000);
-    this.time = setInterval(() => {
-      if (this.resources.ttl != 0) {
-        this.resources.ttl--;
+    this.time = setInterval(async () => {
+      if(this.isGameStarted) {
+        if (this.resources.ttl != 0)
+          this.resources.ttl--;
+      } else {
+        await this.getGameStatus();
+        if(this.isGameStarted) {
+          if (this.resources.ttl != 0)
+            this.resources.ttl--;
+        }
       }
     }, 1000);
   },
