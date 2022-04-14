@@ -23,17 +23,25 @@
     </p>
     <p>
       <b><u>Trésors</u>: 
-      <a v-if="this.$store.state.user.resources.treasures === 'idle' && !resources.treasures.length"> Vous n'avez aucun trésors...</a>
+      <a v-if="this.$store.state.user.resources.treasures === 'idle' || this.$store.state.user.resources.treasures.length === 0">
+        Vous n'avez aucun trésors...
+      </a>
       <a v-else>
-        <div v-for="r in this.$store.state.user.resources.treasures" v-bind:key="r">{{r}}</div>
+        <div v-for="r in this.$store.state.user.resources.treasures" v-bind:key="r">
+          {{r}}
+        </div>
       </a>
       </b>
     </p>
   </ul>
 
   <br />
-  <div v-if="this.$store.state.user.resources.registered"><MyMap :joueur="this.$store.state.user.resources"/></div>
-  <div v-else>Le joueur n'a pas encore été attribué à une partie.</div>
+  <div v-if="this.$store.state.user.resources.registered">
+    <MyMap :joueur="this.$store.state.user.resources"/>
+  </div>
+  <div v-else>
+    Le joueur n'a pas encore été attribué à une partie.
+  </div>
 </template>
 
 <script>
