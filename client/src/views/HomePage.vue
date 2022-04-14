@@ -22,13 +22,13 @@
       <b><u>TTL</u>: {{ this.$store.state.user.resources.ttl }}</b>
     </p>
     <p>
-      <b><u>Trésors</u>: 
+      <b><u>Trésors</u>:
       <a v-if="this.$store.state.user.resources.treasures === 'idle' || this.$store.state.user.resources.treasures.length === 0">
         Vous n'avez aucun trésors...
       </a>
       <a v-else>
         <div v-for="r in this.$store.state.user.resources.treasures" v-bind:key="r">
-          {{r}}
+          Coffre : {{ r.composition }}
         </div>
       </a>
       </b>
@@ -42,6 +42,7 @@
   <div v-else>
     Le joueur n'a pas encore été attribué à une partie.
   </div>
+  <div v-else>Le joueur n'a pas encore été attribué à une partie.</div>
 </template>
 
 <script>
@@ -61,7 +62,7 @@ export default {
     return {
       ping: undefined,
       time: undefined,
-      isGameStarted: undefined
+      isGameStarted: false
     };
   },
   methods: {
@@ -106,7 +107,6 @@ export default {
     clearInterval(this.ping);
     clearInterval(this.time);
   },
-  
 };
 </script>
 
