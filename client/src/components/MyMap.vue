@@ -11,7 +11,7 @@
 
 <script>
 import "leaflet/dist/leaflet.css";
-import { fetchZRR, fetchTresors } from "@/utils/apiFunction";
+import { fetchZRR, fetchTresors, updatePlayerPos, foundTresor } from "@/utils/apiFunction";
 
 // This part resolves an issue where the markers would not appear in webpack
 import { Icon } from "leaflet";
@@ -32,11 +32,20 @@ export default {
   name: "MyMap",
   props: {
     joueur: Object,
+    loginValue: String,
+    token: String,
   },
   data() {
     return {
       ping: undefined,
-      tresors: [],
+      ping_tresors: undefined,
+      tresors: []
+      marker_tresors: [],
+      coffreIcon: undefined,
+      position: {
+        x: this.joueur.position.x,
+        y: this.joueur.position.y,
+      },
     };
   },
   methods: {
@@ -55,11 +64,67 @@ export default {
         console.log("response : ", res);
         this.tresors = await res.json();
       }
-
-      if (res.status === 404) {
+    },
+    async updatePosition(pos) {
+      const res = await updatePlayerPos(this.loginValue, this.token, pos);
+      if (res.status === 200) {
+        // Les ressources on été récuperées
+        //console.log("response de position : ", res);
+      } else {
         // Le nom de compte renseigné est déjà pris
-        console.log("Impossible de récupérer les Tresors");
+        console.log(
+          "Impossible de mettre a jour les positions, code : " + res.status
+        );
       }
+    },
+    async updateTresors(L, mymap){
+      await this.getTresors();
+
+      for (let i = 0; i < this.tresors.length; i++) {
+        let id = this.tresors[i].position;
+        let obj = this.marker_tresors.find(e => e.getLatLng().equals([id.x, id.y]));
+        let opened = this.tresors[i].isOpen;
+        let notadded = (obj === undefined);
+
+        if(!opened && notadded) {
+          console.log("Adding ...");
+          this.marker_tresors.push(
+            L.marker([id.x, id.y], {
+              icon: this.coffreIcon,
+            })
+              .addTo(mymap)
+              .bindPopup(
+                `Coffre contenant:<br><strong>${this.tresors[i].composition}}</strong>.`
+              )
+          );
+        }
+        else if(opened && !notadded){
+          console.log("Removing ...");
+          obj.remove();
+          this.marker_tresors = this.marker_tresors.filter(e => e !== obj);
+        }
+      }
+    },
+    async takeTresor(pos) {
+      const res = await foundTresor(this.loginValue, pos);
+      if (res.status === 204) {
+        // Les ressources on été récuperées
+        console.log("response de foundTresor : ", res);
+        console.log("Coffre récupéré");
+      } else{
+        // Le nom de compte renseigné est déjà pris
+        console.log(
+          "Impossible de récupérer le trésor, code : " + res.status
+        );
+      }
+    },
+    async checkTresor(player_pos){
+      this.marker_tresors.forEach(element => {
+        if(element.getLatLng().distanceTo(player_pos) <= 2.0){
+          console.log("Coffre a proximité");
+          this.takeTresor(element.getLatLng());
+        }
+      });
     },
   },
   async beforeMount() {
@@ -96,6 +161,8 @@ export default {
       .bindPopup("Entrée du bâtiment<br><strong>Nautibus</strong>.")
       .openPopup();
 
+    // GESTION DE LA ZRR
+
     await this.$store.dispatch({type: "readZrr"});
     let bounds = [
       [this.$store.state.zrr.limite_NO.x, this.$store.state.zrr.limite_NO.y],
@@ -107,15 +174,17 @@ export default {
       fill: false,
     }).addTo(mymap);
 
-    await this.getTresors();
-    const coffreIcon = L.icon({
+    // GESTION DES COFFRES AVEC SYNCHRO
+
+    this.coffreIcon = L.icon({
       iconUrl: require("@/assets/icon_coffre.png"),
     });
-    for (let i = 0; i < this.tresors.length; i++) {
-      L.marker([this.tresors[i].position.x, this.tresors[i].position.y], { icon: coffreIcon })
-        .addTo(mymap)
-        .bindPopup(`Coffre contenant:<br><strong>${this.tresors[i].composition}}</strong>.`);
-    }
+    await this.updateTresors(L, mymap);
+    this.ping_tresors = setInterval(async () => {
+      await this.updateTresors(L, mymap);
+    }, 3000);
+
+    // GESTION DU JOUEUR ET DE SA POSITION AVEC UPDATE
 
     const playerIcon = L.icon({
       iconUrl: this.$store.state.user.resources.url,
@@ -126,7 +195,10 @@ export default {
         .bindPopup(`Joueur:<br><strong>${this.$store.state.user.resources.id}}</strong>.`)
         .openPopup();
     this.ping = setInterval(() => {
-      console.log(this.joueur);
+      // Todo : Dans les prochains tp, mettre à jour la position via l'api de géolocalisation
+      this.position.x = this.position.x + 0.000001;
+      this.position.y = this.position.y - 0.000001; // TODO - Faire un setter pour la positio dans le store
+      this.updatePosition(this.position);
       player_marker.setLatLng([this.$store.state.user.resources.position.x, this.$store.state.user.resources.position.y]);
     }, 5000);
 
@@ -136,9 +208,15 @@ export default {
       lng = e.latlng.lng;
       this.updateMap();
     });
+
+    // Déplacement du joueur
+    player_marker.on('move', (player) => {
+      this.checkTresor(player.latlng);
+    });
   },
   async beforeUnmount() {
     clearInterval(this.ping);
+    clearInterval(this.ping_tresors);
   },
 };
 </script>

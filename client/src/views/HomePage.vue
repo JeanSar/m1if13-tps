@@ -46,7 +46,7 @@
 
 <script>
 import MyMap from "@/components/MyMap";
-import { fetchResources } from "@/utils/apiFunction";
+import { fetchResources, fetchGameStatus } from "@/utils/apiFunction";
 
 // Pour récupérer le token, une fois connecté : sessionStorage.getItem("token")
 export default {
@@ -60,6 +60,7 @@ export default {
   data() {
     return {
       ping: undefined,
+      time: undefined
     };
   },
   methods: {
@@ -69,13 +70,39 @@ export default {
   beforeMount() {
     this.$store.dispatch('readResource');
   },
+    async getGameStatus() {
+      const res = await fetchGameStatus();
+      if (res.status === 200) {
+        // Les ressources on été récuperées
+        //console.log("response game status : ", res);
+        this.isGameStarted = (await res.json())["isGameStarted"];
+      } else {
+        // Le nom de compte renseigné est déjà pris
+        console.log(
+          "Impossible de récupérer le status de la partie, code : " + res.status
+        );
+      }
+    },
   async mounted() {
     this.ping = setInterval(() => {
       this.$store.dispatch('readResource');
     }, 5000);
+    this.time = setInterval(async () => {
+      if(this.isGameStarted) {
+        if (this.resources.ttl != 0)
+          this.resources.ttl--;
+      } else {
+        await this.getGameStatus();
+        if(this.isGameStarted) {
+          if (this.resources.ttl != 0)
+            this.resources.ttl--;
+        }
+      }
+    }, 1000);
   },
   async beforeUnmount() {
     clearInterval(this.ping);
+    clearInterval(this.time);
   },
   
 };

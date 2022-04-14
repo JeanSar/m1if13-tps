@@ -49,6 +49,13 @@ adminRouter.post('/ttlInit',
 
 adminRouter.post('/startGame', ((req: Request, res: Response) => {
     gameIsStarted = true;
+    setInterval(() => {
+        for(let user of users) {
+            if(user.aventurier.ttl > 0 && user.isRegisterInToZRR) {
+                user.aventurier.ttl --;
+            }
+        }
+    }, 1000);
     return res.sendStatus(204);
 }));
 

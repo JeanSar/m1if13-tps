@@ -6,8 +6,20 @@ export async function fetchResources(loginValue, token) {
       headers: {
         "content-type": "application/json",
         "authorization": token,
-      },
+      }
     });
+}
+
+export async function updatePlayerPos(loginValue, token, pos){
+  const body = JSON.stringify({position : pos});
+  return await fetch(`${url}/api/${loginValue}`, {
+    method: "PUT",
+    headers: {
+      "content-type": "application/json",
+      "authorization": token,
+    },
+    body: body
+  });
 }
 
 export async function fetchZRR() {
@@ -25,5 +37,25 @@ export async function fetchTresors(){
     headers: {
       "content-type": "*/*",
     },
+  });
+}
+
+export async function fetchGameStatus(){
+  return await fetch(`${url}/admin/startGame`, {
+    method: "GET",
+    headers: {
+      "content-type": "application/json"
+    }
+  });
+}
+
+export async function foundTresor(loginValue, pos) {
+  const body = JSON.stringify({id: loginValue, position : {x: pos.lat, y: pos.lng}});
+  return await fetch(`${url}/admin/foundTresor`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json"
+    },
+    body: body,
   });
 }
