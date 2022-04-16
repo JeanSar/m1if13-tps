@@ -31,6 +31,7 @@ export default {
       ping: undefined,
       ping_tresors: undefined,
       marker_tresors: [],
+      player_marker: undefined,
       coffreIcon: undefined
     };
   },
@@ -75,7 +76,7 @@ export default {
             })
               .addTo(mymap)
               .bindPopup(
-                `Coffre contenant:<br><strong>${this.$store.state.treasures.items.composition}}</strong>.`
+                `Coffre contenant:<br><strong>${this.$store.state.treasures.items[i].composition}</strong>`
               )
           );
         }
@@ -90,6 +91,8 @@ export default {
       const res = await foundTresor(sessionStorage.getItem("login"), pos);
       if (res.status === 204) {
         // Les ressources on été récuperées
+        let res = this.$store.state.treasures.items.find(e => e.position.x == pos.lat && e.position.y == pos.lng)
+        this.player_marker.bindPopup(`Récupéré :<br><strong>Coffre ${res.composition}</strong>`).openPopup();
         console.log("response de foundTresor : ", res);
         console.log("Coffre récupéré");
       } else{
@@ -172,7 +175,7 @@ export default {
       iconUrl: this.$store.state.user.resources.url,
       iconSize: [30, 30],
     });
-    let player_marker = L.marker([this.$store.state.user.resources.position.x, this.$store.state.user.resources.position.y], { icon: playerIcon })
+    this.player_marker = L.marker([this.$store.state.user.resources.position.x, this.$store.state.user.resources.position.y], { icon: playerIcon })
         .addTo(mymap)
         .bindPopup(`Joueur:<br><strong>${this.$store.state.user.resources.id}</strong>`)
         .openPopup();
@@ -181,7 +184,7 @@ export default {
       if(this.$store.state.user.resources.position.x !== 'idle') {
         //this.$store.commit('movePlayer', {x: 0.000001, y: -0.000001});
         this.updatePosition(this.$store.state.user.resources.position);
-        player_marker.setLatLng([this.$store.state.user.resources.position.x, this.$store.state.user.resources.position.y]);
+        this.player_marker.setLatLng([this.$store.state.user.resources.position.x, this.$store.state.user.resources.position.y]);
       }
     }, 5000);
 
@@ -191,11 +194,11 @@ export default {
       lng = e.latlng.lng;
       //this.updateMap();
       this.$store.commit('setPosition', {x: lat, y: lng});
-      player_marker.setLatLng([this.$store.state.user.resources.position.x, this.$store.state.user.resources.position.y]);
+      this.player_marker.setLatLng([this.$store.state.user.resources.position.x, this.$store.state.user.resources.position.y]);
     });
 
     // Déplacement du joueur
-    player_marker.on('move', (player) => {
+    this.player_marker.on('move', (player) => {
       if(this.$store.state.user.resources.ttl > 0) {
         this.checkTresor(player.latlng);
       }
