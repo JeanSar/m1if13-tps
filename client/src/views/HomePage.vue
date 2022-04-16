@@ -1,10 +1,9 @@
 <template>
   <div class="hello">
     <h1>
-      Bienvenue <i>{{ this.$store.state.user.loginValue }}</i> !
+      Bienvenue <i>{{ this.$store.state.user.resources.id }}</i> !
     </h1>
   </div>
-  <h2>{{ message }}</h2>
   <ul>
     <p>
       <img :src="this.$store.state.user.resources.url" alt="" style="width: 100px;border-radius: 50%;opacity: 50%;">
@@ -53,9 +52,6 @@ export default {
   name: "HomePage",
   components: {
     MyMap,
-  },
-  props: {
-    msg: String,
   },
   data() {
     return {

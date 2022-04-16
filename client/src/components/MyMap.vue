@@ -1,10 +1,6 @@
 <template>
   <section>
     <h2>Carte</h2>
-    <p class="content">
-      <strong>TODO :</strong> mettre à jour les positions des différents objets
-      sur la carte.
-    </p>
     <div id="map" class="map"></div>
   </section>
 </template>
@@ -180,7 +176,7 @@ export default {
     });
     let player_marker = L.marker([this.$store.state.user.resources.position.x, this.$store.state.user.resources.position.y], { icon: playerIcon })
         .addTo(mymap)
-        .bindPopup(`Joueur:<br><strong>${this.$store.state.user.resources.id}}</strong>.`)
+        .bindPopup(`Joueur:<br><strong>${this.$store.state.user.resources.id}</strong>`)
         .openPopup();
     this.ping = setInterval(() => {
       // Todo : Dans les prochains tp, mettre à jour la position via l'api de géolocalisation
