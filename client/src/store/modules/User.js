@@ -23,9 +23,10 @@ export const User = {
       state.resources = resource;
     },
     setCurrentResource(state, resource) {
-      const position = { ...state.resources.position }
-      state.resources = resource;
-      state.resources.position = position;
+      state.resources.ttl = resource.ttl;
+      state.resources.registered = resource.registered;
+      state.resources.url = resource.url;
+      state.resources.treasures = resource.treasures;
     },
     movePlayer(state, {x, y}) {
       const tmp = {... state.resources};
@@ -49,11 +50,11 @@ export const User = {
       if (res.status === 200) {
         // Les ressources on été récuperées
         const resJSON = await res.json();
+        console.log(resJSON.position);
         commit('setResource', resJSON);
         sessionStorage.setItem("imageURL", resJSON.url);
       }
       if (res.status === 400) {
-        // Le nom de compte renseigné est déjà pris
         window.alert("Impossible de récupérer la ressource");
       }
     },
@@ -68,7 +69,6 @@ export const User = {
         sessionStorage.setItem("imageURL", resJSON.url);
       }
       if (res.status === 400) {
-        // Le nom de compte renseigné est déjà pris
         window.alert("Impossible de récupérer la ressource");
       }
     },

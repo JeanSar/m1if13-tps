@@ -180,10 +180,11 @@ export default {
         .openPopup();
     this.ping = setInterval(() => {
       // Todo : Dans les prochains tp, mettre à jour la position via l'api de géolocalisation
-
-      this.$store.commit('movePlayer', {x: 0.000001, y: -0.000001});
-      this.updatePosition(this.$store.state.user.resources.position);
-      player_marker.setLatLng([this.$store.state.user.resources.position.x, this.$store.state.user.resources.position.y]);
+      if(this.$store.state.user.resources.position.x !== 'idle') {
+        this.$store.commit('movePlayer', {x: 0.000001, y: -0.000001});
+        this.updatePosition(this.$store.state.user.resources.position);
+        player_marker.setLatLng([this.$store.state.user.resources.position.x, this.$store.state.user.resources.position.y]);
+      }
     }, 5000);
 
     // Clic sur la carte
