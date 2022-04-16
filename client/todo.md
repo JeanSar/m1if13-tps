@@ -11,6 +11,7 @@ TODO :
     - [ ] PopUp récupération coffre, utilisation des objets, affichage des coffres un peu stylé
     - [X] Gérer le TTL chez le client (simulé la décrémentation + synchro sur le serveur)
     - [ ] Gestion de la fin du jeu (popup)
+    - [X] Balise a dans MyMap.vue
 - [ ] Sinon voir partie 4
   - [X] Routage "simple"  
 
