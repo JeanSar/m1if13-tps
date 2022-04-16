@@ -28,6 +28,13 @@ export const User = {
       newPos.x += x;
       newPos.y += y;
       state.resources = {... state.resources, position: newPos}
+    },
+    setPosition(state, {x,y}) {
+      const tmp = {... state.resources};
+      let newPos = tmp.position;
+      newPos = x;
+      newPos = y;
+      state.resources = {... state.resources, position: newPos}
     }
   },
   actions: {

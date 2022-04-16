@@ -185,16 +185,18 @@ export default {
     this.ping = setInterval(() => {
       // Todo : Dans les prochains tp, mettre à jour la position via l'api de géolocalisation
 
-      this.$store.commit('movePlayer', {x: 0.00001, y: -0.00001});
+      this.$store.commit('movePlayer', {x: 0.000001, y: -0.000001});
       this.updatePosition(this.$store.state.user.resources.position);
       player_marker.setLatLng([this.$store.state.user.resources.position.x, this.$store.state.user.resources.position.y]);
-    }, 1000);
+    }, 5000);
 
     // Clic sur la carte
     mymap.on("click", (e) => {
       lat = e.latlng.lat;
       lng = e.latlng.lng;
-      this.updateMap();
+      //this.updateMap();
+      this.$store.commit('setPosition', {x: lat, y: lng});
+      player_marker.setLatLng([this.$store.state.user.resources.position.x, this.$store.state.user.resources.position.y]);
     });
 
     // Déplacement du joueur

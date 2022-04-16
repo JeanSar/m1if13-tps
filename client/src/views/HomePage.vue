@@ -14,8 +14,8 @@
     </p>
     <p>
       <b>
-        <u>Role</u>: <a v-if="this.$store.state.user.resources.role === 'admin'">Administrateur</a>
-        <a v-else>Joueur</a>
+        <u>Role</u>: <span v-if="this.$store.state.user.resources.role === 'admin'">Administrateur</span>
+        <span v-else>Joueur</span>
       </b>
     </p>
     <p>
@@ -23,14 +23,14 @@
     </p>
     <p>
       <b><u>Trésors</u>:
-      <a v-if="this.$store.state.user.resources.treasures === 'idle' || this.$store.state.user.resources.treasures.length === 0">
+      <span v-if="this.$store.state.user.resources.treasures === 'idle' || this.$store.state.user.resources.treasures.length === 0">
         Vous n'avez aucun trésors...
-      </a>
-      <a v-else>
+      </span>
+      <div v-else>
         <div v-for="r in this.$store.state.user.resources.treasures" v-bind:key="r">
           Coffre : {{ r.composition }}
         </div>
-      </a>
+      </div>
       </b>
     </p>
   </ul>
