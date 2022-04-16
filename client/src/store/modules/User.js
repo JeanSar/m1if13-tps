@@ -34,12 +34,11 @@ export const User = {
       newPos.y += y;
       state.resources = {... state.resources, position: newPos}
     },
-    setPosition(state, {x,y}) {
-      const tmp = {... state.resources};
-      let newPos = tmp.position;
-      newPos.x = x;
-      newPos.y = y;
-      state.resources = {... state.resources, position: newPos}
+    setPosition(state, position) {
+      state.resources.position =  position;
+    },
+    decreaseTTL(state) {
+      state.resources.ttl--;
     }
   },
   actions: {
