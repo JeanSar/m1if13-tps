@@ -112,6 +112,7 @@ export default {
     },
   },
   async beforeMount() {
+    await this.$store.dispatch('initResource');
     console.log("Generate Map");
     // HERE is where to load Leaflet components!
     const L = await import("leaflet");

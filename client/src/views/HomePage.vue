@@ -77,9 +77,9 @@ export default {
   },
 
   async beforeMount() {
+    await this.$store.dispatch('initResource');
   },
   async mounted() {
-    await this.$store.dispatch('initResource');
     this.ping = setInterval(() => {
       this.$store.dispatch('readResource');
     }, 5000);
