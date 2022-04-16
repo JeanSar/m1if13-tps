@@ -88,12 +88,12 @@ export default {
       console.log(this.$store.state.user.resources.ttl);
       if(this.isGameStarted) {
         if (this.$store.state.user.resources.ttl !== 0)
-          this.resources.ttl--;
+          this.$store.commit('decreaseTTL');
       } else {
         await this.getGameStatus();
         if(this.isGameStarted) {
           if (this.$store.state.user.resources.ttl !== 0)
-            this.resources.ttl--;
+          this.$store.commit('decreaseTTL');
         }
       }
     }, 1000);
