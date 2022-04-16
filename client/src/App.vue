@@ -1,5 +1,5 @@
 <template>
-  <PopUp message="Cliquer pour fermer la pop-up" />
+  <PopUp v-if="this.$store.state.compteur === 0" message="Partie terminée !"/>
   <nav class="navBar">
       <router-link class="router-link" to="/home">Accueil</router-link>
       <router-link class="router-link" to="/">Sign in / Sign up</router-link>
@@ -46,6 +46,8 @@ nav a.router-link-exact-active {
 <script>
 import PopUp from "@/components/PopUp";
 export default {
-  components: {PopUp}
+  components: { PopUp }
+
+  //components: {PopUp}
 }
 </script>

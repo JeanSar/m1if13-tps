@@ -1,6 +1,5 @@
 <template>
-
-  <div v-if="this.$store.state.showPopUp" class="backgroundPopUp">
+  <div v-if="selfCondition" class="backgroundPopUp">
     <div class="popUp">
       <p>{{message}}</p>
       <button @click="btnClick">OK</button>
@@ -9,14 +8,21 @@
 </template>
 
 <script>
+import { onUpdated } from "vue";
+
 export default {
   name: "PopUp",
-  props: ['message'],
+  props: ['message', 'condition'],
+  data() {
+    return {
+      selfCondition: true
+    }
+  },
   methods: {
     btnClick() {
-      this.$store.commit("setShowPopUp", false);
-    }
-  }
+      this.selfCondition = false
+    },
+  },
 }
 </script>
 

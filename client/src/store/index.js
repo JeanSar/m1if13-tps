@@ -7,15 +7,23 @@ import { Treasure } from "@/store/modules/Treasure";
 export default createStore({
   state() {
     return {
-      showPopUp: true
+      compteur: 1
     }
   },
   getters: {
-
+    condition(state) {
+      return state.compteur === 0;
+    }
   },
   mutations: {
     setShowPopUp(state, value) {
       state.showPopUp = value;
+    },
+    incrementCompteur(state) {
+      state.compteur ++;
+    },
+    decrementCompteur(state) {
+      state.compteur --;
     }
   },
   actions: {

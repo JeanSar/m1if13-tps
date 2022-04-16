@@ -23,6 +23,8 @@
       </div>
     </form>
   </div>
+  <button @click="increment">Increment</button>
+  <button @click="decrement">Decrement</button>
 </template>
 
 <script>
@@ -39,6 +41,14 @@ export default {
     };
   },
   methods: {
+    increment() {
+      this.$store.commit('incrementCompteur');
+      console.log(this.$store.state.compteur);
+    },
+    decrement() {
+      this.$store.commit('decrementCompteur')
+      console.log(this.$store.state.compteur);
+    },
     async login() {
       const res = await loginFunction(this);
       if(res.status === 204) { // La création de compte s'est bien passé
