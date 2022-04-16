@@ -190,9 +190,9 @@ export default {
     mymap.on("click", (e) => {
       lat = e.latlng.lat;
       lng = e.latlng.lng;
-      //this.updateMap();
-      this.$store.commit('setPosition', {x: lat, y: lng});
-      player_marker.setLatLng([this.$store.state.user.resources.position.x, this.$store.state.user.resources.position.y]);
+      this.updateMap();
+      //this.$store.commit('setPosition', {x: lat, y: lng});
+      //player_marker.setLatLng([this.$store.state.user.resources.position.x, this.$store.state.user.resources.position.y]);
     });
 
     // Déplacement du joueur
