@@ -76,7 +76,7 @@ export default {
     }
   },
 
-  beforeMount() {
+  async beforeMount() {
     this.$store.dispatch('initResource');
   },
   async mounted() {
@@ -86,15 +86,11 @@ export default {
 
     this.time = setInterval(async () => {
       console.log(this.$store.state.user.resources.ttl);
-      if(this.isGameStarted) {
+      if(this.isGameStarted && this.$store.state.user.resources.registered) {
         if (this.$store.state.user.resources.ttl !== 0)
           this.$store.commit('decreaseTTL');
       } else {
         await this.getGameStatus();
-        if(this.isGameStarted) {
-          if (this.$store.state.user.resources.ttl !== 0)
-          this.$store.commit('decreaseTTL');
-        }
       }
     }, 1000);
   },
