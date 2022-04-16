@@ -14,7 +14,7 @@ export const User = {
         role: status.idle,
         ttl: status.idle,
         treasures: [],
-        registered: status.idle
+        registered: false
       }
     }
   },

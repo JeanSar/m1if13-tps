@@ -62,10 +62,7 @@ export default {
     async updateTresors(L, mymap){
       await this.$store.dispatch('readTreasures');
       for (let i = 0; i < this.$store.state.treasures.items.length; i++) {
-
-
         let id = this.$store.state.treasures.items[i].position;
-        console.log("id", id);
         let obj = this.marker_tresors.find(e => e.getLatLng().equals([id.x, id.y]));
         let opened = this.$store.state.treasures.items[i].isOpen;
         let notadded = (obj === undefined);
@@ -182,7 +179,7 @@ export default {
     this.ping = setInterval(() => {
       // Todo : Dans les prochains tp, mettre à jour la position via l'api de géolocalisation
       if(this.$store.state.user.resources.position.x !== 'idle') {
-        this.$store.commit('movePlayer', {x: 0.000001, y: -0.000001});
+        //this.$store.commit('movePlayer', {x: 0.000001, y: -0.000001});
         this.updatePosition(this.$store.state.user.resources.position);
         player_marker.setLatLng([this.$store.state.user.resources.position.x, this.$store.state.user.resources.position.y]);
       }
@@ -192,14 +189,16 @@ export default {
     mymap.on("click", (e) => {
       lat = e.latlng.lat;
       lng = e.latlng.lng;
-      this.updateMap();
-      //this.$store.commit('setPosition', {x: lat, y: lng});
-      //player_marker.setLatLng([this.$store.state.user.resources.position.x, this.$store.state.user.resources.position.y]);
+      //this.updateMap();
+      this.$store.commit('setPosition', {x: lat, y: lng});
+      player_marker.setLatLng([this.$store.state.user.resources.position.x, this.$store.state.user.resources.position.y]);
     });
 
     // Déplacement du joueur
     player_marker.on('move', (player) => {
-      this.checkTresor(player.latlng);
+      if(this.$store.state.user.resources.ttl > 0) {
+        this.checkTresor(player.latlng);
+      }
     });
   },
   async beforeUnmount() {
