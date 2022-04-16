@@ -22,6 +22,11 @@ export const User = {
     setResource(state, resource) {
       state.resources = resource;
     },
+    setCurrentResource(state, resource) {
+      const position = { ...state.resources.position }
+      state.resources = resource;
+      state.resources.position = position;
+    },
     movePlayer(state, {x, y}) {
       const tmp = {... state.resources};
       let newPos = tmp.position;
@@ -38,7 +43,7 @@ export const User = {
     }
   },
   actions: {
-    async readResource ({commit}) {
+    async initResource ({commit}) {
       const loginValue = sessionStorage.getItem("login");
       const token = sessionStorage.getItem("token");
       const res = await fetchResources(loginValue, token);
@@ -52,6 +57,22 @@ export const User = {
         // Le nom de compte renseigné est déjà pris
         window.alert("Impossible de récupérer la ressource");
       }
-    }
+    },
+    async readResource ({commit}) {
+      const loginValue = sessionStorage.getItem("login");
+      const token = sessionStorage.getItem("token");
+      const res = await fetchResources(loginValue, token);
+      if (res.status === 200) {
+        // Les ressources on été récuperées
+        const resJSON = await res.json();
+        commit('setCurrentResource', resJSON);
+        sessionStorage.setItem("imageURL", resJSON.url);
+      }
+      if (res.status === 400) {
+        // Le nom de compte renseigné est déjà pris
+        window.alert("Impossible de récupérer la ressource");
+      }
+    },
+
   }
 }
