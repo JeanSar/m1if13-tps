@@ -1,4 +1,5 @@
 <template>
+  <PopUp message="Cliquer pour fermer la pop-up" />
   <nav class="navBar">
       <router-link class="router-link" to="/home">Accueil</router-link>
       <router-link class="router-link" to="/">Sign in / Sign up</router-link>
@@ -42,3 +43,9 @@ nav a.router-link-exact-active {
   border-radius: 0.5em;
 }
 </style>
+<script>
+import PopUp from "@/components/PopUp";
+export default {
+  components: {PopUp}
+}
+</script>

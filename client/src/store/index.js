@@ -6,13 +6,17 @@ import { Treasure } from "@/store/modules/Treasure";
 
 export default createStore({
   state() {
-
+    return {
+      showPopUp: true
+    }
   },
   getters: {
 
   },
   mutations: {
-
+    setShowPopUp(state, value) {
+      state.showPopUp = value;
+    }
   },
   actions: {
 
