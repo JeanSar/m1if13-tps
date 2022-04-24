@@ -32,6 +32,9 @@
       </div>
       </b>
     </p>
+    <div>
+      <p>Le trésor le plus proche se trouve à : {{String(this.$store.state.treasures.closerTreasure)}} mètre.s</p>
+    </div>
   </ul>
 
   <br />

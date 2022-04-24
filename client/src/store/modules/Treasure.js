@@ -4,10 +4,14 @@ import { fetchResources, fetchTresors, fetchZRR } from "@/utils/apiFunction";
 export const Treasure = {
   state () {
     return {
-      items: []
+      items: [],
+      closerTreasure: "Chargement ..."
     }
   },
   mutations: {
+    setCloserTreasure(state, distance) {
+      state.closerTreasure = Math.trunc(distance * 100) / 100;
+    },
     initTreasures(state, treasures) {
       state.items = treasures;
     },

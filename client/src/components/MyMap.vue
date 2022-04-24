@@ -102,8 +102,19 @@ export default {
         );
       }
     },
+    computeDistance(playerPos, treasurePos) {
+      const {sqrt, pow} = Math;
+      const lat = pow((playerPos.lat - treasurePos.lat) * 111, 2);
+      const lng = pow((playerPos.lng - treasurePos.lng) * 88, 2);
+
+      return sqrt(lat + lng) * 1000;
+    },
     checkTresor(player_pos){
+      const distances = [];
       this.marker_tresors.forEach(element => {
+        distances.push(this.computeDistance(player_pos, element.getLatLng()));
+        this.$store.commit('setCloserTreasure', Math.min(...distances));
+        console.log("distances", distances);
         if(element.getLatLng().distanceTo(player_pos) <= 2.0){
           console.log("Coffre a proximité");
           this.takeTresor(element.getLatLng());

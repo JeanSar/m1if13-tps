@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import { onUpdated } from "vue";
 
 export default {
   name: "PopUp",
