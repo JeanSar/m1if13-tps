@@ -29,7 +29,7 @@
 
 <script>
 import { createAnAccountOnNode, createAnAccountOnSpring, loginFunction } from "@/utils/loginFunction";
-
+import apiPath from '../../apiPath'
 export default {
   name: "LoginPage",
   data() {
@@ -43,6 +43,7 @@ export default {
   methods: {
     increment() {
       this.$store.commit('incrementCompteur');
+      console.log(__API__);
       console.log(this.$store.state.compteur);
     },
     decrement() {
