@@ -1,7 +1,7 @@
 const url = 'http://localhost:3376'
 
 export async function fetchResources(loginValue, token) {
-    return await fetch(`${url}/api/${loginValue}`, {
+    return await fetch(`${__API__.api}/api/${loginValue}`, {
       method: "GET",
       headers: {
         "content-type": "application/json",
@@ -12,7 +12,7 @@ export async function fetchResources(loginValue, token) {
 
 export async function updatePlayerPos(loginValue, token, pos){
   const body = JSON.stringify({position : pos});
-  return await fetch(`${url}/api/${loginValue}`, {
+  return await fetch(`${__API__.api}/api/${loginValue}`, {
     method: "PUT",
     headers: {
       "content-type": "application/json",
@@ -23,7 +23,7 @@ export async function updatePlayerPos(loginValue, token, pos){
 }
 
 export async function fetchZRR() {
-  return await fetch(`${url}/zrr/getOne?id=0`, {
+  return await fetch(`${__API__.api}/zrr/getOne?id=0`, {
     method: "GET",
     headers: {
       "content-type": "*/*",
@@ -32,7 +32,7 @@ export async function fetchZRR() {
 }
 
 export async function fetchTresors(){
-  return await fetch(`${url}/tresor/getAll`, {
+  return await fetch(`${__API__.api}/tresor/getAll`, {
     method: "GET",
     headers: {
       "content-type": "*/*",
@@ -41,7 +41,7 @@ export async function fetchTresors(){
 }
 
 export async function fetchGameStatus(){
-  return await fetch(`${url}/admin/startGame`, {
+  return await fetch(`${__API__.api}/admin/startGame`, {
     method: "GET",
     headers: {
       "content-type": "application/json"
@@ -51,7 +51,7 @@ export async function fetchGameStatus(){
 
 export async function foundTresor(loginValue, pos) {
   const body = JSON.stringify({id: loginValue, position : {x: pos.lat, y: pos.lng}});
-  return await fetch(`${url}/admin/foundTresor`, {
+  return await fetch(`${__API__.api}/admin/foundTresor`, {
     method: "POST",
     headers: {
       "content-type": "application/json"

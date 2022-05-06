@@ -28,8 +28,9 @@
 </template>
 
 <script>
+
 import { createAnAccountOnNode, createAnAccountOnSpring, loginFunction } from "@/utils/loginFunction";
-import apiPath from '../../apiPath'
+
 export default {
   name: "LoginPage",
   data() {

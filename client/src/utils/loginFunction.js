@@ -2,7 +2,7 @@ const url = 'http://localhost:8080'
 
 export async function createAnAccountOnSpring({ loginValue, passwordValue }) {
   const body = JSON.stringify({login: loginValue, password: passwordValue});
-  return await fetch(`${url}/users/`, {
+  return await fetch(`${__API__.user}/users/`, {
     mode: "cors",
     method: "POST",
     headers: {
@@ -13,7 +13,7 @@ export async function createAnAccountOnSpring({ loginValue, passwordValue }) {
 }
 
 export async function createAnAccountOnNode({loginValue, passwordValue, ttlValue, imageValue}) {
-  await fetch('http://localhost:3376/user/create', {
+  await fetch(`${__API__.api}/user/create`, {
     method: "POST",
     body: JSON.stringify({
       "aventurier": {
@@ -36,7 +36,7 @@ export async function createAnAccountOnNode({loginValue, passwordValue, ttlValue
 
 export async function loginFunction({ loginValue, passwordValue }) {
   const body = JSON.stringify({login: loginValue, password: passwordValue});
-  return await fetch(`${url}/login`, {
+  return await fetch(`${__API__.user}/login`, {
     mode: "cors",
     method: "POST",
     headers: {
