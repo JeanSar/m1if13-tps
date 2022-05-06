@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+   <script type="text/javascript">
+      function getPosition() {
+         var options = {
+            enableHighAccuracy: true,
+            timeout: 500,
+            maximumAge: 0
+         };
+
+         function scrollMap(position) {
+            let latlon = document.getElementById("latlon");
+            console.log("Position :", position.coords.latitude, "  ", position.coords.longitude, " ; Objet : ", position.coords);
+            latlon.innerHTML = `${position.coords.latitude} ${position.coords.longitude}`;
+         }
+
+         function handleError(error) {
+            // Display error based on the error code.
+            const { code } = error;
+            switch (code) {
+               case GeolocationPositionError.TIMEOUT:
+                  // Handle timeout.
+                  break;
+               case GeolocationPositionError.PERMISSION_DENIED:
+                  // User denied the request.
+                  break;
+               case GeolocationPositionError.POSITION_UNAVAILABLE:
+                  // Position not available.
+                  break;
+            }
+         }
+
+         // Request repeated updates.
+         const watchId = navigator.geolocation.watchPosition(
+            scrollMap, handleError, options
+         );
+
+      }
+   </script>
+</head>
+
+<body>
+   <input type="button" onclick="getPosition()" value="Récupérer la position" /> <br />
+   <div id="latlon"></div>
+</body>
+
+</html>
