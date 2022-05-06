@@ -76,6 +76,11 @@ NODE_ENV ne fonctionne que sur Linux donc pour lancer webpack en local sur Windo
 
 Les tests de Jasmine se lance via la commande npm run test, ils fonctionnent en Local et ne peuvent pas être tourné sur docker car il nécéssiterais de lancer le serveur. Il ne sont pas présent en production.
 
+# TP7
+## Information concernant la géolocalisation
+Le script simple de géolocalisation est présent sur la vm en tant que fichier statique à l'adresse suivante :
+#### [Lien vers le script simple de géolocalisation](https://192.168.75.13/game/static/geoloc.html)
+
 ## Liens vers les différentes ressource :
 
 #### [Collection postman](https://forge.univ-lyon1.fr/p1710759/m1if13-tps/-/blob/main/Users%20API.postman_collection.json)
