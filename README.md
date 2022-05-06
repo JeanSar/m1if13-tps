@@ -3,6 +3,10 @@
 - DANTIER Florian p1710759
 - SAURY Jean p1805563
 
+## Information concernant le serveur Spring
+#### [Lien vers le serveur Spring](https://192.168.75.13:8443/mif13)
+
+
 ## Information concernant postman
 Une collection postman au format json a été mise en plus du fichier yaml swagger.
 En effet la collection postman générée par ce fichier yaml comporte quelques erreurs
