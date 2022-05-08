@@ -1,11 +1,13 @@
 <template>
+  <PopUp v-if="!this.isPositionRetrieved" message="Merci d'autoriser la récupération de votre position."/>
   <section>
     <h2>Carte</h2>
-    <div id="map" class="map"></div>
+    <div id="map" class="map" v-show="this.isPositionRetrieved"></div>
   </section>
 </template>
 
 <script>
+import PopUp from "@/components/PopUp";
 import "leaflet/dist/leaflet.css";
 import { fetchZRR, fetchTresors, updatePlayerPos, foundTresor } from "@/utils/apiFunction";
 
@@ -26,13 +28,14 @@ let mymap = {};
 
 export default {
   name: "MyMap",
+  components: { PopUp },
   data() {
     return {
-      ping: undefined,
       ping_tresors: undefined,
       marker_tresors: [],
       player_marker: undefined,
-      coffreIcon: undefined
+      coffreIcon: undefined,
+      isPositionRetrieved: false
     };
   },
   methods: {
@@ -121,6 +124,46 @@ export default {
         }
       });
     },
+    getPosition(page, map) {
+         var options = {
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: 0
+         };
+
+         function scrollMap(position) {
+            let pos = {x: position.coords.latitude, y: position.coords.longitude};
+            console.log("Position :", pos.x, "  ", pos.y, " ; Objet : ", position.coords);
+            page.isPositionRetrieved = true;
+            page.$store.commit('setPosition', pos);
+            page.updatePosition(page.$store.state.user.resources.position);
+            page.player_marker.setLatLng([page.$store.state.user.resources.position.x, page.$store.state.user.resources.position.y]);
+            map.invalidateSize();
+         }
+
+         function handleError(error) {
+            // Display error based on the error code.
+            const { code } = error;
+            switch (code) {
+               case GeolocationPositionError.TIMEOUT:
+                  // Handle timeout.
+                  break;
+               case GeolocationPositionError.PERMISSION_DENIED:
+                  // User denied the request.
+                  page.isPositionRetrieved = false;
+                  break;
+               case GeolocationPositionError.POSITION_UNAVAILABLE:
+                  // Position not available.
+                  break;
+            }
+         }
+
+         // Request repeated updates.
+         const watchId = navigator.geolocation.watchPosition(
+            scrollMap, handleError, options
+         );
+
+    }
   },
   async beforeMount() {
     await this.$store.dispatch('initResource');
@@ -186,26 +229,20 @@ export default {
       iconUrl: this.$store.state.user.resources.url,
       iconSize: [30, 30],
     });
+
     this.player_marker = L.marker([this.$store.state.user.resources.position.x, this.$store.state.user.resources.position.y], { icon: playerIcon })
         .addTo(mymap)
         .bindPopup(`Joueur:<br><strong>${this.$store.state.user.resources.id}</strong>`)
         .openPopup();
-    this.ping = setInterval(() => {
-      // Todo : Dans les prochains tp, mettre à jour la position via l'api de géolocalisation
-      if(this.$store.state.user.resources.position.x !== 'idle') {
-        //this.$store.commit('movePlayer', {x: 0.000001, y: -0.000001});
-        this.updatePosition(this.$store.state.user.resources.position);
-        this.player_marker.setLatLng([this.$store.state.user.resources.position.x, this.$store.state.user.resources.position.y]);
-      }
-    }, 5000);
+    this.getPosition(this, mymap);
 
     // Clic sur la carte
     mymap.on("click", (e) => {
       lat = e.latlng.lat;
       lng = e.latlng.lng;
-      //this.updateMap();
-      this.$store.commit('setPosition', {x: lat, y: lng});
-      this.player_marker.setLatLng([this.$store.state.user.resources.position.x, this.$store.state.user.resources.position.y]);
+      this.updateMap();
+      //this.$store.commit('setPosition', {x: lat, y: lng});
+      //this.player_marker.setLatLng([this.$store.state.user.resources.position.x, this.$store.state.user.resources.position.y]);
     });
 
     // Déplacement du joueur
@@ -216,7 +253,6 @@ export default {
     });
   },
   async beforeUnmount() {
-    clearInterval(this.ping);
     clearInterval(this.ping_tresors);
   },
 };
@@ -228,4 +264,8 @@ export default {
   width: 100%;
   border: 1px solid;
 }
+.tohide {
+  opacity: 0;
+}
+
 </style>

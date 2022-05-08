@@ -47,7 +47,5 @@ nav a.router-link-exact-active {
 import PopUp from "@/components/PopUp";
 export default {
   components: { PopUp }
-
-  //components: {PopUp}
 }
 </script>
