@@ -40,4 +40,12 @@ deploynode:
     script:
         - scp -o StrictHostKeyChecking=no -i $CI_SSH_KEY /builds/p1710759/m1if13-tps/api/public/static/dist/main.js gitlabci@192.168.75.13:/home/p1805563/game-express/public/static/dist/main.js
 
+deployvue:
+  image: node:16.14.2
+    before_script:
+      - chmod 400 $CI_SSH_KEY
+      - cd client/
+      - npm i
+      - npm run build
+      - scp -o StrictHostKeyChecking=no -i $CI_SSH_KEY -r /builds/p1710759/m1if13-tps/client/dist gitlabci@192.168.75.13:/opt/vue/client
 

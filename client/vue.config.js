@@ -20,7 +20,8 @@ const paths = process.env.NODE_ENV === 'production'
 
 module.exports = defineConfig({
   transpileDependencies: true,
-  configureWebpack: {
+    publicPath: "./",
+    configureWebpack: {
     // On se sera amené à utiliser cet objet pour configurer webpack, comme au tp précédent
     plugins: [
       new webpack.DefinePlugin({
