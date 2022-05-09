@@ -24,8 +24,6 @@
       </div>
     </form>
   </div>
-  <button @click="increment">Increment</button>
-  <button @click="decrement">Decrement</button>
 </template>
 
 <script>
