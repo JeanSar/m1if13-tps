@@ -48,5 +48,7 @@ deployvue:
       - npm i
       - npm run build
   script:
+      - echo $CI_SSH_KEY
+      - ssh -i $CI_SSH_KEY gitlabci@192.168.75.13 "rm -r /deploy/test"
       - scp -o StrictHostKeyChecking=no -i $CI_SSH_KEY -r /builds/p1710759/m1if13-tps/client/dist gitlabci@192.168.75.13:/deploy/client
 
