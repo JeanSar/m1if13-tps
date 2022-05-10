@@ -50,7 +50,7 @@ deployvue:
   script:
       - echo $CI_SSH_KEY
       - cat $CI_SSH_KEY > ssh_key
-      - chmod 700 ssh_key
+      - chmod 400 ssh_key
       - ssh -i ssh_key gitlabci@192.168.75.13 "rm -r /deploy/test"
       - scp -o StrictHostKeyChecking=no -i $CI_SSH_KEY -r /builds/p1710759/m1if13-tps/client/dist gitlabci@192.168.75.13:/deploy/client
 
