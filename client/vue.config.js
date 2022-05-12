@@ -1,9 +1,11 @@
 const { defineConfig } = require("@vue/cli-service");
 const webpack = require('webpack');
+const ip = require("ip");
 
 console.log("Value of process.env.NODE_ENV", process.env.NODE_ENV)
 
-
+console.log("Addr ip : ")
+console.log(ip.address())
 
 const paths = process.env.NODE_ENV === 'production'
   ? 
@@ -13,8 +15,8 @@ const paths = process.env.NODE_ENV === 'production'
     }
   : 
     {
-      api: JSON.stringify("http://localhost:3376"),
-      user: JSON.stringify("http://localhost:8080")
+      api: JSON.stringify(`http://${ip.address()}:3376`),
+      user: JSON.stringify(`http://${ip.address()}:8080`)
     }
 
 
