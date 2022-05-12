@@ -132,13 +132,12 @@ export default {
          };
 
          function scrollMap(position) {
+            page.isPositionRetrieved = true;
             let pos = {x: position.coords.latitude, y: position.coords.longitude};
             console.log("Position :", pos.x, "  ", pos.y, " ; Objet : ", position.coords);
-            page.isPositionRetrieved = true;
             page.$store.commit('setPosition', pos);
             page.updatePosition(page.$store.state.user.resources.position);
             page.player_marker.setLatLng([page.$store.state.user.resources.position.x, page.$store.state.user.resources.position.y]);
-            map.invalidateSize();
          }
 
          function handleError(error) {
@@ -147,13 +146,14 @@ export default {
             switch (code) {
                case GeolocationPositionError.TIMEOUT:
                   // Handle timeout.
+                  page.isPositionRetrieved = false;
                   break;
                case GeolocationPositionError.PERMISSION_DENIED:
                   // User denied the request.
                   page.isPositionRetrieved = false;
                   break;
                case GeolocationPositionError.POSITION_UNAVAILABLE:
-                  // Position not available.
+                  page.isPositionRetrieved = false;
                   break;
             }
          }
@@ -241,8 +241,11 @@ export default {
       lat = e.latlng.lat;
       lng = e.latlng.lng;
       this.updateMap();
-      //this.$store.commit('setPosition', {x: lat, y: lng});
-      //this.player_marker.setLatLng([this.$store.state.user.resources.position.x, this.$store.state.user.resources.position.y]);
+    });
+
+    // Maj de la vue de la carte
+    mymap.on("viewreset", (e) => {
+      e.target.invalidateSize();
     });
 
     // Déplacement du joueur

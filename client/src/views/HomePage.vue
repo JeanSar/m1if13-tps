@@ -39,7 +39,7 @@
 
   <br />
   <div v-if="this.$store.state.user.resources.registered">
-    <MyMap :joueur="this.$store.state.user.resources"/>
+    <MyMap />
   </div>
   <div v-else>
     Le joueur n'a pas encore été attribué à une partie.
