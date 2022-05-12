@@ -43,7 +43,6 @@ export default {
     updateMap: function () {
       // Affichage à la nouvelle position
       mymap.setView([lat, lng], zoom);
-
       // La fonction de validation du formulaire renvoie false pour bloquer le rechargement de la page.
       return false;
     },
@@ -194,13 +193,7 @@ export default {
       }
     ).addTo(mymap);
 
-    // Ajout d'un marker
-    L.marker([45.78207, 4.86559])
-      .addTo(mymap)
-      .bindPopup("Entrée du bâtiment<br><strong>Nautibus</strong>.")
-      .openPopup();
-
-    // GESTION DE LA ZRR
+// GESTION DE LA ZRR
 
     await this.$store.dispatch({type: "readZrr"});
     let bounds = [
@@ -247,12 +240,12 @@ export default {
     mymap.on("viewreset", (e) => {
       e.target.invalidateSize();
     });
-
     // Déplacement du joueur
     this.player_marker.on('move', (player) => {
       if(this.$store.state.user.resources.ttl > 0) {
         this.checkTresor(player.latlng);
       }
+      mymap.invalidateSize()
     });
   },
   async beforeUnmount() {
