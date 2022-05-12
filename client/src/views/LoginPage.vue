@@ -1,5 +1,4 @@
 <template>
-  <h1>Test redéploiement !!!</h1>
   <div class="formulaire">
     <form id="loginForm" >
       <div class="inputAndLabel">
