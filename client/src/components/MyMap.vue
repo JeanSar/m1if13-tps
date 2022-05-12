@@ -13,6 +13,7 @@ import { fetchZRR, fetchTresors, updatePlayerPos, foundTresor } from "@/utils/ap
 
 // This part resolves an issue where the markers would not appear in webpack
 import { Icon } from "leaflet";
+import { onMounted } from "vue";
 delete Icon.Default.prototype._getIconUrl;
 Icon.Default.mergeOptions({
   iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
@@ -35,10 +36,29 @@ export default {
       marker_tresors: [],
       player_marker: undefined,
       coffreIcon: undefined,
-      isPositionRetrieved: false
+      isPositionRetrieved: false,
+      timerError: null,
+      watchId: null,
     };
   },
+  watch: {
+    isPositionRetrieved: function() {
+      clearTimeout(this.timerError);
+      if(this.isPositionRetrieved) {
+        this.timerError = null;
+      } else {
+        this.timerError = setTimeout(() => this.posNotFound(), 60000);
+      }
+    }
+  },
   methods: {
+    // Fonction affichant une erreur et désactivant la récupération de la position
+    async posNotFound() {
+      if(this.watchId != null) {
+        navigator.geolocation.clearWatch(this.watchId);
+      }
+      alert('Impossible de récupérer votre position, veuillez rafraîchir la page');
+    },
     // Procédure de mise à jour de la map
     updateMap: function () {
       // Affichage à la nouvelle position
@@ -133,7 +153,6 @@ export default {
          function scrollMap(position) {
             page.isPositionRetrieved = true;
             let pos = {x: position.coords.latitude, y: position.coords.longitude};
-            console.log("Position :", pos.x, "  ", pos.y, " ; Objet : ", position.coords);
             page.$store.commit('setPosition', pos);
             page.updatePosition(page.$store.state.user.resources.position);
             page.player_marker.setLatLng([page.$store.state.user.resources.position.x, page.$store.state.user.resources.position.y]);
@@ -145,20 +164,23 @@ export default {
             switch (code) {
                case GeolocationPositionError.TIMEOUT:
                   // Handle timeout.
+                  console.log("Geolocation API error : Time Out")
                   page.isPositionRetrieved = false;
                   break;
                case GeolocationPositionError.PERMISSION_DENIED:
                   // User denied the request.
+                  console.log("Geolocation API error : Permission Denied")
                   page.isPositionRetrieved = false;
                   break;
                case GeolocationPositionError.POSITION_UNAVAILABLE:
+                  console.log("Geolocation API error : Position")
                   page.isPositionRetrieved = false;
                   break;
             }
          }
-
+        this.timerError = setTimeout(() => this.posNotFound(), 60000);
          // Request repeated updates.
-         const watchId = navigator.geolocation.watchPosition(
+         this.watchId = navigator.geolocation.watchPosition(
             scrollMap, handleError, options
          );
 
@@ -240,6 +262,9 @@ export default {
     mymap.on("viewreset", (e) => {
       e.target.invalidateSize();
     });
+    mymap.on("move", (e) => {
+      e.target.invalidateSize();
+    });
     // Déplacement du joueur
     this.player_marker.on('move', (player) => {
       if(this.$store.state.user.resources.ttl > 0) {
@@ -248,8 +273,10 @@ export default {
       mymap.invalidateSize()
     });
   },
+
   async beforeUnmount() {
     clearInterval(this.ping_tresors);
+    clearTimeout(this.timerError);
   },
 };
 </script>
