@@ -1,16 +1,27 @@
 <template>
+  <PopUp
+    v-if="!this.isPositionRetrieved"
+    message="Merci d'autoriser la récupération de votre position."
+  />
   <section>
     <h2>Carte</h2>
-    <div id="map" class="map"></div>
+    <div id="map" class="map" v-show="this.isPositionRetrieved"></div>
   </section>
 </template>
 
 <script>
+import PopUp from "@/components/PopUp";
 import "leaflet/dist/leaflet.css";
-import { fetchZRR, fetchTresors, updatePlayerPos, foundTresor } from "@/utils/apiFunction";
+import {
+  fetchZRR,
+  fetchTresors,
+  updatePlayerPos,
+  foundTresor,
+} from "@/utils/apiFunction";
 
 // This part resolves an issue where the markers would not appear in webpack
 import { Icon } from "leaflet";
+import { onMounted } from "vue";
 delete Icon.Default.prototype._getIconUrl;
 Icon.Default.mergeOptions({
   iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
@@ -26,21 +37,42 @@ let mymap = {};
 
 export default {
   name: "MyMap",
+  components: { PopUp },
   data() {
     return {
-      ping: undefined,
       ping_tresors: undefined,
       marker_tresors: [],
       player_marker: undefined,
-      coffreIcon: undefined
+      coffreIcon: undefined,
+      isPositionRetrieved: false,
+      timerError: null,
+      watchId: null,
     };
   },
+  watch: {
+    isPositionRetrieved: function () {
+      clearTimeout(this.timerError);
+      if (this.isPositionRetrieved) {
+        this.timerError = null;
+      } else {
+        this.timerError = setTimeout(() => this.posNotFound(), 60000);
+      }
+    },
+  },
   methods: {
+    // Fonction affichant une erreur et désactivant la récupération de la position
+    async posNotFound() {
+      if (this.watchId != null) {
+        navigator.geolocation.clearWatch(this.watchId);
+      }
+      alert(
+        "Impossible de récupérer votre position, veuillez rafraîchir la page"
+      );
+    },
     // Procédure de mise à jour de la map
     updateMap: function () {
       // Affichage à la nouvelle position
       mymap.setView([lat, lng], zoom);
-
       // La fonction de validation du formulaire renvoie false pour bloquer le rechargement de la page.
       return false;
     },
@@ -60,15 +92,17 @@ export default {
         );
       }
     },
-    async updateTresors(L, mymap){
-      await this.$store.dispatch('readTreasures');
+    async updateTresors(L, mymap) {
+      await this.$store.dispatch("readTreasures");
       for (let i = 0; i < this.$store.state.treasures.items.length; i++) {
         let id = this.$store.state.treasures.items[i].position;
-        let obj = this.marker_tresors.find(e => e.getLatLng().equals([id.x, id.y]));
+        let obj = this.marker_tresors.find((e) =>
+          e.getLatLng().equals([id.x, id.y])
+        );
         let opened = this.$store.state.treasures.items[i].isOpen;
-        let notadded = (obj === undefined);
+        let notadded = obj === undefined;
 
-        if(!opened && notadded) {
+        if (!opened && notadded) {
           console.log("Adding ...");
           this.marker_tresors.push(
             L.marker([id.x, id.y], {
@@ -79,11 +113,10 @@ export default {
                 `Coffre contenant:<br><strong>${this.$store.state.treasures.items[i].composition}</strong>`
               )
           );
-        }
-        else if(opened && !notadded){
+        } else if (opened && !notadded) {
           console.log("Removing ...");
           obj.remove();
-          this.marker_tresors = this.marker_tresors.filter(e => e !== obj);
+          this.marker_tresors = this.marker_tresors.filter((e) => e !== obj);
         }
       }
     },
@@ -91,39 +124,89 @@ export default {
       const res = await foundTresor(sessionStorage.getItem("login"), pos);
       if (res.status === 204) {
         // Les ressources on été récuperées
-        let res = this.$store.state.treasures.items.find(e => e.position.x == pos.lat && e.position.y == pos.lng)
-        this.player_marker.bindPopup(`Récupéré :<br><strong>Coffre ${res.composition}</strong>`).openPopup();
+        let res = this.$store.state.treasures.items.find(
+          (e) => e.position.x == pos.lat && e.position.y == pos.lng
+        );
+        this.player_marker
+          .bindPopup(`Récupéré :<br><strong>Coffre ${res.composition}</strong>`)
+          .openPopup();
         console.log("response de foundTresor : ", res);
         console.log("Coffre récupéré");
-      } else{
+      } else {
         // Le nom de compte renseigné est déjà pris
-        console.log(
-          "Impossible de récupérer le trésor, code : " + res.status
-        );
+        console.log("Impossible de récupérer le trésor, code : " + res.status);
       }
     },
     computeDistance(playerPos, treasurePos) {
-      const {sqrt, pow} = Math;
+      const { sqrt, pow } = Math;
       const lat = pow((playerPos.lat - treasurePos.lat) * 111, 2);
       const lng = pow((playerPos.lng - treasurePos.lng) * 88, 2);
 
       return sqrt(lat + lng) * 1000;
     },
-    checkTresor(player_pos){
+    checkTresor(player_pos) {
       const distances = [];
-      this.marker_tresors.forEach(element => {
+      this.marker_tresors.forEach((element) => {
         distances.push(this.computeDistance(player_pos, element.getLatLng()));
-        this.$store.commit('setCloserTreasure', Math.min(...distances));
+        this.$store.commit("setCloserTreasure", Math.min(...distances));
         console.log("distances", distances);
-        if(element.getLatLng().distanceTo(player_pos) <= 2.0){
+        if (element.getLatLng().distanceTo(player_pos) <= 2.0) {
           console.log("Coffre a proximité");
           this.takeTresor(element.getLatLng());
         }
       });
     },
+    getPosition(page, map) {
+      var options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0,
+      };
+
+      function scrollMap(position) {
+        page.isPositionRetrieved = true;
+        let pos = { x: position.coords.latitude, y: position.coords.longitude };
+        page.$store.commit("setPosition", pos);
+        page.updatePosition(page.$store.state.user.resources.position);
+        page.player_marker.setLatLng([
+          page.$store.state.user.resources.position.x,
+          page.$store.state.user.resources.position.y,
+        ]);
+      }
+
+      function handleError(error) {
+        // Display error based on the error code.
+        const { code } = error;
+        switch (code) {
+          case GeolocationPositionError.TIMEOUT:
+            // Handle timeout.
+            console.log("Geolocation API error : Time Out");
+            page.isPositionRetrieved = false;
+            break;
+          case GeolocationPositionError.PERMISSION_DENIED:
+            // User denied the request.
+            console.log("Geolocation API error : Permission Denied");
+            page.isPositionRetrieved = false;
+            break;
+          case GeolocationPositionError.POSITION_UNAVAILABLE:
+            console.log("Geolocation API error : Position");
+            page.isPositionRetrieved = false;
+            break;
+        }
+      }
+
+      //Timeout de 60 secondes pour avoir une géolocalisatio
+      this.timerError = setTimeout(() => this.posNotFound(), 60000);
+      // Request repeated updates.
+      this.watchId = navigator.geolocation.watchPosition(
+        scrollMap,
+        handleError,
+        options
+      );
+    },
   },
   async beforeMount() {
-    await this.$store.dispatch('initResource');
+    await this.$store.dispatch("initResource");
     console.log("Generate Map");
     // HERE is where to load Leaflet components!
     const L = await import("leaflet");
@@ -151,15 +234,9 @@ export default {
       }
     ).addTo(mymap);
 
-    // Ajout d'un marker
-    L.marker([45.78207, 4.86559])
-      .addTo(mymap)
-      .bindPopup("Entrée du bâtiment<br><strong>Nautibus</strong>.")
-      .openPopup();
-
     // GESTION DE LA ZRR
 
-    await this.$store.dispatch({type: "readZrr"});
+    await this.$store.dispatch({ type: "readZrr" });
     let bounds = [
       [this.$store.state.zrr.limite_NO.x, this.$store.state.zrr.limite_NO.y],
       [this.$store.state.zrr.limite_SE.x, this.$store.state.zrr.limite_SE.y],
@@ -186,38 +263,47 @@ export default {
       iconUrl: this.$store.state.user.resources.url,
       iconSize: [30, 30],
     });
-    this.player_marker = L.marker([this.$store.state.user.resources.position.x, this.$store.state.user.resources.position.y], { icon: playerIcon })
-        .addTo(mymap)
-        .bindPopup(`Joueur:<br><strong>${this.$store.state.user.resources.id}</strong>`)
-        .openPopup();
-    this.ping = setInterval(() => {
-      // Todo : Dans les prochains tp, mettre à jour la position via l'api de géolocalisation
-      if(this.$store.state.user.resources.position.x !== 'idle') {
-        //this.$store.commit('movePlayer', {x: 0.000001, y: -0.000001});
-        this.updatePosition(this.$store.state.user.resources.position);
-        this.player_marker.setLatLng([this.$store.state.user.resources.position.x, this.$store.state.user.resources.position.y]);
-      }
-    }, 5000);
+
+    this.player_marker = L.marker(
+      [
+        this.$store.state.user.resources.position.x,
+        this.$store.state.user.resources.position.y,
+      ],
+      { icon: playerIcon }
+    )
+      .addTo(mymap)
+      .bindPopup(
+        `Joueur:<br><strong>${this.$store.state.user.resources.id}</strong>`
+      )
+      .openPopup();
+    this.getPosition(this, mymap);
 
     // Clic sur la carte
     mymap.on("click", (e) => {
       lat = e.latlng.lat;
       lng = e.latlng.lng;
-      //this.updateMap();
-      this.$store.commit('setPosition', {x: lat, y: lng});
-      this.player_marker.setLatLng([this.$store.state.user.resources.position.x, this.$store.state.user.resources.position.y]);
+      this.updateMap();
     });
 
+    // Maj de la vue de la carte
+    mymap.on("viewreset", (e) => {
+      e.target.invalidateSize();
+    });
+    mymap.on("move", (e) => {
+      e.target.invalidateSize();
+    });
     // Déplacement du joueur
-    this.player_marker.on('move', (player) => {
-      if(this.$store.state.user.resources.ttl > 0) {
+    this.player_marker.on("move", (player) => {
+      if (this.$store.state.user.resources.ttl > 0) {
         this.checkTresor(player.latlng);
       }
+      mymap.invalidateSize();
     });
   },
+
   async beforeUnmount() {
-    clearInterval(this.ping);
     clearInterval(this.ping_tresors);
+    clearTimeout(this.timerError);
   },
 };
 </script>
@@ -227,5 +313,8 @@ export default {
   height: 400px;
   width: 100%;
   border: 1px solid;
+}
+.tohide {
+  opacity: 0;
 }
 </style>
