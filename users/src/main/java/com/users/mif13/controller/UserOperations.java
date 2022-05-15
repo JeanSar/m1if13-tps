@@ -81,6 +81,13 @@ public class UserOperations {
     @PostMapping(value = "/login", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Void> loginJSON(@RequestBody UserAPI userAPI,
                                           @RequestHeader("Origin") String origin) {
+
+        System.out.println("================================================");
+        System.out.println("================================================");
+        System.out.println("================================================");
+        System.out.println("================================================");
+        System.out.println(origin);
+
         if (dao.get(userAPI.login).isPresent()) {
             try {
                 User user = dao.get(userAPI.login).get();
