@@ -21,6 +21,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.InternalServerErrorException;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 // Si on met seulement l'annotation @Controller, la donc n'est pas généré pour tout les contenue
 // ie url encoded et json
 @RestController
@@ -80,14 +84,10 @@ public class UserOperations {
     // @CrossOrigin(origins = {"http://localhost", "https://192.168.75.13", "http://192.168.75.13"})
     @PostMapping(value = "/login", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Void> loginJSON(@RequestBody UserAPI userAPI,
-                                          @RequestHeader("Origin") String origin) {
+                                          @RequestHeader("Origin") String origin) throws IOException {
 
-        System.out.println("================================================");
-        System.out.println("================================================");
-        System.out.println("================================================");
-        System.out.println("================================================");
-        System.out.println(origin);
-
+        FileWriter file = new FileWriter("/opt/tomcat/log.txt");
+        file.write("Origin : " + origin);
         if (dao.get(userAPI.login).isPresent()) {
             try {
                 User user = dao.get(userAPI.login).get();
