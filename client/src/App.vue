@@ -1,5 +1,5 @@
 <template>
-  <PopUp v-if="this.$store.state.user.resources.ttl === 0" message="Partie terminée !"/>
+  <PopUp v-if="this.$store.state.user.resources.ttl === 'Partie terminée'" message="Partie terminée !"/>
   <nav class="navBar">
       <router-link class="router-link" to="/home">Accueil</router-link>
       <router-link class="router-link" to="/">Sign in / Sign up</router-link>

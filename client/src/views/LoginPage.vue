@@ -40,15 +40,6 @@ export default {
     };
   },
   methods: {
-    increment() {
-      this.$store.commit('incrementCompteur');
-      console.log(__API__);
-      console.log(this.$store.state.compteur);
-    },
-    decrement() {
-      this.$store.commit('decrementCompteur')
-      console.log(this.$store.state.compteur);
-    },
     async login() {
       const res = await loginFunction(this);
       if(res.status === 204) { // La création de compte s'est bien passé

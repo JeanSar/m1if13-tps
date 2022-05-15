@@ -20,10 +20,20 @@ export const User = {
   },
   mutations: {
     setResource(state, resource) {
+      const {ttl, ...other} = resource;
+      state.resources.id = other.id;
+      state.resources.url = other.url;
+      state.resources.registered = other.registered;
+      state.resources.treasures = other.treasures;
+      state.resources.position = other.position;
+      state.resources.role = other.role;
+      this.commit("setTTL", ttl);
       state.resources = resource;
     },
-    setCurrentResource(state, resource) {
-      state.resources.ttl = resource.ttl;
+      setCurrentResource(state, resource) {
+
+      this.commit("setTTL", resource.ttl);
+      // state.resources.ttl = resource.ttl;
       state.resources.registered = resource.registered;
       state.resources.url = resource.url;
       state.resources.treasures = resource.treasures;
@@ -39,7 +49,18 @@ export const User = {
       state.resources.position =  position;
     },
     decreaseTTL(state) {
-      state.resources.ttl--;
+      if(typeof state.resources.ttl === "number" ) {
+        this.commit("setTTL", state.resources.ttl = state.resources.ttl - 1);
+      }
+    },
+    setTTL(state, ttl) {
+      if(ttl === 0 && typeof state.resources.ttl === "number") {
+        console.log("Vibration");
+        window.navigator.vibrate(1000);
+        state.resources.ttl = "Partie terminée";
+      } else if(typeof state.resources.ttl === "number"){
+        state.resources.ttl = ttl;
+      }
     }
   },
   actions: {
