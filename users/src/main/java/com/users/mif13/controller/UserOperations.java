@@ -85,9 +85,6 @@ public class UserOperations {
     @PostMapping(value = "/login", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Void> loginJSON(@RequestBody UserAPI userAPI,
                                           @RequestHeader("Origin") String origin) throws IOException {
-
-        FileWriter file = new FileWriter("/opt/tomcat/log.txt");
-        file.write("Origin : " + origin);
         if (dao.get(userAPI.login).isPresent()) {
             try {
                 User user = dao.get(userAPI.login).get();
