@@ -49,6 +49,7 @@ deployapi:
     script:
         - ssh -o StrictHostKeyChecking=no -i $CI_SSH_KEY gitlabci@192.168.75.13 "rm -rf /deploy/api "
         - scp -o StrictHostKeyChecking=no -i $CI_SSH_KEY -r /builds/p1710759/m1if13-tps/api gitlabci@192.168.75.13:/deploy/
+        - ssh -o StrictHostKeyChecking=no -i $CI_SSH_KEY gitlabci@192.168.75.13 "cd /deploy/api && npm i"
 
 deployvue:
   image: node:16.14.2
