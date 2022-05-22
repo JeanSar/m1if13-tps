@@ -47,10 +47,10 @@ deployapi:
         - cd api/
         - npm i
     script:
-        - ssh -o StrictHostKeyChecking=no -i $CI_SSH_KEY gitlabci@192.168.75.13 "sudo systemctl stop express.service"
+        - ssh -o StrictHostKeyChecking=no -i $CI_SSH_KEY gitlabci@192.168.75.13 "systemctl stop express.service"
         - ssh -o StrictHostKeyChecking=no -i $CI_SSH_KEY gitlabci@192.168.75.13 "rm -rf /deploy/api "
         - scp -o StrictHostKeyChecking=no -i $CI_SSH_KEY -r /builds/p1710759/m1if13-tps/api gitlabci@192.168.75.13:/deploy/
-        - ssh -o StrictHostKeyChecking=no -i $CI_SSH_KEY gitlabci@192.168.75.13 "sudo systemctl start express.service"
+        - ssh -o StrictHostKeyChecking=no -i $CI_SSH_KEY gitlabci@192.168.75.13 "systemctl start express.service"
 
 deployvue:
   image: node:16.14.2
