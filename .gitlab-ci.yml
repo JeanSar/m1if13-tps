@@ -40,6 +40,18 @@ deploynode:
     script:
         - scp -o StrictHostKeyChecking=no -i $CI_SSH_KEY /builds/p1710759/m1if13-tps/api/public/static/dist/main.js gitlabci@192.168.75.13:/home/p1805563/game-express/public/static/dist/main.js
 
+deployapi:
+    image: node:16.14.2
+    before_script:
+        - chmod 400 $CI_SSH_KEY
+        - cd api/
+        - npm i
+    script:
+        - ssh -o StrictHostKeyChecking=no -i $CI_SSH_KEY gitlabci@192.168.75.13 "sudo systemctl stop express.service"
+        - ssh -o StrictHostKeyChecking=no -i $CI_SSH_KEY gitlabci@192.168.75.13 "rm -rf /deploy/api "
+        - scp -o StrictHostKeyChecking=no -i $CI_SSH_KEY -r /builds/p1710759/m1if13-tps/api gitlabci@192.168.75.13:/deploy/
+        - ssh -o StrictHostKeyChecking=no -i $CI_SSH_KEY gitlabci@192.168.75.13 "sudo systemctl start express.service"
+
 deployvue:
   image: node:16.14.2
   before_script:
