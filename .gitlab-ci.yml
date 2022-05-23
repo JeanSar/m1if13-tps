@@ -30,26 +30,31 @@ deploy:
         - mvn clean package --batch-mode
         - scp -o StrictHostKeyChecking=no -i $CI_SSH_KEY /builds/p1710759/m1if13-tps/users/target/mif13.war gitlabci@192.168.75.13:/opt/tomcat/webapps/mif13.war
 
-deploynode:
-    image: node:16.14.2
-    before_script:
-        - chmod 400 $CI_SSH_KEY
-        - cd admin/
-        - npm i
-        - npm run build:prod
-    script:
-        - scp -o StrictHostKeyChecking=no -i $CI_SSH_KEY /builds/p1710759/m1if13-tps/api/public/static/dist/main.js gitlabci@192.168.75.13:/deploy/api/public/static/dist/main.js
+# deploynode:
+#     image: node:16.14.2
+#     before_script:
+#         - chmod 400 $CI_SSH_KEY
+#         - cd admin/
+#         - npm i
+#         - npm run build:prod
+#     script:
+        
 
 deployapi:
     image: node:16.14.2
     before_script:
         - chmod 400 $CI_SSH_KEY
-        - cd api/
-        - npm i
+        - ssh -o StrictHostKeyChecking=no -i $CI_SSH_KEY gitlabci@192.168.75.13 "rm -rf /deploy/api"
     script:
-        - ssh -o StrictHostKeyChecking=no -i $CI_SSH_KEY gitlabci@192.168.75.13 "rm -rf /deploy/api "
+        # Copie du répertoire contenant l'api node.js sans avoir fait npm install
         - scp -o StrictHostKeyChecking=no -i $CI_SSH_KEY -r /builds/p1710759/m1if13-tps/api gitlabci@192.168.75.13:/deploy/
+        # Puis on lance le npm install directement sur la vm, une fois la copie ok (cela évite de copier trop de fichiers)
         - ssh -o StrictHostKeyChecking=no -i $CI_SSH_KEY gitlabci@192.168.75.13 "cd /deploy/api && npm i"
+    after_script:
+        - cd admin/
+        - npm install
+        - npm run build:prod
+        - scp -o StrictHostKeyChecking=no -i $CI_SSH_KEY /builds/p1710759/m1if13-tps/api/public/static/dist/main.js gitlabci@192.168.75.13:/deploy/api/public/static/dist/main.js
 
 deployvue:
   image: node:16.14.2
