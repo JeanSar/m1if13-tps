@@ -21,7 +21,6 @@ app.use('/zrr', zrrRouter);
 app.use('/tresor', tresorRouter);
 app.use('/api', resourcesRouter);
 
-// Test redeploiement
 // Après toutes nos routes car si on le met avant, ce code sera appelé avant nos routes et on aura donc tout le temps
 // une 404
 app.use((req: Request, res: Response, next) => {
