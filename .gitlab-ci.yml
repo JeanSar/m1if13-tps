@@ -28,19 +28,9 @@ deploy:
         - cd users/
     script:
         - mvn clean package --batch-mode
-        - scp -o StrictHostKeyChecking=no -i $CI_SSH_KEY /builds/p1710759/m1if13-tps/users/target/mif13.war gitlabci@192.168.75.13:/opt/tomcat/webapps/mif13.war
+        - scp -o StrictHostKeyChecking=no -i $CI_SSH_KEY /builds/p1710759/m1if13-tps/users/target/mif13.war gitlabci@192.168.75.13:/opt/tomcat/webapps/mif13.war      
 
-# deploynode:
-#     image: node:16.14.2
-#     before_script:
-#         - chmod 400 $CI_SSH_KEY
-#         - cd admin/
-#         - npm i
-#         - npm run build:prod
-#     script:
-        
-
-deployapi:
+deploy_api_and_admin:
     image: node:16.14.2
     before_script:
         - chmod 400 $CI_SSH_KEY
