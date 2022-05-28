@@ -28,8 +28,8 @@ export interface User {
 export interface Tresor {
     id: string,
     position: Position,
-    isOpen?: boolean
-    composition: string
+    isOpen?: boolean,
+    composition: "lune" | "Bêta-X" | "dissimulation" | "pierre magique"
 }
 
 export interface Georesource {

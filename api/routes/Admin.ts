@@ -125,11 +125,23 @@ adminRouter.post('/foundTresor',
         }
         const user = users.find(e => e.aventurier.id === id);
         if(user === undefined) {
-            res.statusMessage = "Utilsateurs non trouvé";
+            res.statusMessage = "Utilisateur non trouvé";
             return res.sendStatus(400);
         }
         user.aventurier.tresors.push(tresor);
         tresor.isOpen = true;
+        switch(tresor.composition) {
+            case "lune":
+                user.aventurier.ttl+= 60;
+                break;
+            case "Bêta-X":
+                user.aventurier.ttl = 0;
+                break;
+            case "dissimulation":
+                user.aventurier.ttl = 99999;
+            default:
+                break;
+        }
         res.statusMessage = "Coffre récupéré";
         return res.sendStatus(204);
 }));
