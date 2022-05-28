@@ -44,7 +44,7 @@ export default {
       marker_tresors: [],
       player_marker: undefined,
       coffreIcon: undefined,
-      isPositionRetrieved: false,
+      isPositionRetrieved: true,//false,
       timerError: null,
       watchId: null,
     };
@@ -110,7 +110,7 @@ export default {
             })
               .addTo(mymap)
               .bindPopup(
-                `Coffre contenant:<br><strong>${this.$store.state.treasures.items[i].composition}</strong>`
+                `<strong>Coffre Surprise</strong>`
               )
           );
         } else if (opened && !notadded) {
@@ -276,13 +276,20 @@ export default {
         `Joueur:<br><strong>${this.$store.state.user.resources.id}</strong>`
       )
       .openPopup();
-    this.getPosition(this, mymap);
+    //this.getPosition(this, mymap);
 
     // Clic sur la carte
     mymap.on("click", (e) => {
       lat = e.latlng.lat;
       lng = e.latlng.lng;
-      this.updateMap();
+      let pos = { x: lat, y: lng };
+      this.$store.commit("setPosition", pos);
+      this.updatePosition(this.$store.state.user.resources.position);
+      this.player_marker.setLatLng([
+          this.$store.state.user.resources.position.x,
+          this.$store.state.user.resources.position.y,
+      ]);
+      //this.updateMap();
     });
 
     // Maj de la vue de la carte
