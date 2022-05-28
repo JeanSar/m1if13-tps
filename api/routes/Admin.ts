@@ -11,6 +11,31 @@ const adminRouter = Router();
 
 let gameIsStarted: boolean = false;
 
+setInterval(() => {
+    if(!gameIsStarted){
+        return;
+    }
+    for(let user of users) {
+        if(user.aventurier.ttl > 0 && user.isRegisterInToZRR) {
+            if(notInZRR(user.aventurier.position,zrrs[0])){
+                user.aventurier.ttl = 0;
+            }
+            else{
+                user.aventurier.ttl --;
+            }
+        }
+    }
+}, 1000);
+
+function notInZRR(pos: Position, l: Limites){
+
+    return (pos.x > l.limite_NO.x 
+        || pos.x < l.limite_SE.x 
+        || pos.y > l.limite_SE.y
+        || pos.y < l.limite_NO.y
+    );
+}
+
 adminRouter.post("/areaLimit",
     body("limite_NE.x").isNumeric(),
     body("limite_NE.y").isNumeric(),
@@ -27,6 +52,16 @@ adminRouter.post("/areaLimit",
         // On s'assure que le tableau ne contient qu'un élément ce qui revient à un avoir un seul objet
         if(zrrs.length > 0) {
             zrrs.pop();
+            if(gameIsStarted) {
+                if(tresors.length != 0) {
+                    tresors.splice(0, tresors.length)
+                }
+                for(let user of users) {
+                    user.isRegisterInToZRR = false;
+                    user.aventurier.tresors = [];
+                }
+                gameIsStarted = false;
+            } 
         }
     return CRUDcreate(zrrs, req, res);
 }));
@@ -48,30 +83,18 @@ adminRouter.post('/ttlInit',
 }));
 
 adminRouter.post('/startGame', ((req: Request, res: Response) => {
-    gameIsStarted = true;
-    setInterval(() => {
-        for(let user of users) {
-            if(user.aventurier.ttl > 0 && user.isRegisterInToZRR) {
-                if(notInZRR(user.aventurier.position,zrrs[0])){
-                    user.aventurier.ttl = 0;
-                }
-                else{
-                    user.aventurier.ttl --;
-                }
-            }
+    if(gameIsStarted) {
+        if(tresors.length != 0) {
+            tresors.splice(0, tresors.length)
         }
-    }, 1000);
+        for(let user of users) {
+            user.aventurier.tresors = [];
+        }
+    } else {
+        gameIsStarted = true;
+    }
     return res.sendStatus(204);
 }));
-
-function notInZRR(pos: Position, l: Limites){
-
-    return (pos.x > l.limite_NO.x 
-        || pos.x < l.limite_SE.x 
-        || pos.y > l.limite_SE.y
-        || pos.y < l.limite_NO.y
-    );
-}
 
 adminRouter.get('/startGame', (req: Request, res: Response) => {
     res.status(200);
