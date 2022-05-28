@@ -4,7 +4,7 @@ import {zrrs} from "./ZRR";
 import {body, query, validationResult} from "express-validator";
 import {tresors} from "./Tresor";
 import {users} from "./User";
-import {Tresor} from "../Types/types";
+import {Tresor, Position, Limites} from "../Types/types";
 
 const adminRouter = Router();
 
@@ -52,12 +52,26 @@ adminRouter.post('/startGame', ((req: Request, res: Response) => {
     setInterval(() => {
         for(let user of users) {
             if(user.aventurier.ttl > 0 && user.isRegisterInToZRR) {
-                user.aventurier.ttl --;
+                if(notInZRR(user.aventurier.position,zrrs[0])){
+                    user.aventurier.ttl = 0;
+                }
+                else{
+                    user.aventurier.ttl --;
+                }
             }
         }
     }, 1000);
     return res.sendStatus(204);
 }));
+
+function notInZRR(pos: Position, l: Limites){
+
+    return (pos.x > l.limite_NO.x 
+        || pos.x < l.limite_SE.x 
+        || pos.y > l.limite_SE.y
+        || pos.y < l.limite_NO.y
+    );
+}
 
 adminRouter.get('/startGame', (req: Request, res: Response) => {
     res.status(200);
