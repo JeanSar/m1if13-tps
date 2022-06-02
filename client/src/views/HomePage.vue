@@ -26,8 +26,10 @@
         Vous n'avez aucun trésors...
       </span>
       <div v-else>
-        <div v-for="r in this.$store.state.user.resources.treasures" v-bind:key="r">
-          Coffre : {{ r.composition }}
+        <div v-for="c in compoArr" v-bind:key="c">
+          <div v-if="this.$store.state.user.resources.treasures.find(t => t.composition == c) != undefined">
+            Coffre {{c}} : {{this.$store.state.user.resources.treasures.filter(t => t.composition == c).length}}
+          </div>
         </div>
       </div>
       </b>
@@ -60,7 +62,8 @@ export default {
     return {
       ping: undefined,
       time: undefined,
-      isGameStarted: false
+      isGameStarted: false,
+      compoArr: ["lune", "pierre magique", "Bêta-X", "dissimulation"]
     };
   },
   methods: {

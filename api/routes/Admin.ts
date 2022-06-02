@@ -4,12 +4,37 @@ import {zrrs} from "./ZRR";
 import {body, query, validationResult} from "express-validator";
 import {tresors} from "./Tresor";
 import {users} from "./User";
-import {Tresor} from "../Types/types";
+import {Tresor, Position, Limites} from "../Types/types";
 
 const adminRouter = Router();
 
 
 let gameIsStarted: boolean = false;
+
+setInterval(() => {
+    if(!gameIsStarted){
+        return;
+    }
+    for(let user of users) {
+        if(user.aventurier.ttl > 0 && user.isRegisterInToZRR) {
+            if(notInZRR(user.aventurier.position,zrrs[0])){
+                user.aventurier.ttl = 0;
+            }
+            else{
+                user.aventurier.ttl --;
+            }
+        }
+    }
+}, 1000);
+
+function notInZRR(pos: Position, l: Limites){
+
+    return (pos.x > l.limite_NO.x 
+        || pos.x < l.limite_SE.x 
+        || pos.y > l.limite_SE.y
+        || pos.y < l.limite_NO.y
+    );
+}
 
 adminRouter.post("/areaLimit",
     body("limite_NE.x").isNumeric(),
@@ -27,6 +52,16 @@ adminRouter.post("/areaLimit",
         // On s'assure que le tableau ne contient qu'un élément ce qui revient à un avoir un seul objet
         if(zrrs.length > 0) {
             zrrs.pop();
+            if(gameIsStarted) {
+                if(tresors.length != 0) {
+                    tresors.splice(0, tresors.length)
+                }
+                for(let user of users) {
+                    user.isRegisterInToZRR = false;
+                    user.aventurier.tresors = [];
+                }
+                gameIsStarted = false;
+            } 
         }
     return CRUDcreate(zrrs, req, res);
 }));
@@ -48,14 +83,16 @@ adminRouter.post('/ttlInit',
 }));
 
 adminRouter.post('/startGame', ((req: Request, res: Response) => {
-    gameIsStarted = true;
-    setInterval(() => {
-        for(let user of users) {
-            if(user.aventurier.ttl > 0 && user.isRegisterInToZRR) {
-                user.aventurier.ttl --;
-            }
+    if(gameIsStarted) {
+        if(tresors.length != 0) {
+            tresors.splice(0, tresors.length)
         }
-    }, 1000);
+        for(let user of users) {
+            user.aventurier.tresors = [];
+        }
+    } else {
+        gameIsStarted = true;
+    }
     return res.sendStatus(204);
 }));
 
@@ -125,11 +162,23 @@ adminRouter.post('/foundTresor',
         }
         const user = users.find(e => e.aventurier.id === id);
         if(user === undefined) {
-            res.statusMessage = "Utilsateurs non trouvé";
+            res.statusMessage = "Utilisateur non trouvé";
             return res.sendStatus(400);
         }
         user.aventurier.tresors.push(tresor);
         tresor.isOpen = true;
+        switch(tresor.composition) {
+            case "lune":
+                user.aventurier.ttl+= 60;
+                break;
+            case "Bêta-X":
+                user.aventurier.ttl = 0;
+                break;
+            case "dissimulation":
+                user.aventurier.ttl = 99999;
+            default:
+                break;
+        }
         res.statusMessage = "Coffre récupéré";
         return res.sendStatus(204);
 }));

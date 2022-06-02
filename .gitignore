@@ -16,3 +16,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Dev utils ###
+run-all-server.sh

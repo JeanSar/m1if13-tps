@@ -6,8 +6,7 @@ import apiPath from "./apiPath";
 let lat = 45.782,
     lng = 4.8656,
     zoom = 19;
-let gameStarted = false;
-
+    
 let mymap = L.map("map", {
     center: [lat, lng],
     zoom: zoom,
@@ -58,8 +57,20 @@ document.querySelector("#createArea").addEventListener("click", (e) => {
     removeLayer(markerpt2);
 });
 
-document.querySelector("#sendTreasure").addEventListener("click", (e) => {
+document.querySelector("#sendTreasure").addEventListener("click", async (e) => {
     e.preventDefault();
+
+    const res2 = await fetch(`${apiPath}/admin/startGame`, {
+        method: "POST",
+        headers: {
+            "content-type": "application/json",
+        },
+    });
+
+    console.log(res2);
+    if (res2.status === 204) {
+        // Le serveur a bien commencé partie
+    }
     fire = true;
 });
 
@@ -118,24 +129,9 @@ mymap.on("click", async (e) => {
                 L.marker([coffre_lat, coffre_lng], { icon: coffreIcon })
                     .addTo(mymap)
                     .bindPopup(
-                        `Coffre contenant:<br><strong>${composition}}</strong>.`
+                        `Coffre contenant:<br><strong>${composition}</strong>.`
                     )
                     .openPopup();
-
-                if (gameStarted === false) {
-                    const res2 = await fetch(`${apiPath}/admin/startGame`, {
-                        method: "POST",
-                        headers: {
-                            "content-type": "application/json",
-                        },
-                    });
-
-                    console.log(res2);
-                    if (res2.status === 204) {
-                        // Le serveur a bien commencé partie
-                        gameStarted = true;
-                    }
-                }
             }
         } catch (e) {
             console.error(e.message);

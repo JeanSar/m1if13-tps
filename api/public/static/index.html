@@ -35,7 +35,7 @@
 				</form>
 				<form id="sendZrr" class="pure-form">
 					<fieldset>
-						<label for="sendZrr">Valider la position de la ZRR : </label>&nbsp;&nbsp;
+						<label for="sendZrr">Valider la position de la ZRR (réinitialise la partie): </label>&nbsp;&nbsp;
 						<input type="submit" name="sendZrr" id="submitSendZrr" value="Send" class="pure-button pure-button-active">
 					</fieldset>
 				</form>
@@ -48,7 +48,7 @@
 				<form id="setTtl" class="pure-form">
 					<fieldset>
 						<label for="ttl">Temps de Tranquillité et de Liberté (TTL) par défaut : </label>
-						<input type="number" min="0" max="180" value="60" id="ttl" name="ttl">&nbsp;&nbsp;
+						<input type="number" min="0" max="800" value="60" id="ttl" name="ttl">&nbsp;&nbsp;
 						<input type="submit" name="setTtl" value="Set" id="okTTL" class="pure-button pure-button-active">
 					</fieldset>
 				</form>
@@ -56,12 +56,13 @@
 					<fieldset>
 						<label for="treasureType">Type de trésor : </label>
 						<select id="treasureType" name="treasureType">
-						    <option value="lune" selected>potion de lune</option>
-						    <option value="dissimulation">potion de dissimulation</option>
+						    <option value="lune" selected>Potion de lune</option>
+							<option value="pierre magique">Pierre magique</option>
+						    <option value="dissimulation">Potion de dissimulation</option>
 						    <option value="Bêta-X">Bêta-X</option>
 						</select>
 						<br>
-						<label for="sendTreasure">Passer en mode de déclenchement d'impact (démarre le jeu) : </label> 
+						<label for="sendTreasure">Passer en mode de déclenchement d'impact (réinitialise les coffres) : </label> 
 						<input id="sendTreasure" type="submit" name="sendTreasure" value="Feu!" class="pure-button pure-button-active">
 					</fieldset>
 				</form>
@@ -71,7 +72,7 @@
 		<section>
 			<h2>Aventurier</h2>
 			<div class="content">
-				<p><span class="elanor">TODO:</span> placer ici les informations sur le joueur et les liens pour les modifier. Exemple :</p>
+				<br />
 				<div>
 					<label for="namePlayer">Nom du joueur : </label>
 					<input type="text" id="namePlayer" name="namePlayer">
