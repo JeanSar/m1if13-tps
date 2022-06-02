@@ -29,7 +29,7 @@ module.exports = defineConfig({
     appleMobileWebAppStatusBarStyle: 'black',
     workboxPluginMode: 'InjectManifest',
     workboxOptions: {
-      swSrc: 'sw.js'
+      swSrc: './sw.js'
     }
   },
   transpileDependencies: true,
