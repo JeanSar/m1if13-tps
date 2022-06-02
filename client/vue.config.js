@@ -21,6 +21,17 @@ const paths = process.env.NODE_ENV === 'production'
 
 
 module.exports = defineConfig({
+  pwa: {
+    name: 'Treasure guild',
+    themeColor: '#00FFFF',
+    msTileColor: '#000000',
+    appleMobileWebAppCapable: 'yes',
+    appleMobileWebAppStatusBarStyle: 'black',
+    workboxPluginMode: 'InjectManifest',
+    workboxOptions: {
+      swSrc: 'sw.js'
+    }
+  },
   transpileDependencies: true,
     publicPath: "./",
     configureWebpack: {
