@@ -26,8 +26,8 @@ resourcesRouter.use(async (req: Request, res: Response, next: NextFunction) => {
         }
                 
         try {
-            const response = await fetch(`${url}`);
-            res.status(response.status);
+            const response = await fetch(url);
+            res.status(204);
             next();
         } catch (e) {
             console.log(e);
