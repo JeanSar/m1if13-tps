@@ -1,6 +1,4 @@
-import {precacheAndRoute} from 'workbox-precaching';
-
-precacheAndRoute(self.__WB_MANIFEST);
+workbox.precaching.precacheAndRoute(self.__WB_MANIFEST);
 
 //This is how you can use the network first strategy for files ending with .js
 workbox.routing.registerRoute(

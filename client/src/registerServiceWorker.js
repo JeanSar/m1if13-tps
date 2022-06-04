@@ -3,8 +3,8 @@
 import { register } from 'register-service-worker'
 
 if (process.env.NODE_ENV === 'production') {
-  console.log("process.env.BASE_URL", process.env.BASE_URL)
-  register(`./sw.js`, {
+  console.log("process.env.BASE_URL : ", process.env.BASE_URL)
+  register(`./service-worker.js`, {
     ready () {
       console.log(
         'App is being served from cache by a service worker.\n' +
@@ -31,7 +31,7 @@ if (process.env.NODE_ENV === 'production') {
     }
   })
 } else {
-  register(`./sw.js`, {
+  register(`./service-worker.js`, {
     ready () {
       console.log(
           'App is being served from cache by a service worker.\n' +
