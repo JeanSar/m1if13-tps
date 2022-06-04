@@ -10,7 +10,10 @@ import {tresors} from "./Tresor";
 
 const resourcesRouter = Router();
 const axios = require('axios');
-
+const https = require('https')
+const httpsAgent = new https.Agent({
+    rejectUnauthorized: false,
+});
 const notFoudRessourceIdMsg = "L'id spécifié n'existe pas";
 
 
@@ -26,7 +29,7 @@ resourcesRouter.use(async (req: Request, res: Response, next: NextFunction) => {
         }
                 
         try {
-            const response = await fetch(url);
+            const response = await fetch(url, {agent: httpsAgent});
             res.status(204);
             next();
         } catch (e) {
