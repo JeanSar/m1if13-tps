@@ -2,6 +2,7 @@ import {NextFunction, Request, Response, Router} from "express";
 import {convertToGeoResource, Georesource} from "../Types/types";
 import {body, header, param, query, validationResult} from "express-validator";
 import { CRUDdelete, CRUDgetAll, CRUDgetOne, CRUDupdate, CRUDcreate } from "./genericsCRUD"
+import fetch from "node-fetch";
 import {users} from "./User";
 import {tresors} from "./Tresor";
 
@@ -16,13 +17,20 @@ const notFoudRessourceIdMsg = "L'id spécifié n'existe pas";
 // Middleware gérant l'authentification
 resourcesRouter.use(async (req: Request, res: Response, next: NextFunction) => {
     if(!(req.headers['x-admin-authorization'] !== undefined && req.headers['x-admin-authorization'] == 'true')) { // Ce header est mis si l'on reqûete depuis la page admin
-        const origin = req.headers.origin;
-        const jwt_token = req.headers.authorization;        
+        const jwt_token = req.headers.authorization;
+        let origin = req.headers.origin;
+        let url = `http://localhost:8080/authenticate?jwt=${jwt_token}&origin=${origin}`
+        if(origin === undefined) {
+            origin = "https://192.168.75.13";
+            url = `https://192.168.75.13:8443/mif13/authenticate?jwt=${jwt_token}&origin=${origin}`;
+        }
+                
         try {
-            const response = await axios.get(`http://localhost:8080/authenticate?jwt=${jwt_token}&origin=${origin}`);
+            const response = await fetch(`${url}`);
             res.status(response.status);
             next();
         } catch (e) {
+            console.log(e);
             return res.sendStatus(401); // Non authentifié
         }
     } else { // C'est que la requête vien de la page admin
