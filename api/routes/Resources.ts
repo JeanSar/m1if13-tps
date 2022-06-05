@@ -24,12 +24,18 @@ resourcesRouter.use(async (req: Request, res: Response, next: NextFunction) => {
         let origin = req.headers.origin;
         let url = `http://localhost:8080/authenticate?jwt=${jwt_token}&origin=${origin}`
         if(origin === undefined) {
+            console.log("In origin === undefined")
             origin = "https://192.168.75.13";
             url = `https://192.168.75.13:8443/mif13/authenticate?jwt=${jwt_token}&origin=${origin}`;
         }
                 
         try {
-            const response = await fetch(url, {agent: httpsAgent});
+            if(url.startsWith("https")) {
+                const response = await fetch(url, {agent: httpsAgent});
+            } else {
+                const response = await fetch(url);
+            }
+
             res.status(204);
             next();
         } catch (e) {

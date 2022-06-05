@@ -1,5 +1,5 @@
 <template>
-  <div style="display: flex; flex-direction: column; align-items: center" >
+  <div style="display: flex; flex-direction: column; align-items: center" v-if="this.$store.state.user.resources.id !== 'idle'" >
     <div>
       <h1> Bienvenue {{ this.$store.state.user.resources.id }} ! </h1>
     </div>
@@ -51,6 +51,10 @@
       <MyMap />
     </div>
     <div class="container" v-else>Le joueur n'a pas encore été attribué à une partie.</div>
+  </div>
+  <div style="display: flex; flex-direction: column; justify-content: center" v-else>
+    <h1>Vous devez être connecté pour accéder à cette page !</h1>
+    <router-link style="color: #0b7350; font-weight: bold; font-size: 1.5em; margin-top: 1em" class="router-link" to="/">Retour à la page de login</router-link>
   </div>
 </template>
 
