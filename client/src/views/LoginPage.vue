@@ -1,21 +1,20 @@
 <template>
+  <div>
+    <h1 style="margin-bottom: 1.5em; color: darkslategrey">Sign in / Sign up</h1>
+  </div>
   <div class="formulaire">
     <form id="loginForm" >
       <div class="inputAndLabel">
-        <label class="centerInputAndText" for="login">Login :</label>
-        <input class="centerInputAndText" v-model="loginValue" type="text" name="login" id="login" />
+        <input class="centerInputAndText" placeholder="Login" v-model="loginValue" type="text" name="login" id="login" />
       </div>
       <div class="inputAndLabel">
-        <label class="centerInputAndText" for="password">Password :</label>
-        <input class="centerInputAndText" v-model="passwordValue" type="password" name="password" id="password" />
+        <input class="centerInputAndText" placeholder="Password" v-model="passwordValue" type="password" name="password" id="password" />
       </div>
       <div class="inputAndLabel">
-        <label class="centerInputAndText" for="image">Image :</label>
-        <input class="centerInputAndText" v-model="imageValue" type="url" name="image" id="image" />
+        <input class="centerInputAndText" v-model="imageValue" placeholder="Image URL" type="url" name="image" id="image" />
       </div>
       <div class="inputAndLabel">
-        <label class="centerInputAndText" for="ttl">TTL :</label>
-        <input class="centerInputAndText" v-model="ttlValue" type="number" name="ttl" id="ttl" />
+        <input class="centerInputAndText" v-model="ttlValue" type="number" placeholder="TTL" name="ttl" id="ttl" />
       </div>
       <div class="submitButton">
         <button class="primaryBtn" @click.prevent="login">Se connecter</button>
@@ -98,6 +97,7 @@ select {
 
 .centerInputAndText {
   display: flex;
+  flex: 1;
   flex-direction: column;
   justify-content: center;
 }
@@ -107,7 +107,8 @@ button {
   border-radius: 1em;
   width: 10em;
   height: 4em;
-  margin: 1em;
+  margin-inline: 0.2em;
+  margin-top: 1em;
   color: black;
   font-size: 1em;
 
@@ -116,24 +117,27 @@ button {
 
 .primaryBtn {
   background-color: #2475e5;
+  flex: 1;
   color: white;
 }
 
 .secondaryBtn {
   background-color: #f6f5f5;
+  flex: 1;
 }
 
 input {
   padding-left: 1em;
   height: 2.5em;
   font-size: 14pt;
-  width: 15em;
   border-radius: 0.6em;
   border-color: white;
 }
 .formulaire {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   max-width: 25em;
   margin-left: auto;
   margin-right: auto;
@@ -141,6 +145,7 @@ input {
 
 .submitButton {
   display: flex;
+  flex: 1;
   flex-direction: row;
   background-color: white;
 }

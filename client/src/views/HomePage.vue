@@ -1,79 +1,57 @@
 <template>
-  <div class="hello">
-    <h1>
-      Bienvenue <i>{{ this.$store.state.user.resources.id }}</i> !
-    </h1>
-  </div>
-  <ul>
-    <p>
-      <img
-        :src="this.$store.state.user.resources.url"
-        alt=""
-        style="width: 100px; border-radius: 50%; opacity: 50%"
-      />
-    </p>
-    <p>
-      <b
-        ><u>Identifiant de joueur</u>:
-        {{ this.$store.state.user.resources?.id }}</b
-      >
-    </p>
-    <p>
-      <b>
-        <u>Role</u>:
-        <span v-if="this.$store.state.user.resources.role === 'admin'"
-          >Administrateur</span
-        >
-        <span v-else>Joueur</span>
-      </b>
-    </p>
-    <p>
-      <b><u>TTL</u>: {{ this.$store.state.user.resources.ttl }}</b>
-    </p>
-    <p>
-      <b
-        ><u>Trésors</u>:
-        <span
-          v-if="
-            this.$store.state.user.resources.treasures === 'idle' ||
-            this.$store.state.user.resources.treasures.length === 0
-          "
-        >
+  <div style="display: flex; flex-direction: column; align-items: center" >
+    <div>
+      <h1> Bienvenue {{ this.$store.state.user.resources.id }} ! </h1>
+    </div>
+    <div style="display: flex; flex-direction: column">
+      <div class="container">
+        <img :src="this.$store.state.user.resources.url" alt="" style="width: 100px; border-radius: 50%; opacity: 50%" />
+      </div>
+      <div style="font-weight: bold" class="container">
+        Identifiant de joueur: {{ this.$store.state.user.resources?.id }}
+      </div>
+      <div class="container">
+          <span>
+            Role: <span v-if="this.$store.state.user.resources.role === 'admin'">Administrateur</span>
+            <span v-else>Joueur</span>
+          </span>
+
+
+      </div>
+      <div class="container">
+        TTL: {{ this.$store.state.user.resources.ttl }}
+      </div>
+      <div class="container">
+        <span style="margin-right: 0.2em">Trésors:</span>
+          <span v-if="this.$store.state.user.resources.treasures === 'idle'
+                      || this.$store.state.user.resources.treasures.length === 0">
           Vous n'avez aucun trésors...
         </span>
-        <div v-else>
-          <div v-for="c in compoArr" v-bind:key="c">
-            <div
-              v-if="
-                this.$store.state.user.resources.treasures.find(
-                  (t) => t.composition == c
-                ) != undefined
-              "
-            >
-              Coffre {{ c }} :
-              {{
-                this.$store.state.user.resources.treasures.filter(
-                  (t) => t.composition == c
-                ).length
-              }}
+          <div class="container" v-else>
+            <div v-for="c in compoArr" v-bind:key="c">
+              <div v-if="this.$store.state.user.resources.treasures.find((t) => t.composition == c) != undefined">
+                Coffre {{ c }} :
+                {{
+                  this.$store.state.user.resources.treasures.filter(
+                      (t) => t.composition == c
+                  ).length
+                }}
+              </div>
             </div>
           </div>
-        </div>
-      </b>
-    </p>
-    <div>
-      <p>
-        Le trésor le plus proche se trouve à :
-        {{ String(this.$store.state.treasures.closerTreasure) }} mètre.s
-      </p>
+      </div>
+      <div class="container">
+          Le trésor le plus proche se trouve à :
+          {{ String(this.$store.state.treasures.closerTreasure) === "Chargement ..."
+             ? String(this.$store.state.treasures.closerTreasure)
+             : String(this.$store.state.treasures.closerTreasure) + "mètre.s" }}
+      </div>
     </div>
-  </ul>
-
-  <br />
-  <div v-if="this.$store.state.user.resources.registered">
-    <MyMap />
+    <div v-if="this.$store.state.user.resources.registered">
+      <MyMap />
+    </div>
+    <div class="container" v-else>Le joueur n'a pas encore été attribué à une partie.</div>
   </div>
-  <div v-else>Le joueur n'a pas encore été attribué à une partie.</div>
 </template>
 
 <script>
@@ -160,4 +138,12 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped></style>
+<style scoped>
+.container{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 0.5em;
+  margin-top: 0.5em;
+}
+</style>
