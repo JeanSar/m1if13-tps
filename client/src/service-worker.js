@@ -1,29 +1,45 @@
-workbox.precaching.precacheAndRoute(self.__WB_MANIFEST);
+import { precacheAndRoute } from 'workbox-precaching';
+import { registerRoute } from 'workbox-routing';
+import { NetworkFirst, StaleWhileRevalidate, CacheFirst } from 'workbox-strategies';
+import { ExpirationPlugin } from 'workbox-expiration'
+
+
+addEventListener('message', (event) => {
+    if (event.data && event.data.type == 'skipWaiting') {
+      skipWaiting();
+    }
+  });
+
+//precacheAndRoute(self.__precacheManifest);
+precacheAndRoute(self.__WB_MANIFEST);
 
 //This is how you can use the network first strategy for files ending with .js
-workbox.routing.registerRoute(
+registerRoute(
     /.*\.js/,
-    workbox.strategies.networkFirst()
+    new NetworkFirst()
 )
 
 // Use cache but update cache files in the background ASAP
-workbox.routing.registerRoute(
+registerRoute(
     /.*\.css/,
-    workbox.strategies.staleWhileRevalidate({
+    new StaleWhileRevalidate({
         cacheName: 'css-cache'
     })
 )
 
 //Cache first, but defining duration and maximum files
-workbox.routing.registerRoute(
+registerRoute(
     /.*\.(?:png|jpg|jpeg|svg|gif)/,
-    workbox.strategies.cacheFirst({
+    new CacheFirst({
         cacheName: 'image-cache',
         plugins: [
-            new workbox.expiration.Plugin({
+            new ExpirationPlugin({
                 maxEntries: 20,
                 maxAgeSeconds: 7 * 24 * 60 * 60
             })
         ]
     })
 )
+
+
+
