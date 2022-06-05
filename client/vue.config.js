@@ -23,7 +23,7 @@ const paths = process.env.NODE_ENV === 'production'
 module.exports = defineConfig({
   pwa: {
     name: 'Treasure guild',
-    themeColor: '#00FFFF',
+    themeColor: '#0b7350',
     msTileColor: '#000000',
     appleMobileWebAppCapable: 'yes',
     appleMobileWebAppStatusBarStyle: 'black',
