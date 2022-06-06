@@ -134,22 +134,13 @@ export default {
 
     this.time = setInterval(async () => {
       if (this.isGameStarted && this.$store.state.user.resources.registered) {
-        if (this.$store.state.user.resources.ttl !== 0) {
-          this.$store.commit("decreaseTTL");
-          if(this.$store.state.user.resources.ttl == 0) {
-            this.notification("Fin de la partie.");
-          }
-        }
+        this.displayGameInf();
       } else {
         this.notifDebutShown = false;
         this.notifFinShown = false;
         await this.getGameStatus();
         if(this.isGameStarted && this.$store.state.user.resources.registered) {
-          if(this.$store.state.user.resources.ttl > 0) {
-            this.notification("Début de la partie.");
-          } else {
-            this.notification("Fin de la partie.");
-          }
+          this.displayGameInf();
         }
       }
     }, 1000);
