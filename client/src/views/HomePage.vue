@@ -73,6 +73,7 @@ export default {
     return {
       ping: undefined,
       time: undefined,
+      endGame: false,
       isGameStarted: false,
       compoArr: ["lune", "pierre magique", "Bêta-X", "dissimulation"],
       notifAllowed: false,
@@ -136,7 +137,8 @@ export default {
       if (this.isGameStarted && this.$store.state.user.resources.registered) {
         if (this.$store.state.user.resources.ttl !== 0) {
           this.$store.commit("decreaseTTL");
-          if(this.$store.state.user.resources.ttl == 0) {
+          if(this.$store.state.user.resources.ttl == 0 && !endGame) {
+            this.endGame = true;
             this.notification("Fin de la partie.");
           }
         }
@@ -144,11 +146,13 @@ export default {
         this.notifDebutShown = false;
         this.notifFinShown = false;
         await this.getGameStatus();
+
         if(this.isGameStarted && this.$store.state.user.resources.registered) {
           if(this.$store.state.user.resources.ttl > 0) {
             this.notification("Début de la partie.");
-          } else {
+          } else if(!endGame) {
             this.notification("Fin de la partie.");
+            this.endGame = true;
           }
         }
       }
