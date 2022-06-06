@@ -76,6 +76,8 @@ export default {
       isGameStarted: false,
       compoArr: ["lune", "pierre magique", "Bêta-X", "dissimulation"],
       notifAllowed: false,
+      notifFinShown: false,
+      notifDebutShown: false,
     };
   },
   methods: {
@@ -85,12 +87,26 @@ export default {
         // Les ressources on été récuperées
         //console.log("response game status : ", res);
         this.isGameStarted = (await res.json())["isGameStarted"];
-
       } else {
         // Le nom de compte renseigné est déjà pris
         console.log(
           "Impossible de récupérer le status de la partie, code : " + res.status
         );
+      }
+    },
+    displayGameInf() {
+      if (this.$store.state.user.resources.ttl > 0) {
+        if(this.notifDebutShown) {
+          this.$store.commit("decreaseTTL");
+        } else {
+          this.notification("Début de la partie.");
+          this.notifDebutShown = true;
+        }
+      } else {
+        if (!this.notifFinShown) {
+          this.notification("Fin de la partie.");
+          this.notifFinShown = true; // meme si les notifications ne sont pas authorisé, on tent d'afficher une seule fois
+        }
       }
     },
     notification(msg) {
@@ -107,6 +123,7 @@ export default {
     },
   },
   async mounted() {
+    // demande à l'utilisateur l'authorisation de notification (pas obligatoire)
     Notification.requestPermission().then((result) => {
       this.notifAllowed = result === "granted";
     });
@@ -124,6 +141,8 @@ export default {
           }
         }
       } else {
+        this.notifDebutShown = false;
+        this.notifFinShown = false;
         await this.getGameStatus();
         if(this.isGameStarted && this.$store.state.user.resources.registered) {
           if(this.$store.state.user.resources.ttl > 0) {
