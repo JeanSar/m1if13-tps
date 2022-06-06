@@ -47,15 +47,16 @@
              : String(this.$store.state.treasures.closerTreasure) + "mètre.s" }}
       </div>
     </div>
-    <div v-if="this.$store.state.user.resources.registered">
-      <MyMap />
-    </div>
-    <div class="container" v-else>Le joueur n'a pas encore été attribué à une partie.</div>
+
   </div>
   <div style="display: flex; flex-direction: column; justify-content: center" v-else>
     <h1>Vous devez être connecté pour accéder à cette page !</h1>
     <router-link style="color: #0b7350; font-weight: bold; font-size: 1.5em; margin-top: 1em" class="router-link" to="/">Retour à la page de login</router-link>
   </div>
+  <div v-if="this.$store.state.user.resources.registered">
+    <MyMap />
+  </div>
+  <div class="container" v-else>Le joueur n'a pas encore été attribué à une partie.</div>
 </template>
 
 <script>
