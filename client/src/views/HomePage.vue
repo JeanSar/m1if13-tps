@@ -97,6 +97,7 @@ export default {
     displayGameInf() {
       if (this.$store.state.user.resources.ttl > 0) {
         if(this.notifDebutShown) {
+          console.log("In if(this.notifDebutShown)");
           this.$store.commit("decreaseTTL");
         } else {
           this.notification("Début de la partie.");

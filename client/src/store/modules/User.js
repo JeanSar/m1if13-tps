@@ -50,6 +50,7 @@ export const User = {
     },
     decreaseTTL(state) {
       if(typeof state.resources.ttl === "number" ) {
+        console.log(state.resources.ttl)
         this.commit("setTTL", state.resources.ttl = state.resources.ttl - 1);
       }
     },
