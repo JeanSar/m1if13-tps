@@ -137,7 +137,7 @@ export default {
       if (this.isGameStarted && this.$store.state.user.resources.registered) {
         if (this.$store.state.user.resources.ttl !== 0) {
           this.$store.commit("decreaseTTL");
-          if(this.$store.state.user.resources.ttl == 0 && !endGame) {
+          if((this.$store.state.user.resources.ttl === 0 || this.$store.state.user.resources.ttl === "Partie terminée" ) && !endGame) {
             this.endGame = true;
             this.notification("Fin de la partie.");
           }
