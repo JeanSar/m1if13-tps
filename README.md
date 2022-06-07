@@ -60,7 +60,7 @@ Sur l'adresse ~/game/static/index.html est présent le client admin qui permet d
     - En appuyant sur le bouton feu, on peut désormais placer les coffres sur la carte en cliquant sur cette dernière.
     - Il est a noter que cliquer une deuxième fois sur le bouton feu provoque la réinitialisation des coffres sur la map et ceux récupérés par les joueurs.
 - Initialisation de la TTL :
-  -   Toujours dans la section paramêtre on peut initialiser le TTL par défaut des joueurs en saisissant la valeur adéquate dans le champ associé puis en cliquant sur le bouton "Set". 
+  -   Toujours dans la section paramêtre on peut initialiser le TTL par défaut de tout les joueurs (y compris ceux qui n'ont pas été ajouté) en saisissant la valeur adéquate dans le champ associé puis en cliquant sur le bouton "Set". 
 - Inscription du joueur dans la ZRR :
    - Dans la section aventurier, en saisissant un nom de joueur (inscris au préalable), nous pouvons l'inscrire dans la ZRR.
    - Cela récupèrera ses informations : avatar, TTL et trésors récupérés.
@@ -83,9 +83,27 @@ NODE_ENV ne fonctionne que sur Linux donc pour lancer webpack en local sur Windo
 Les tests de Jasmine se lance via la commande npm run test, ils fonctionnent en Local et ne peuvent pas être tourné sur docker car il nécéssiterais de lancer le serveur. Il ne sont pas présent en production.
 
 # TP7
+## Information concernant le client Vue
+Sur l'adresse ~/index/ est présent le client Vue qui permet de jouer au jeu.
+Vous pouvez vous créer un compte et ajouter une image avec son url, vous pouvez choisir vous-même votre ttl. Vous pouvez ensuite vous connecter et après avoir accepté les autorisations de notification (optionnel) et de géolocalisation (après avoir été ajouté sur une partie), vous pourrez vous déplacer et aller récupérer les mystérieux coffres.
+
+Attention ! Certain coffres sont piégés ...
+- Coffre Lune = +60 TTL
+- Coffre Dissimulation = Invicibilité ? (+99999 TTL)
+- Coffre Beta-X = 💀
+- Coffre pierre magique = Catch'em all ! (l'objectif est d'en avoir le plus possible)
+
 ## Information concernant la géolocalisation
 Le script simple de géolocalisation est présent sur la vm en tant que fichier statique à l'adresse suivante :
 #### [Lien vers le script simple de géolocalisation](https://192.168.75.13/game/static/geoloc.html)
+## Information concernant la PWA
+Pour télécharger la PWA sur votre téléphone ou sur votre ordinateur il est conseillé :
+- D'etre sur le navigateur Chrome ou Firefox Nightly (ce dernier testé uniquement sur android et nécéssite d'aller modifier des paramêtres dans about:config)
+- D'avoir ajouté le certificat de l'autorité de certification (Pour android il faut avoir un téléphone en mode développeur et ajouter le certificat dans les paramêtres du téléphone)
+- De disposer des dernières versions à jour des navigateurs
+- D'avoir son téléphone en mode non-silencieux (et pas en "ne pas déranger")
+
+#### [Lien vers le client d'admin (VM)](https://192.168.75.13/client/)
 
 ## Liens vers les différentes ressource :
 
