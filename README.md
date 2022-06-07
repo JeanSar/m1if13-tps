@@ -49,20 +49,22 @@ Ces validations ne sont pas présentes sur toutes les routes, car le but était 
 # TP4
 ## Information concernant le client
 
-Sur l'adresse ~/static est présent le client admin qui permet de configurer une partie avec les fonctionnalités suivantes :
+Sur l'adresse ~/game/static/index.html est présent le client admin qui permet de configurer une partie avec les fonctionnalités suivantes :
  - Création de la ZRR :
     - En cliquant sur le bouton "créer la zone" situé en dessous de la carte, on peut en cliquant sur deux points, construire la ZRR.
     - On peut ensuite cliquer sur send pour envoyer l'information au serveur.
     - Pour la modifier il suffit de refaire les étapes précédente et cela sera mis à jour sur le serveur.
+    - La création de la ZRR provoque le retrait des joueurs de la partie, réinitialise leurs coffres et ceux de la map, la partie doit également être redémarré (dans la section suivante). 
  - Ajout des coffres :
     - Dans la section paramêtre, via le picker, on séléctionne le contenu du coffre.
     - En appuyant sur le bouton feu, on peut désormais placer les coffres sur la carte en cliquant sur cette dernière.
+    - Il est a noter que cliquer une deuxième fois sur le bouton feu provoque la réinitialisation des coffres sur la map et ceux récupérés par les joueurs.
 - Initialisation de la TTL :
   -   Toujours dans la section paramêtre on peut initialiser le TTL par défaut des joueurs en saisissant la valeur adéquate dans le champ associé puis en cliquant sur le bouton "Set". 
 - Inscription du joueur dans la ZRR :
    - Dans la section aventurier, en saisissant un nom de joueur (inscris au préalable), nous pouvons l'inscrire dans la ZRR.
    - Cela récupèrera ses informations : avatar, TTL et trésors récupérés.
-   - Il est à noter qu'en cas d'inscription d'un joueur inscris, ses données seront réinitialisées.
+   - Il est à noter qu'en cas d'inscription d'un joueur inscris, ses données seront réinitialisées (ses coffres et sa position enregistré entre autre).
 
 Une config prettier a été mise (minimaliste).  
 Pour l'exécuter : ``npm run prettier``
