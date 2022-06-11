@@ -1,3 +1,7 @@
+### Un accès à tous les liens du projet est fourni en dernière section si besoin.
+[Cliquer ici pour y accéder](##Regroupement des liens vers les différentes parties du projet)
+
+
 # M1IF13 - TP 1 & 2
 
 - DANTIER Florian p1710759
@@ -82,15 +86,33 @@ NODE_ENV ne fonctionne que sur Linux donc pour lancer webpack en local sur Windo
 
 Les tests de Jasmine se lance via la commande npm run test, ils fonctionnent en Local et ne peuvent pas être tourné sur docker car il nécéssiterais de lancer le serveur. Il ne sont pas présent en production.
 
-# TP7
+# TP5-6-7
 ## Information concernant le client Vue
-Sur l'adresse ~/index/ est présent le client Vue qui permet de jouer au jeu.
-Vous pouvez vous créer un compte et ajouter une image avec son url, vous pouvez choisir vous-même votre ttl. Vous pouvez ensuite vous connecter et après avoir accepté les autorisations de notification (optionnel) et de géolocalisation (après avoir été ajouté sur une partie), vous pourrez vous déplacer et aller récupérer les mystérieux coffres.
+#### [Lien vers le client Vue.js](https://192.168.75.13/client/#/)
 
-Attention ! Certain coffres sont piégés ...
+
+Procédure à suivre pour s'enregistrer et se connecter (compte inexistant) :  
+1. Renseignez les 4 champs login, password, image URL et ttl.
+2. Cliquez sur le bouton (gris) créer un compte.
+3. Une fois cela effectué, les champs renseignés sont toujours remplis, vous pouvez donc cliquer sur le bouton "Se connecter"
+4. Une redirection est effectuée vers la page de jeu.
+
+Procédure à suivre pour se connecter (compte existant) :
+1. Renseignez uniquement les champs login et password.
+2. Cliquer sur le bouton (bleu) "Se connecter"
+3. Une redirection est effectuée vers la page du jeu.
+
+Ensuite, voir la procédure indiquée dans la section [TP4](#TP4) pour paramétrer et démarrer une partie.
+
+Enfin vous devrez accepter les autorisations
+de notification (optionnel) et de géolocalisation (après avoir été ajouté sur une partie).
+Tout est prêt pour aller récupérer les mystérieux coffres ! 
+
+
+Attention ! Certains coffres sont piégés ...
 - Coffre Lune = +60 TTL
-- Coffre Dissimulation = Invicibilité ? (+99999 TTL)
-- Coffre Beta-X = 💀
+- Coffre Dissimulation = Invincibilité ? (+99999 TTL)
+- Coffre Beta-X = 💀 (mort)
 - Coffre pierre magique = Catch'em all ! (l'objectif est d'en avoir le plus possible)
 
 ## Information concernant la géolocalisation
@@ -112,4 +134,11 @@ Pour télécharger la PWA sur votre téléphone ou sur votre ordinateur il est c
 #### [Fichier d'export de l'API swagger](https://forge.univ-lyon1.fr/p1710759/m1if13-tps/-/blob/main/users-api.yaml)
 #### [Documentation swagger (un peu buggée comme dit plus haut) disponible sur la VM](https://192.168.75.13:8443/mif13/swagger-ui/index.html#/)
 
+## Regroupement des liens vers les différentes parties du projet
 
+#### [Page admin](https://192.168.75.13/game/static/)
+#### [Page client](https://192.168.75.13/client/#/)
+#### [Serveur d'authentification](https://192.168.75.13:8443/mif13)
+#### [Lien de l'api (racine)" : https://192.168.75.13/game/](https://192.168.75.13/game/)
+#### [Lien de l'api "Resource" : https://192.168.75.13/game/api](https://192.168.75.13/game/api)
+#### [Lien de l'api "Admin" : https://192.168.75.13/game/admin](https://192.168.75.13/game/admin)
