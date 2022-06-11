@@ -1,5 +1,5 @@
-### Un accès à tous les liens du projet est fourni en dernière section si besoin.
-[Cliquer ici pour y accéder](##Regroupement des liens vers les différentes parties du projet)
+# Un accès à tous les liens du projet est fourni en dernière section si besoin.
+
 
 
 # M1IF13 - TP 1 & 2
@@ -102,7 +102,7 @@ Procédure à suivre pour se connecter (compte existant) :
 2. Cliquer sur le bouton (bleu) "Se connecter"
 3. Une redirection est effectuée vers la page du jeu.
 
-Ensuite, voir la procédure indiquée dans la section [TP4](#TP4) pour paramétrer et démarrer une partie.
+Ensuite, si cela n'a pas encore été fait, voir la procédure indiquée dans la section TP4 situé ci-desssus.
 
 Enfin vous devrez accepter les autorisations
 de notification (optionnel) et de géolocalisation (après avoir été ajouté sur une partie).
