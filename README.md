@@ -47,7 +47,7 @@ En plus de ces deux api, nous avons fait un CRUD sur chaque type d'objet sur les
 Nous avons fait cela car, nous avions compris qu'il fallait faire ces routes (avant de se rendre compte que non).  
 Nous les avons tout de même gardé, car cela permet malgré tout de présenter du contenu, comme les fonctions générique gérant les opérations CRUD.  
 Nous avons également fait, sur quelques routes, de la validation de donné avec express-validator.  
-Ces validations ne sont pas présentes sur toutes les routes, car le but était avant tout de se rajouter une lib à découvrir sans y passer trop de temps non plus.  
+Ces validations ne sont pas présentes sur toutes les routes, car le but était avant tout de se rajouter une librairie à découvrir.  
 
 
 # TP4
@@ -102,7 +102,7 @@ Procédure à suivre pour se connecter (compte existant) :
 2. Cliquer sur le bouton (bleu) "Se connecter"
 3. Une redirection est effectuée vers la page du jeu.
 
-Ensuite, si cela n'a pas encore été fait, voir la procédure indiquée dans la section TP4 situé ci-desssus.
+Ensuite, si cela n'a pas encore été fait, voir la procédure indiquée dans la section TP4 située ci-dessus.
 
 Enfin vous devrez accepter les autorisations
 de notification (optionnel) et de géolocalisation (après avoir été ajouté sur une partie).
